@@ -42,7 +42,7 @@ function useAnimatedNumber(target: number, duration = 400) {
 }
 
 export default function IntensityTldrBlock() {
-  const [level, setLevel] = useState(4); // 0-indexed, default to max (level 5)
+  const [level, setLevel] = useState(1); // 0-indexed, default to Moderate
   const [copied, setCopied] = useState(false);
   const sliderRef = useRef<HTMLDivElement>(null);
   const isDragging = useRef(false);
