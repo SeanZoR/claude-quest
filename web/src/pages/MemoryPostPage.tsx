@@ -6,6 +6,7 @@ import { getPostBySlug } from '../data/memoryPosts';
 import { useHead } from '../hooks/useHead';
 import TldrBlock from '../components/TldrBlock';
 import IntensityTldrBlock from '../components/IntensityTldrBlock';
+import SubscribeForm from '../components/SubscribeForm';
 
 export default function MemoryPostPage() {
   const { slug } = useParams<{ slug: string }>();
@@ -63,6 +64,8 @@ export default function MemoryPostPage() {
               </span>
             ))}
           </div>
+
+          <SubscribeForm />
         </article>
       </main>
     </div>

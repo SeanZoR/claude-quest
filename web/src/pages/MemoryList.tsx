@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { ArrowLeft, Star } from 'lucide-react';
 import { memoryPosts, getPostBySlug } from '../data/memoryPosts';
 import { useHead } from '../hooks/useHead';
+import SubscribeForm from '../components/SubscribeForm';
 
 export default function MemoryList() {
   useHead({
@@ -85,6 +86,8 @@ export default function MemoryList() {
             </Link>
           ))}
         </div>
+
+        <SubscribeForm source="memory-list" />
       </main>
     </div>
   );

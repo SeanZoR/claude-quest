@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { Copy, Check } from 'lucide-react';
+import SubscribePrompt, { shouldShowPrompt } from './SubscribePrompt';
 
 const LEVELS = [
   { skills: 5, changes: 2, label: 'Gentle' },
@@ -46,6 +47,16 @@ export default function IntensityTldrBlock() {
   const [copied, setCopied] = useState(false);
   const sliderRef = useRef<HTMLDivElement>(null);
   const isDragging = useRef(false);
+  const [showPrompt, setShowPrompt] = useState(false);
+  const hasInteracted = useRef(false);
+
+  const triggerPrompt = useCallback(() => {
+    if (hasInteracted.current) return;
+    hasInteracted.current = true;
+    if (shouldShowPrompt()) {
+      setShowPrompt(true);
+    }
+  }, []);
 
   const current = LEVELS[level];
   const total = current.skills * current.changes;
@@ -68,6 +79,7 @@ Work on all skills in parallel.`;
     navigator.clipboard.writeText(getPrompt());
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
+    triggerPrompt();
   };
 
   const updateLevelFromPosition = useCallback((clientX: number) => {
@@ -82,6 +94,7 @@ Work on all skills in parallel.`;
     isDragging.current = true;
     (e.target as HTMLElement).setPointerCapture(e.pointerId);
     updateLevelFromPosition(e.clientX);
+    triggerPrompt();
   };
 
   const handlePointerMove = (e: React.PointerEvent) => {
@@ -96,7 +109,8 @@ Work on all skills in parallel.`;
   const thumbPercent = (level / (LEVELS.length - 1)) * 100;
 
   return (
-    <div className="mb-10 rounded-lg border border-amber-500/30 bg-amber-500/5 overflow-hidden">
+    <div className="mb-10">
+    <div className="rounded-lg border border-amber-500/30 bg-amber-500/5 overflow-hidden">
       <div className="flex items-center justify-between px-4 py-2 border-b border-amber-500/20 bg-amber-500/10">
         <span className="text-sm font-medium text-amber-400">Paste this into Claude Code</span>
         <button
@@ -184,7 +198,7 @@ Work on all skills in parallel.`;
           {LEVELS.map((l, i) => (
             <button
               key={i}
-              onClick={() => setLevel(i)}
+              onClick={() => { setLevel(i); triggerPrompt(); }}
               className={`text-[10px] transition-colors duration-300 cursor-pointer ${
                 i === level ? 'text-amber-400 font-medium' : 'text-gray-600 hover:text-gray-400'
               }`}
@@ -194,6 +208,10 @@ Work on all skills in parallel.`;
           ))}
         </div>
       </div>
+
+      </div>
+
+      <SubscribePrompt show={showPrompt} onClose={() => setShowPrompt(false)} />
     </div>
   );
 }

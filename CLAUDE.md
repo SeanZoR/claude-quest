@@ -23,7 +23,18 @@ cd web && npm run build && wrangler pages deploy dist --project-name=claude-ques
 
 # X-bot worker
 cd workers/x-bot && wrangler deploy
+
+# Subscribe worker
+cd workers/subscribe && wrangler deploy
 ```
+
+## Email Subscribers
+
+**IMPORTANT:** After publishing a new memory post, send a broadcast email to subscribers via the Resend dashboard (Broadcasts tab). The subscribe worker only handles signups - it does not auto-send on new posts.
+
+- **Resend audience ID:** `e170afe6-a555-49ba-93f0-512b3fc37bb1`
+- **Sender:** `clauding.dev <noreply@ajents.company>`
+- **Worker:** `clauding-subscribe.sean-katz.workers.dev`
 
 ## Analytics
 

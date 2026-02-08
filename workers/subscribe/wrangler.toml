@@ -1,0 +1,6 @@
+name = "clauding-subscribe"
+main = "src/index.ts"
+compatibility_date = "2024-01-01"
+
+[vars]
+RESEND_AUDIENCE_ID = "e170afe6-a555-49ba-93f0-512b3fc37bb1"
