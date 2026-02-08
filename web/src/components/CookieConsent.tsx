@@ -14,10 +14,13 @@ export default function CookieConsent() {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    // Show banner only if user hasn't made a choice yet
     if (getConsentStatus() === null) {
-      const timer = setTimeout(() => setVisible(true), 1500);
-      return () => clearTimeout(timer);
+      const showTimer = setTimeout(() => setVisible(true), 1500);
+      const hideTimer = setTimeout(() => {
+        localStorage.setItem(CONSENT_KEY, 'granted');
+        setVisible(false);
+      }, 6500); // 1.5s delay + 5s visible
+      return () => { clearTimeout(showTimer); clearTimeout(hideTimer); };
     }
   }, []);
 
