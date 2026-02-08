@@ -4,7 +4,7 @@
 # A gamification system for Claude Code
 #
 # Usage:
-#   curl -sSL https://raw.githubusercontent.com/clauding-dev/claude-quest/main/install.sh | bash
+#   curl -sSL https://raw.githubusercontent.com/SeanZoR/claude-quest/main/install.sh | bash
 #
 
 set -e
@@ -13,8 +13,8 @@ set -e
 # Configuration
 # ============================================================================
 
-REPO_URL="https://github.com/clauding-dev/claude-quest.git"
-RAW_BASE_URL="https://raw.githubusercontent.com/clauding-dev/claude-quest/main"
+REPO_URL="https://github.com/SeanZoR/claude-quest.git"
+RAW_BASE_URL="https://raw.githubusercontent.com/SeanZoR/claude-quest/main"
 CLAUDE_DIR="$HOME/.claude"
 QUEST_DATA_DIR="$CLAUDE_DIR/claude-quest"
 SKILLS_DIR="$CLAUDE_DIR/skills"

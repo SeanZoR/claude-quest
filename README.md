@@ -34,7 +34,7 @@
 One command. That's all it takes to begin your quest.
 
 ```bash
-curl -sSL https://raw.githubusercontent.com/clauding-dev/claude-quest/main/install.sh | bash
+curl -sSL https://raw.githubusercontent.com/SeanZoR/claude-quest/main/install.sh | bash
 ```
 
 Then restart Claude Code and type:
@@ -228,7 +228,7 @@ MIT License - Go forth and quest freely.
 **Ready to begin?**
 
 ```bash
-curl -sSL https://raw.githubusercontent.com/clauding-dev/claude-quest/main/install.sh | bash
+curl -sSL https://raw.githubusercontent.com/SeanZoR/claude-quest/main/install.sh | bash
 ```
 
 ⚔️ *Your quest awaits, adventurer.* ⚔️

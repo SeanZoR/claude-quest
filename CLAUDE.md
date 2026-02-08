@@ -51,7 +51,7 @@ cd workers/subscribe && wrangler deploy
 
 - **URL:** https://clauding.dev
 - **Hosting:** Cloudflare Pages (project: claude-quest)
-- **GitHub:** https://github.com/clauding-dev/claude-quest
+- **GitHub:** https://github.com/SeanZoR/claude-quest
 
 ## Tech Stack
 
