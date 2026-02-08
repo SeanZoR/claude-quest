@@ -236,3 +236,13 @@ html {
 .animate-slide-up {
   animation: slide-up 0.3s ease-out;
 }
+
+/* Slider thumb breathing animation */
+@keyframes breathe {
+  0%, 100% { transform: scale(1); opacity: 0.4; }
+  50% { transform: scale(1.8); opacity: 0; }
+}
+
+.slider-thumb-glow {
+  animation: breathe 3s ease-in-out infinite;
+}

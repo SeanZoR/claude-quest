@@ -5,6 +5,7 @@ import remarkGfm from 'remark-gfm';
 import { getPostBySlug } from '../data/memoryPosts';
 import { useHead } from '../hooks/useHead';
 import TldrBlock from '../components/TldrBlock';
+import IntensityTldrBlock from '../components/IntensityTldrBlock';
 
 export default function MemoryPostPage() {
   const { slug } = useParams<{ slug: string }>();
@@ -45,7 +46,11 @@ export default function MemoryPostPage() {
           </div>
           <h1 className="text-3xl md:text-4xl font-bold mb-8">{post.title}</h1>
 
-          {post.tldr && <TldrBlock prompt={post.tldr} />}
+          {slug === 'vercel-skills-parallel-improvements' ? (
+            <IntensityTldrBlock />
+          ) : (
+            post.tldr && <TldrBlock prompt={post.tldr} />
+          )}
 
           <div className="memory-prose">
             <Markdown remarkPlugins={[remarkGfm]}>{post.content}</Markdown>
