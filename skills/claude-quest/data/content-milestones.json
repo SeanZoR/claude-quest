@@ -1,0 +1,848 @@
+{
+  "category": "milestones",
+  "content": {
+    "adventurer": {
+      "longDescription": "The Adventurer achievement marks a significant milestone in your Claude Quest journey - unlocking 25 achievements means you have thoroughly explored multiple facets of Claude Code. You have moved beyond beginner territory into the realm of experienced practitioners. This achievement recognizes your curiosity, persistence, and growing expertise across commands, memory, workflows, and more.",
+      "whyItMatters": "Reaching 25 achievements demonstrates real commitment to mastering Claude Code. You are no longer just experimenting - you are building genuine proficiency.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Continue unlocking achievements across all categories until you reach 25 total.",
+        "steps": [
+          "Run `/quest` to see your current achievement count and progress",
+          "Identify categories where you have fewer unlocks - focus there",
+          "Check `/quest hints` for suggestions on easy achievements to pursue",
+          "Diversify your exploration - try commands, memory features, and workflows"
+        ]
+      },
+      "examples": [
+        {
+          "title": "Checking Your Progress",
+          "description": "Use the quest command to see how close you are to 25 achievements",
+          "code": "/quest\n# Look for: \"Achievements: X/25\" in the progress section"
+        }
+      ],
+      "tips": [
+        "Focus on common and uncommon achievements first - they unlock faster",
+        "Many achievements come naturally from regular Claude Code usage",
+        "Categories like 'commands' and 'memory' have beginner-friendly achievements"
+      ],
+      "relatedAchievements": ["getting_started", "explorer", "veteran"]
+    },
+    "anniversary": {
+      "longDescription": "Anniversary is a testament to long-term dedication. Using Claude Quest for an entire year means you have witnessed updates, discovered new features, and made Claude Code an integral part of your development workflow. This achievement celebrates not just time passed, but consistent engagement with a tool that helps you build better software faster.",
+      "whyItMatters": "A year of Claude Quest usage reflects deep integration into your workflow. You have grown alongside the platform and your accumulated wisdom is substantial.",
+      "difficulty": "time-based",
+      "howTo": {
+        "summary": "Continue using Claude Quest for 365 consecutive days from your first installation.",
+        "steps": [
+          "Install Claude Quest and complete your first scan",
+          "Use Claude Code regularly throughout the year",
+          "Run `/quest` periodically to track your tenure",
+          "Let time do its work - consistency is key"
+        ]
+      },
+      "examples": [
+        {
+          "title": "Checking Your Tenure",
+          "description": "See how long you have been using Claude Quest",
+          "code": "/quest stats\n# Look for your start date and days active"
+        }
+      ],
+      "tips": [
+        "This achievement rewards patience - there are no shortcuts",
+        "Use Claude Code for real projects to maintain consistent engagement",
+        "Combine with other milestone achievements as you progress through the year"
+      ],
+      "relatedAchievements": ["early_adopter", "monthly_master", "quarter_champion"]
+    },
+    "category_master_commands": {
+      "longDescription": "Command Conqueror represents complete mastery of the commands category. By unlocking every command-related achievement, you have demonstrated fluency with slash commands, custom command creation, parameterized commands, and advanced command patterns. You are now among the elite who have fully explored this powerful feature set.",
+      "whyItMatters": "Commands are the primary way humans interact with Claude Code. Mastering them unlocks tremendous efficiency and customization potential for any workflow.",
+      "difficulty": "advanced",
+      "howTo": {
+        "summary": "Unlock every achievement in the commands category.",
+        "steps": [
+          "Run `/quest achievements --category commands` to see all command achievements",
+          "Review which ones remain locked for you",
+          "Systematically work through each unearned achievement",
+          "Focus on advanced ones like custom commands and parameterized inputs",
+          "Complete the final command achievements to earn this mastery badge"
+        ]
+      },
+      "examples": [
+        {
+          "title": "View Commands Category Progress",
+          "description": "Check your progress toward category completion",
+          "code": "/quest progress commands\n# Shows X/Y achievements unlocked in commands"
+        }
+      ],
+      "tips": [
+        "Start with basic command usage before tackling custom commands",
+        "Creating reusable commands in .claude/commands/ unlocks multiple achievements",
+        "Some command achievements require project-level and user-level commands"
+      ],
+      "relatedAchievements": ["completionist", "well_rounded", "category_master_memory"]
+    },
+    "category_master_memory": {
+      "longDescription": "Memory Master signifies complete command over Claude's memory and context features. You have mastered CLAUDE.md files at all levels, context management, session handling, and persistent memory patterns. Your projects now benefit from perfectly configured memory that makes Claude smarter about your specific codebase.",
+      "whyItMatters": "Memory is what transforms Claude from a generic assistant into your personalized coding partner. Mastering it means Claude truly understands your projects.",
+      "difficulty": "advanced",
+      "howTo": {
+        "summary": "Unlock every achievement in the memory category.",
+        "steps": [
+          "Run `/quest achievements --category memory` to see all memory achievements",
+          "Create and optimize CLAUDE.md at project and user levels",
+          "Document architecture decisions, coding standards, and patterns",
+          "Experiment with session management and context features",
+          "Complete all memory achievements to earn this mastery badge"
+        ]
+      },
+      "examples": [
+        {
+          "title": "View Memory Category Progress",
+          "description": "Check your progress toward memory mastery",
+          "code": "/quest progress memory\n# Shows your memory achievement completion"
+        }
+      ],
+      "tips": [
+        "A rich CLAUDE.md file unlocks multiple memory achievements at once",
+        "Include sections on architecture, conventions, and project-specific knowledge",
+        "Both project-level and user-level memory files contribute to this achievement"
+      ],
+      "relatedAchievements": ["completionist", "category_master_commands", "well_rounded"]
+    },
+    "category_master_security": {
+      "longDescription": "Security Sentinel represents the pinnacle of security awareness in Claude Code. You have mastered permission controls, understood trust levels, configured secure defaults, and implemented proper safeguards. Your Claude Code environment is hardened against common risks while maintaining productivity.",
+      "whyItMatters": "Security separates professionals from hobbyists. Mastering security features protects your code, credentials, and systems from accidental exposure or damage.",
+      "difficulty": "advanced",
+      "howTo": {
+        "summary": "Unlock every achievement in the security category.",
+        "steps": [
+          "Run `/quest achievements --category security` to see all security achievements",
+          "Configure permission settings appropriately for your projects",
+          "Understand and use allowlists and blocklists",
+          "Review trust levels and when to use each",
+          "Complete all security achievements for this elite badge"
+        ]
+      },
+      "examples": [
+        {
+          "title": "View Security Progress",
+          "description": "Check your security achievement completion",
+          "code": "/quest progress security\n# Shows security achievements earned"
+        }
+      ],
+      "tips": [
+        "Security achievements often require intentional configuration changes",
+        "Read the Claude Code documentation on permissions thoroughly",
+        "Some security achievements unlock when you actively restrict permissions"
+      ],
+      "relatedAchievements": ["completionist", "well_rounded", "category_master_commands"]
+    },
+    "century_club": {
+      "longDescription": "Century Club welcomes those who have unlocked 100 achievements - a truly impressive feat. You have explored nearly every corner of Claude Code, from basic commands to advanced MCP integrations, from simple memory to complex automation. This achievement marks you as a genuine power user who has invested significant time in mastering the platform.",
+      "whyItMatters": "100 achievements represents comprehensive Claude Code expertise. You have features and patterns to share with others and efficiency that sets you apart.",
+      "difficulty": "advanced",
+      "howTo": {
+        "summary": "Continue your journey until you have unlocked 100 total achievements.",
+        "steps": [
+          "Run `/quest` to see your current total",
+          "Identify categories with remaining achievements",
+          "Pursue rare and epic achievements you have been avoiding",
+          "Explore advanced features like MCP, SDK, and hooks"
+        ]
+      },
+      "examples": [
+        {
+          "title": "Track Century Progress",
+          "description": "Monitor your path to 100 achievements",
+          "code": "/quest\n# Target: 100 achievements unlocked"
+        }
+      ],
+      "tips": [
+        "At this level, you may need to explore advanced features intentionally",
+        "MCP servers and SDK usage unlock many rare achievements",
+        "Consider creating your own commands and skills for additional unlocks"
+      ],
+      "relatedAchievements": ["veteran", "explorer", "questmaster"]
+    },
+    "completionist": {
+      "longDescription": "Completionist recognizes the first time you fully master any category. Whether it is commands, memory, security, or any other category, achieving 100% completion demonstrates focused dedication. This meta-achievement celebrates your thoroughness and rewards specialization before expecting broad mastery.",
+      "whyItMatters": "Deep expertise in one area often teaches more than shallow exposure to many. Completing a category proves you can master complex feature sets.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Fully complete all achievements in any single category.",
+        "steps": [
+          "Run `/quest categories` to see all categories and your progress",
+          "Choose a category you are closest to completing",
+          "Run `/quest achievements --category <name>` to see remaining achievements",
+          "Systematically unlock each remaining achievement in that category",
+          "Earn this achievement upon your first category completion"
+        ]
+      },
+      "examples": [
+        {
+          "title": "Find Your Closest Category",
+          "description": "Identify which category to focus on",
+          "code": "/quest categories\n# Look for categories with highest completion percentage"
+        }
+      ],
+      "tips": [
+        "Commands and memory categories are often easiest to complete first",
+        "You only need to complete ONE category to earn this achievement",
+        "Subsequent category completions unlock specific mastery achievements"
+      ],
+      "relatedAchievements": ["category_master_commands", "category_master_memory", "well_rounded"]
+    },
+    "day_one": {
+      "longDescription": "Day One commemorates your very first step into Claude Quest. By completing your first achievement scan, you have begun tracking your Claude Code journey. Every expert started here, and this achievement serves as the permanent marker of when your quest began. It is the foundation upon which all future achievements will build.",
+      "whyItMatters": "Every journey starts with a single step. Day One proves you took action and committed to tracking your growth as a Claude Code user.",
+      "difficulty": "beginner",
+      "howTo": {
+        "summary": "Simply run your first Claude Quest scan to earn this achievement.",
+        "steps": [
+          "Open Claude Code in any project",
+          "Run `/quest` to initiate your first achievement scan",
+          "The achievement unlocks automatically upon completion"
+        ]
+      },
+      "examples": [
+        {
+          "title": "Start Your Quest",
+          "description": "Run the quest command to begin",
+          "code": "/quest\n# Your journey begins!"
+        }
+      ],
+      "tips": [
+        "This is your first achievement - everyone starts here",
+        "The scan will likely find other achievements you have already earned",
+        "Check `/quest hints` immediately for quick wins"
+      ],
+      "relatedAchievements": ["getting_started", "early_adopter", "xp_hunter"]
+    },
+    "early_adopter": {
+      "longDescription": "Early Adopter is a time-limited achievement awarded to those who installed Claude Quest in 2025, its launch year. This achievement can never be earned again after 2025 ends, making it a permanent badge of honor for pioneers who believed in gamifying their Claude Code experience from the beginning.",
+      "whyItMatters": "Being an early adopter shows you embrace new tools and were among the first to enhance your Claude Code experience with gamification.",
+      "difficulty": "time-limited",
+      "howTo": {
+        "summary": "Install and run Claude Quest before January 1, 2026.",
+        "steps": [
+          "Install Claude Quest in 2025",
+          "Run `/quest` to complete your first scan",
+          "The achievement unlocks automatically if the date is before 2026"
+        ]
+      },
+      "examples": [
+        {
+          "title": "Verify Early Adopter Status",
+          "description": "Check your achievements for Early Adopter",
+          "code": "/quest achievements early_adopter\n# Shows if you earned this time-limited badge"
+        }
+      ],
+      "tips": [
+        "This achievement becomes impossible to earn after December 31, 2025",
+        "If you are reading this in 2025, run /quest now to claim it",
+        "Early adopters often discover features and achievements before they are documented"
+      ],
+      "relatedAchievements": ["day_one", "anniversary", "getting_started"]
+    },
+    "epic_hoarder": {
+      "longDescription": "Epic Hoarder recognizes those who have collected 5 epic-rarity achievements. Epic achievements represent significant accomplishments that require dedication, skill, or substantial time investment. Earning five of them proves you have pushed well beyond casual usage into genuinely impressive Claude Code mastery.",
+      "whyItMatters": "Epic achievements are not earned casually. Collecting five demonstrates sustained excellence and willingness to tackle challenging goals.",
+      "difficulty": "advanced",
+      "howTo": {
+        "summary": "Unlock 5 achievements with epic rarity.",
+        "steps": [
+          "Run `/quest achievements --rarity epic` to see all epic achievements",
+          "Identify which epic achievements match your current skill level",
+          "Work toward streak-based epics like Monthly Master",
+          "Pursue category completion epics",
+          "Track your progress - 5 epics earns this achievement"
+        ]
+      },
+      "examples": [
+        {
+          "title": "View Your Epic Achievements",
+          "description": "See which epic achievements you have and which remain",
+          "code": "/quest achievements --rarity epic\n# Shows all epic achievements and your status"
+        }
+      ],
+      "tips": [
+        "Streak achievements (7-day, 30-day) are consistent paths to epic rarity",
+        "XP milestones like XP Legend are epic achievements",
+        "Category mastery achievements are often epic rarity"
+      ],
+      "relatedAchievements": ["rare_collector", "xp_legend", "monthly_master"]
+    },
+    "evangelist": {
+      "longDescription": "Evangelist celebrates those who share their Claude Quest journey with others. Whether posting progress on social media, recommending Claude Quest to colleagues, or sharing achievements in team channels, you help grow the community. Great tools spread through word of mouth, and you are part of that momentum.",
+      "whyItMatters": "Communities grow through sharing. By spreading the word about Claude Quest, you help others discover gamified productivity and strengthen the ecosystem.",
+      "difficulty": "beginner",
+      "howTo": {
+        "summary": "Share your Claude Quest progress or recommend it to others.",
+        "steps": [
+          "Take a screenshot of your achievements or progress",
+          "Share on social media, Slack, Discord, or with teammates",
+          "Mention to Claude that you shared your progress",
+          "The achievement is manually triggered upon confirmation"
+        ]
+      },
+      "examples": [
+        {
+          "title": "Export Progress for Sharing",
+          "description": "Generate shareable progress summary",
+          "code": "/quest export\n# Creates a shareable summary of your achievements"
+        }
+      ],
+      "tips": [
+        "Screenshots of your quest progress work great for sharing",
+        "Mentioning Claude Quest in team standups counts",
+        "The achievement triggers when you tell Claude you have shared your progress"
+      ],
+      "relatedAchievements": ["day_one", "getting_started", "pair_programmer"]
+    },
+    "explorer": {
+      "longDescription": "Explorer marks the midpoint of your achievement journey - 50 achievements unlocked. At this stage, you have ventured into multiple categories, discovered features you might not have found otherwise, and built substantial Claude Code expertise. You are no longer just exploring; you are charting territory.",
+      "whyItMatters": "50 achievements means you have seriously engaged with Claude Code across many dimensions. Your exploration has built genuine, transferable expertise.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Continue unlocking achievements until you reach 50 total.",
+        "steps": [
+          "Run `/quest` to check your current count",
+          "Review categories where you have room for growth",
+          "Mix easy achievements with more challenging ones",
+          "Stay consistent - regular usage naturally unlocks achievements"
+        ]
+      },
+      "examples": [
+        {
+          "title": "Check Explorer Progress",
+          "description": "See how close you are to 50 achievements",
+          "code": "/quest\n# Target: 50 achievements unlocked"
+        }
+      ],
+      "tips": [
+        "Diversify across categories rather than focusing on one",
+        "Some achievements unlock from normal workflow without extra effort",
+        "Use /quest hints for efficient achievement hunting"
+      ],
+      "relatedAchievements": ["adventurer", "veteran", "well_rounded"]
+    },
+    "getting_started": {
+      "longDescription": "Getting Started celebrates your first 10 achievements - a crucial early milestone that proves you have committed to the quest. These initial achievements typically span multiple categories, showing you have begun exploring Claude Code's diverse capabilities. This foundation sets the stage for everything that follows.",
+      "whyItMatters": "The first 10 achievements establish momentum. You have proven this is more than a passing curiosity - you are genuinely engaging with gamified learning.",
+      "difficulty": "beginner",
+      "howTo": {
+        "summary": "Unlock your first 10 achievements through normal Claude Code usage.",
+        "steps": [
+          "Run `/quest hints` to see easy achievements available",
+          "Try basic features: commands, memory files, help",
+          "Let natural usage unlock achievements",
+          "Run `/quest` periodically to check progress"
+        ]
+      },
+      "examples": [
+        {
+          "title": "Find Quick Wins",
+          "description": "Get hints for easy achievements to start",
+          "code": "/quest hints\n# Shows achievements you can likely unlock quickly"
+        }
+      ],
+      "tips": [
+        "Many first achievements unlock from features you already use",
+        "Check /help for commands that might trigger achievements",
+        "Creating a CLAUDE.md file often unlocks multiple memory achievements"
+      ],
+      "relatedAchievements": ["day_one", "adventurer", "well_rounded"]
+    },
+    "hundred_achievements": {
+      "longDescription": "This Century Club milestone represents unlocking 100 achievements - a comprehensive exploration of Claude Code. Reaching this count means you have discovered obscure features, mastered advanced workflows, and likely helped others along the way. Very few users reach this pinnacle of engagement.",
+      "whyItMatters": "100 achievements proves exhaustive Claude Code knowledge. You have explored corners of the platform most users never discover.",
+      "difficulty": "advanced",
+      "howTo": {
+        "summary": "Accumulate 100 total achievement unlocks through comprehensive exploration.",
+        "steps": [
+          "Continue from the 75-achievement Veteran milestone",
+          "Explore advanced categories like MCP and SDK",
+          "Pursue remaining epic and legendary achievements",
+          "Complete multiple category masteries"
+        ]
+      },
+      "examples": [
+        {
+          "title": "Check Century Progress",
+          "description": "Track progress toward 100 achievements",
+          "code": "/quest\n# Monitor total achievement count"
+        }
+      ],
+      "tips": [
+        "At this level, you may need to explore niche features intentionally",
+        "Creating MCP servers unlocks many advanced achievements",
+        "SDK usage and programmatic Claude access open new achievement paths"
+      ],
+      "relatedAchievements": ["veteran", "two_hundred_achievements", "questmaster"]
+    },
+    "monthly_master": {
+      "longDescription": "Monthly Master honors those who have maintained a 30-day usage streak with Claude Quest. A full month of consistent engagement demonstrates that Claude Code has become an integral part of your daily development practice. This is not about intensity but consistency - showing up day after day.",
+      "whyItMatters": "Habits form through consistency. 30 consecutive days proves Claude Code is woven into your workflow, not just an occasional experiment.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Use Claude Code for 30 consecutive days.",
+        "steps": [
+          "Use Claude Code at least once each day",
+          "Run `/quest` periodically to track your streak",
+          "Set a daily reminder if needed",
+          "Complete 30 consecutive days to unlock"
+        ]
+      },
+      "examples": [
+        {
+          "title": "Check Current Streak",
+          "description": "View your usage streak",
+          "code": "/quest stats\n# Shows current streak and longest streak"
+        }
+      ],
+      "tips": [
+        "Even a quick question to Claude counts as daily usage",
+        "Build Claude Code into your morning routine",
+        "Missing one day resets the streak - be consistent"
+      ],
+      "relatedAchievements": ["week_warrior", "quarter_champion", "anniversary"]
+    },
+    "quarter_champion": {
+      "longDescription": "Quarter Champion is a legendary streak achievement requiring 90 consecutive days of Claude Code usage. Three months of daily engagement is exceptional - it means Claude Code has become as natural to your workflow as your editor or terminal. This level of consistency is rare and worthy of celebration.",
+      "whyItMatters": "90 days of consistent usage transforms a tool into a habit. You have built Claude Code into your muscle memory and daily practice.",
+      "difficulty": "advanced",
+      "howTo": {
+        "summary": "Maintain daily Claude Code usage for 90 consecutive days.",
+        "steps": [
+          "First achieve Week Warrior (7 days) and Monthly Master (30 days)",
+          "Continue your daily usage habit without breaks",
+          "Track your streak with /quest stats",
+          "Plan for weekends and vacations - brief usage still counts"
+        ]
+      },
+      "examples": [
+        {
+          "title": "Monitor Long Streak",
+          "description": "Track progress toward 90-day streak",
+          "code": "/quest stats\n# Watch your streak grow toward 90"
+        }
+      ],
+      "tips": [
+        "Mobile or quick terminal sessions count toward the streak",
+        "Consider using Claude for code review or planning even on light days",
+        "This achievement requires real dedication - plan accordingly"
+      ],
+      "relatedAchievements": ["monthly_master", "week_warrior", "anniversary"]
+    },
+    "questmaster": {
+      "longDescription": "Questmaster is the ultimate achievement - unlocking ALL achievements in Claude Quest. This legendary accomplishment means you have mastered every category, earned every tier, and explored every feature. You have achieved 100% completion and stand among the most dedicated Claude Code users in existence.",
+      "whyItMatters": "Complete mastery is extraordinarily rare. Questmaster status proves unparalleled dedication to and expertise with Claude Code.",
+      "difficulty": "legendary",
+      "howTo": {
+        "summary": "Unlock every single achievement in Claude Quest.",
+        "steps": [
+          "Review all categories and identify any gaps",
+          "Complete all category mastery achievements",
+          "Earn all streak and tenure achievements",
+          "Unlock every legendary achievement",
+          "Achieve 100% completion across all categories"
+        ]
+      },
+      "examples": [
+        {
+          "title": "Check Completion Status",
+          "description": "View overall completion percentage",
+          "code": "/quest\n# Target: 100% achievement completion"
+        }
+      ],
+      "tips": [
+        "This achievement may require waiting for time-based achievements",
+        "Some achievements may require specific circumstances or features",
+        "Document your journey - Questmaster is an exceptional accomplishment"
+      ],
+      "relatedAchievements": ["century_club", "three_hundred_achievements", "completionist"]
+    },
+    "rare_collector": {
+      "longDescription": "Rare Collector celebrates those who have accumulated 10 achievements of rare rarity or higher. Rare achievements require more than basic usage - they demand exploration, experimentation, and genuine engagement with advanced features. Collecting ten proves you actively pursue challenges rather than only accepting easy wins.",
+      "whyItMatters": "Rare achievements represent meaningful accomplishments. Collecting 10 shows you push beyond the basics and seek genuine mastery.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Unlock 10 achievements with rare, epic, or legendary rarity.",
+        "steps": [
+          "Run `/quest achievements --rarity rare` to see rare+ achievements",
+          "Identify achievable rare achievements in your strongest categories",
+          "Work toward category completion for rare mastery achievements",
+          "Progress to epic achievements once you have rare ones"
+        ]
+      },
+      "examples": [
+        {
+          "title": "View Rare Achievements",
+          "description": "See available rare and higher achievements",
+          "code": "/quest achievements --rarity rare\n# Lists all rare, epic, and legendary achievements"
+        }
+      ],
+      "tips": [
+        "Streak achievements often reach rare rarity",
+        "Advanced feature usage (hooks, MCP) unlocks rare achievements",
+        "10 rare achievements is achievable with focused effort"
+      ],
+      "relatedAchievements": ["epic_hoarder", "adventurer", "explorer"]
+    },
+    "three_hundred_achievements": {
+      "longDescription": "Triple Crown is a legendary achievement for unlocking 300 achievements. This represents near-total mastery of Claude Quest - you have explored virtually every feature, completed most categories, and demonstrated expertise that few users ever achieve. This is the mark of a true Claude Code virtuoso.",
+      "whyItMatters": "300 achievements is exceptional. You have not just used Claude Code - you have mastered it comprehensively and can likely teach others.",
+      "difficulty": "legendary",
+      "howTo": {
+        "summary": "Accumulate 300 total achievements through comprehensive mastery.",
+        "steps": [
+          "Progress through 100, 200 achievement milestones first",
+          "Complete all category mastery achievements",
+          "Explore niche features and edge cases",
+          "Achieve maximum engagement across all areas"
+        ]
+      },
+      "examples": [
+        {
+          "title": "Track Triple Crown Progress",
+          "description": "Monitor progress toward 300 achievements",
+          "code": "/quest\n# Long-term goal: 300 total achievements"
+        }
+      ],
+      "tips": [
+        "This is an aspirational long-term goal",
+        "Requires comprehensive exploration of advanced features",
+        "Many achievements unlock naturally over extended usage"
+      ],
+      "relatedAchievements": ["two_hundred_achievements", "hundred_achievements", "questmaster"]
+    },
+    "two_hundred_achievements": {
+      "longDescription": "Double Century marks the remarkable accomplishment of unlocking 200 achievements. At this level, you have deeply explored most categories, earned numerous mastery achievements, and demonstrated sustained excellence. Your Claude Code knowledge is extensive and valuable.",
+      "whyItMatters": "200 achievements places you among the most dedicated Claude Code users. Your expertise spans nearly every feature and capability.",
+      "difficulty": "advanced",
+      "howTo": {
+        "summary": "Continue progressing until you reach 200 total achievements.",
+        "steps": [
+          "Build from the 100-achievement Century Club milestone",
+          "Complete additional category masteries",
+          "Pursue remaining epic and legendary achievements",
+          "Explore any features you have not yet tried"
+        ]
+      },
+      "examples": [
+        {
+          "title": "Track Double Century",
+          "description": "Monitor progress toward 200 achievements",
+          "code": "/quest\n# Goal: 200 achievements unlocked"
+        }
+      ],
+      "tips": [
+        "At 200, most low-hanging fruit is gone - expect deliberate exploration",
+        "SDK and MCP achievements may be key to reaching this level",
+        "Consider helping others - teaching often reveals new insights"
+      ],
+      "relatedAchievements": ["hundred_achievements", "three_hundred_achievements", "questmaster"]
+    },
+    "veteran": {
+      "longDescription": "Veteran status is awarded at 75 achievements - three-quarters of the way to Century Club. You have graduated from explorer to experienced practitioner. Your Claude Code knowledge is substantial, and you likely have developed personal workflows and preferences that maximize your productivity.",
+      "whyItMatters": "75 achievements represents serious investment. You are not just familiar with Claude Code - you are genuinely proficient across multiple domains.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Unlock 75 achievements through continued exploration and mastery.",
+        "steps": [
+          "Progress beyond the 50-achievement Explorer milestone",
+          "Focus on categories where you can achieve completion",
+          "Pursue rare achievements you have been putting off",
+          "Balance breadth and depth in your exploration"
+        ]
+      },
+      "examples": [
+        {
+          "title": "Track Veteran Progress",
+          "description": "Monitor progress toward 75 achievements",
+          "code": "/quest\n# Target: 75 achievements for Veteran status"
+        }
+      ],
+      "tips": [
+        "At 75, consider which categories you could complete",
+        "Advanced features become more important for continued progress",
+        "Share your knowledge - veterans often become mentors"
+      ],
+      "relatedAchievements": ["explorer", "century_club", "adventurer"]
+    },
+    "week_warrior": {
+      "longDescription": "Week Warrior celebrates your first 7-day usage streak. A full week of consistent Claude Code engagement shows you are building a habit. This is often where casual users become regular users - where the tool transitions from novelty to necessity. Keep the momentum going!",
+      "whyItMatters": "Seven days builds habit formation. Week Warrior proves Claude Code is becoming part of your regular development practice.",
+      "difficulty": "beginner",
+      "howTo": {
+        "summary": "Use Claude Code for 7 consecutive days.",
+        "steps": [
+          "Use Claude Code at least once each day",
+          "Track your streak with /quest stats",
+          "Find reasons to engage even on lighter work days",
+          "Complete 7 consecutive days"
+        ]
+      },
+      "examples": [
+        {
+          "title": "Start Your Streak",
+          "description": "Check your current streak status",
+          "code": "/quest stats\n# Shows current streak - aim for 7 days"
+        }
+      ],
+      "tips": [
+        "Even quick questions count toward daily usage",
+        "Set a daily reminder for your first week",
+        "Use code review or planning tasks on slower days"
+      ],
+      "relatedAchievements": ["monthly_master", "quarter_champion", "day_one"]
+    },
+    "well_rounded": {
+      "longDescription": "Well Rounded celebrates breadth over depth - you have unlocked at least one achievement in every category. This demonstrates curiosity and willingness to explore all of Claude Code's capabilities rather than staying in your comfort zone. Generalists often discover unexpected synergies between features.",
+      "whyItMatters": "Touching every category means you have seen Claude Code's full breadth. Well-rounded users often combine features in creative ways.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Unlock at least one achievement in every category.",
+        "steps": [
+          "Run `/quest categories` to see all categories and your status",
+          "Identify categories where you have zero achievements",
+          "Find the easiest achievement in each missing category",
+          "Explore new features to unlock one achievement per category"
+        ]
+      },
+      "examples": [
+        {
+          "title": "Find Untouched Categories",
+          "description": "See which categories need attention",
+          "code": "/quest categories\n# Look for categories with 0 achievements"
+        }
+      ],
+      "tips": [
+        "Focus on getting one achievement per category, not completion",
+        "Some categories have very easy entry achievements",
+        "This achievement encourages exploration over specialization"
+      ],
+      "relatedAchievements": ["completionist", "explorer", "adventurer"]
+    },
+    "xp_collector_10k": {
+      "longDescription": "XP Legend celebrates accumulating 10,000 total experience points. This substantial XP total reflects broad achievement collection across all rarities. You have earned common achievements for foundation, rare ones for skill, and likely some epic ones for dedication. Your XP total tells the story of comprehensive engagement.",
+      "whyItMatters": "10,000 XP represents significant accumulated accomplishments. Each point was earned through real actions - this total reflects substantial mastery.",
+      "difficulty": "advanced",
+      "howTo": {
+        "summary": "Accumulate 10,000 total XP through achievement unlocks.",
+        "steps": [
+          "Continue unlocking achievements across all categories",
+          "Prioritize higher-XP achievements for faster accumulation",
+          "Epic and rare achievements contribute more XP per unlock",
+          "Track your XP total with /quest stats"
+        ]
+      },
+      "examples": [
+        {
+          "title": "Check XP Progress",
+          "description": "View your current XP total",
+          "code": "/quest stats\n# Shows total XP earned"
+        }
+      ],
+      "tips": [
+        "Higher rarity achievements give more XP",
+        "Consistent achievement hunting builds XP steadily",
+        "Milestone achievements often have high XP rewards"
+      ],
+      "relatedAchievements": ["xp_collector_5k", "xp_collector_25k", "xp_collector_1k"]
+    },
+    "xp_collector_1k": {
+      "longDescription": "XP Collector marks your first 1,000 experience points - a solid foundation of accomplishment. Every achievement you earn adds XP to your total, and reaching four digits proves you have been actively engaging with Claude Quest. This milestone validates your growing expertise.",
+      "whyItMatters": "1,000 XP shows meaningful engagement. You have earned enough achievements to build real momentum in your quest.",
+      "difficulty": "beginner",
+      "howTo": {
+        "summary": "Accumulate 1,000 total XP by unlocking achievements.",
+        "steps": [
+          "Continue unlocking achievements naturally",
+          "Each achievement contributes XP based on its rarity",
+          "Track your progress with /quest stats",
+          "Reach 1,000 total XP for this milestone"
+        ]
+      },
+      "examples": [
+        {
+          "title": "Track XP",
+          "description": "Check your current XP total",
+          "code": "/quest stats\n# Look for total XP earned"
+        }
+      ],
+      "tips": [
+        "XP accumulates from all achievement unlocks",
+        "Higher rarity = more XP per achievement",
+        "1,000 XP often comes before 25 achievements"
+      ],
+      "relatedAchievements": ["xp_collector_5k", "getting_started", "adventurer"]
+    },
+    "xp_collector_25k": {
+      "longDescription": "XP Titan is the ultimate XP milestone - 25,000 total experience points. This legendary accumulation represents comprehensive achievement collection across all categories and rarities. Only the most dedicated Claude Quest participants reach this pinnacle of accumulated accomplishment.",
+      "whyItMatters": "25,000 XP is exceptional. This total reflects mastery-level engagement with Claude Quest over substantial time and effort.",
+      "difficulty": "legendary",
+      "howTo": {
+        "summary": "Accumulate 25,000 total XP through extensive achievement collection.",
+        "steps": [
+          "Progress through 1K, 5K, 10K XP milestones",
+          "Pursue legendary and epic achievements",
+          "Complete multiple category masteries",
+          "Maximize achievement unlocks across all areas"
+        ]
+      },
+      "examples": [
+        {
+          "title": "Track Titan Progress",
+          "description": "Monitor XP toward 25,000",
+          "code": "/quest stats\n# Long-term goal: 25,000 XP"
+        }
+      ],
+      "tips": [
+        "This is an aspirational long-term achievement",
+        "Requires comprehensive achievement hunting",
+        "Legendary achievements contribute significant XP"
+      ],
+      "relatedAchievements": ["xp_collector_10k", "questmaster", "three_hundred_achievements"]
+    },
+    "xp_collector_5k": {
+      "longDescription": "XP Hoarder celebrates reaching 5,000 total experience points - a substantial accumulation that proves sustained engagement. At this level, you have unlocked numerous achievements across multiple categories. Your XP total reflects real breadth and depth of Claude Code exploration.",
+      "whyItMatters": "5,000 XP represents serious achievement collection. You have moved well beyond basics into intermediate and advanced territory.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Accumulate 5,000 total XP through continued achievement unlocks.",
+        "steps": [
+          "Build on your 1,000 XP foundation",
+          "Pursue higher-rarity achievements",
+          "Explore new categories and features",
+          "Track XP growth with /quest stats"
+        ]
+      },
+      "examples": [
+        {
+          "title": "Track XP Growth",
+          "description": "Monitor progress toward 5,000 XP",
+          "code": "/quest stats\n# Target: 5,000 total XP"
+        }
+      ],
+      "tips": [
+        "Rare and epic achievements boost XP significantly",
+        "Category completion achievements have high XP",
+        "Consistent daily usage unlocks more achievements faster"
+      ],
+      "relatedAchievements": ["xp_collector_1k", "xp_collector_10k", "explorer"]
+    },
+    "xp_hunter": {
+      "longDescription": "XP Hunter is an early XP milestone marking your first 1,000 experience points. As you unlock achievements, each one contributes XP based on its rarity. Reaching 1,000 XP shows you have been actively engaging and earning rewards for your Claude Code exploration.",
+      "whyItMatters": "Tracking XP adds another dimension to your progress. 1,000 XP proves you are earning meaningful achievements, not just easy ones.",
+      "difficulty": "beginner",
+      "howTo": {
+        "summary": "Earn 1,000 XP through achievement unlocks.",
+        "steps": [
+          "Unlock achievements across any categories",
+          "Higher rarity achievements give more XP",
+          "Track your total with /quest stats",
+          "Reach 1,000 XP for this milestone"
+        ]
+      },
+      "examples": [
+        {
+          "title": "Check XP Total",
+          "description": "View accumulated experience points",
+          "code": "/quest stats\n# Shows your XP total and level"
+        }
+      ],
+      "tips": [
+        "Even common achievements contribute XP",
+        "1,000 XP often arrives after 15-20 achievements",
+        "Keep unlocking to build toward higher XP milestones"
+      ],
+      "relatedAchievements": ["xp_master", "xp_legend", "getting_started"]
+    },
+    "xp_legend": {
+      "longDescription": "XP Legend celebrates the impressive milestone of 10,000 accumulated experience points. This total reflects extensive achievement collection including many rare and epic unlocks. You have demonstrated sustained excellence and comprehensive exploration of Claude Code's capabilities.",
+      "whyItMatters": "10,000 XP is a significant milestone that few reach. Your accumulated experience represents genuine expertise built over time.",
+      "difficulty": "advanced",
+      "howTo": {
+        "summary": "Accumulate 10,000 XP through comprehensive achievement earning.",
+        "steps": [
+          "Build from lower XP milestones",
+          "Focus on higher-rarity achievements",
+          "Complete category masteries for bonus XP",
+          "Track progress with /quest stats"
+        ]
+      },
+      "examples": [
+        {
+          "title": "Track Legend Progress",
+          "description": "Monitor XP accumulation",
+          "code": "/quest stats\n# Goal: 10,000 total XP"
+        }
+      ],
+      "tips": [
+        "Epic and legendary achievements give substantial XP",
+        "Milestone achievements themselves contribute high XP",
+        "Consistent engagement builds XP steadily over time"
+      ],
+      "relatedAchievements": ["xp_master", "xp_hunter", "century_club"]
+    },
+    "xp_master": {
+      "longDescription": "XP Master marks the halfway point to XP Legend - 5,000 total experience points. This milestone proves you have moved beyond beginner achievements into intermediate and advanced territory. Your XP total reflects meaningful engagement across multiple categories.",
+      "whyItMatters": "5,000 XP demonstrates real progress. You are building substantial expertise through consistent achievement earning.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Accumulate 5,000 XP through achievement unlocks.",
+        "steps": [
+          "Progress from XP Hunter (1,000 XP)",
+          "Pursue rare achievements for higher XP yields",
+          "Explore new categories to find fresh achievements",
+          "Track your XP total regularly"
+        ]
+      },
+      "examples": [
+        {
+          "title": "Track XP Master Progress",
+          "description": "Monitor progress toward 5,000 XP",
+          "code": "/quest stats\n# Target: 5,000 XP for XP Master"
+        }
+      ],
+      "tips": [
+        "Category completion unlocks high-XP achievements",
+        "Rare achievements typically give 150-200 XP each",
+        "Keep diversifying your achievement hunting"
+      ],
+      "relatedAchievements": ["xp_hunter", "xp_legend", "explorer"]
+    },
+    "full_year_365": {
+      "longDescription": "Full Year is the ultimate count milestone - 350 achievements unlocked, representing daily dedication symbolized by 365 days worth of accomplishments. This legendary achievement proves you have achieved near-complete mastery of Claude Quest, exploring virtually every feature and earning achievements most users never discover.",
+      "whyItMatters": "350 achievements approaches total completion. This achievement celebrates year-round dedication symbolized through comprehensive mastery.",
+      "difficulty": "legendary",
+      "howTo": {
+        "summary": "Unlock 350 achievements for the ultimate milestone.",
+        "steps": [
+          "Progress through all previous count milestones",
+          "Complete all category masteries",
+          "Earn all streak and tenure achievements",
+          "Pursue every available legendary achievement",
+          "Achieve near-total completion"
+        ]
+      },
+      "examples": [
+        {
+          "title": "Track Full Year Progress",
+          "description": "Monitor your path to 350 achievements",
+          "code": "/quest\n# Ultimate goal: 350 achievements"
+        }
+      ],
+      "tips": [
+        "This is the aspirational peak of Claude Quest",
+        "Requires comprehensive exploration over extended time",
+        "Some achievements require specific timing or circumstances",
+        "Document your journey - this achievement is exceptional"
+      ],
+      "relatedAchievements": ["three_hundred_achievements", "questmaster", "anniversary"]
+    }
+  }
+}

@@ -1,0 +1,900 @@
+{
+  "category": "automation",
+  "content": {
+    "auto_committer": {
+      "longDescription": "The Auto Committer achievement recognizes your use of Claude Code to automate git commits. Instead of manually crafting commit messages, you let Claude analyze your changes and generate meaningful, conventional commit messages. This transforms the tedious task of writing commit messages into an automated workflow, ensuring consistency across your project's history while saving valuable development time.",
+      "whyItMatters": "Consistent commit messages improve code review efficiency and make git history searchable. Automated commits reduce context-switching and maintain momentum during development.",
+      "difficulty": "beginner",
+      "howTo": {
+        "summary": "Ask Claude to commit your changes or use the /commit command to automatically generate and execute git commits.",
+        "steps": [
+          {
+            "step": 1,
+            "description": "Make some changes to your codebase",
+            "code": "echo 'console.log(\"new feature\")' >> src/index.js"
+          },
+          {
+            "step": 2,
+            "description": "Ask Claude to commit the changes",
+            "code": "# In Claude Code session:\n\"Commit my changes with a descriptive message\""
+          },
+          {
+            "step": 3,
+            "description": "Or use the /commit skill if available",
+            "code": "/commit"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Simple commit request",
+          "description": "Let Claude analyze changes and create a commit",
+          "code": "# In your Claude Code session:\n\"Review my staged changes and create a commit with a conventional commit message\"\n\n# Claude will run:\ngit diff --staged\n# Then create an appropriate commit like:\ngit commit -m \"feat(auth): add password reset functionality\""
+        },
+        {
+          "title": "Commit with context",
+          "description": "Provide context for better commit messages",
+          "code": "# In your Claude Code session:\n\"I just fixed the user authentication bug from issue #42. Please commit these changes.\"\n\n# Claude creates:\ngit commit -m \"fix(auth): resolve session timeout issue\n\nCloses #42\""
+        }
+      ],
+      "tips": [
+        "Stage specific files before asking Claude to commit for more focused messages",
+        "Provide context about what you were working on for better commit messages",
+        "Use conventional commit format by mentioning it in your CLAUDE.md",
+        "Review Claude's proposed commit message before confirming"
+      ],
+      "relatedAchievements": ["branch_manager", "pr_generator", "changelog_generator"]
+    },
+    "batch_processor": {
+      "longDescription": "The Batch Processor achievement celebrates your ability to leverage Claude Code for processing multiple files simultaneously. This powerful automation technique allows you to apply consistent transformations, updates, or analyses across your entire codebase in a single request. Whether refactoring imports, updating configurations, or adding documentation, batch processing dramatically accelerates repetitive tasks that would otherwise require tedious manual work.",
+      "whyItMatters": "Batch processing eliminates the error-prone nature of manual repetitive edits. It ensures consistency across files and can accomplish in seconds what might take hours manually.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Request Claude to modify, analyze, or process multiple files at once using patterns, glob expressions, or explicit file lists.",
+        "steps": [
+          {
+            "step": 1,
+            "description": "Identify the files you want to process",
+            "code": "# Find all files matching a pattern\n\"Find all TypeScript files in src/ that import from 'lodash'\""
+          },
+          {
+            "step": 2,
+            "description": "Describe the transformation to apply",
+            "code": "# Request batch modification\n\"Update all those files to import from 'lodash-es' instead\""
+          },
+          {
+            "step": 3,
+            "description": "Review and confirm the changes",
+            "code": "# Claude will show you each change before applying\n# Confirm to proceed with all modifications"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Update imports across codebase",
+          "description": "Change import statements in all matching files",
+          "code": "# In Claude Code session:\n\"Find all files importing from '@old-package' and update them to import from '@new-package'. Show me a summary of changes.\"\n\n# Claude processes files like:\n# src/components/Button.tsx\n# src/utils/helpers.ts\n# src/hooks/useAuth.ts\n# And updates each import statement"
+        },
+        {
+          "title": "Add license headers",
+          "description": "Add consistent headers to all source files",
+          "code": "# In Claude Code session:\n\"Add the MIT license header comment to all .ts and .tsx files in src/ that don't already have a license header\"\n\n# Claude adds to each file:\n/**\n * MIT License\n * Copyright (c) 2025 Your Company\n */"
+        }
+      ],
+      "tips": [
+        "Start with a dry-run by asking Claude to show what would change before applying",
+        "Use specific patterns to limit scope and avoid unintended modifications",
+        "Ask for a summary after batch operations to verify all changes",
+        "Consider creating a command for frequently repeated batch operations"
+      ],
+      "relatedAchievements": ["refactor_ranger", "codemod_creator", "lint_automator"]
+    },
+    "branch_manager": {
+      "longDescription": "The Branch Manager achievement recognizes your use of Claude Code to streamline git branch operations. Rather than remembering complex git commands or switching context to a GUI, you can ask Claude to create, switch, merge, or delete branches conversationally. This natural language approach to branch management reduces friction in your git workflow and helps prevent common branching mistakes.",
+      "whyItMatters": "Efficient branch management is essential for clean git workflows. Automating branch operations reduces errors like switching to wrong branches or forgetting to pull before branching.",
+      "difficulty": "beginner",
+      "howTo": {
+        "summary": "Ask Claude to perform branch operations like creating feature branches, switching branches, or cleaning up merged branches.",
+        "steps": [
+          {
+            "step": 1,
+            "description": "Create a new feature branch",
+            "code": "# In Claude Code session:\n\"Create a new branch called feature/user-authentication from main\""
+          },
+          {
+            "step": 2,
+            "description": "Switch between branches",
+            "code": "\"Switch to the develop branch and pull latest changes\""
+          },
+          {
+            "step": 3,
+            "description": "Clean up old branches",
+            "code": "\"Delete all local branches that have been merged into main\""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Feature branch workflow",
+          "description": "Create and set up a feature branch",
+          "code": "# In Claude Code session:\n\"Create a feature branch for implementing dark mode. Make sure we're starting from the latest main.\"\n\n# Claude executes:\ngit fetch origin\ngit checkout main\ngit pull origin main\ngit checkout -b feature/dark-mode"
+        },
+        {
+          "title": "Branch cleanup",
+          "description": "Remove stale branches safely",
+          "code": "# In Claude Code session:\n\"Show me all branches that have been merged and delete the local ones that are safe to remove\"\n\n# Claude runs:\ngit branch --merged main\n# Then safely deletes merged branches"
+        }
+      ],
+      "tips": [
+        "Always specify the base branch when creating new branches",
+        "Ask Claude to verify branch status before switching",
+        "Use descriptive branch names following your team's conventions",
+        "Have Claude pull latest changes before creating new branches"
+      ],
+      "relatedAchievements": ["auto_committer", "pr_generator", "release_automator"]
+    },
+    "changelog_generator": {
+      "longDescription": "The Changelog Generator achievement celebrates your use of Claude Code to automatically generate project changelogs. By analyzing commit history, pull requests, and release tags, Claude can compile comprehensive changelogs that follow conventional formats like Keep a Changelog. This automation ensures your users and teammates always have accurate, up-to-date release documentation without the manual burden of maintaining it.",
+      "whyItMatters": "Well-maintained changelogs are crucial for user trust and developer onboarding. Automated generation ensures completeness and consistency that manual changelog maintenance often lacks.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Ask Claude to analyze your git history and generate or update CHANGELOG.md following standard formats.",
+        "steps": [
+          {
+            "step": 1,
+            "description": "Request changelog generation",
+            "code": "# In Claude Code session:\n\"Generate a changelog for the upcoming v2.0.0 release based on commits since v1.5.0\""
+          },
+          {
+            "step": 2,
+            "description": "Specify the format",
+            "code": "\"Use the Keep a Changelog format with sections for Added, Changed, Fixed, and Removed\""
+          },
+          {
+            "step": 3,
+            "description": "Review and refine",
+            "code": "\"Group the database changes under a 'Database' subsection and make the descriptions more user-friendly\""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Release changelog",
+          "description": "Generate changelog for a new version",
+          "code": "# In Claude Code session:\n\"Create a changelog entry for v2.1.0. Analyze all commits since the v2.0.0 tag and categorize them appropriately.\"\n\n# Claude generates:\n## [2.1.0] - 2025-01-06\n\n### Added\n- User profile customization options\n- Dark mode support\n\n### Fixed\n- Memory leak in image processing\n- Login timeout issues\n\n### Changed\n- Improved error messages"
+        },
+        {
+          "title": "Update existing changelog",
+          "description": "Add new entries to existing CHANGELOG.md",
+          "code": "# In Claude Code session:\n\"Update CHANGELOG.md with changes from the last 2 weeks. Add them to the Unreleased section.\"\n\n# Claude reads existing changelog, analyzes recent commits,\n# and adds new entries while preserving existing content"
+        }
+      ],
+      "tips": [
+        "Use conventional commit messages for better changelog generation",
+        "Create a command for changelog generation you can reuse each release",
+        "Have Claude categorize changes by impact (breaking, feature, fix)",
+        "Include PR/issue references for traceability"
+      ],
+      "relatedAchievements": ["release_automator", "pr_generator", "auto_committer"]
+    },
+    "ci_integrator": {
+      "longDescription": "The CI Integrator achievement marks a significant milestone in your automation journey: integrating Claude Code into your continuous integration pipeline. By adding Claude to GitHub Actions, GitLab CI, or other CI systems, you enable automated code review, test generation, documentation updates, and intelligent issue triage. This transforms Claude from a development tool into an integral part of your software delivery process.",
+      "whyItMatters": "CI integration enables consistent automated assistance across your entire team. Every PR can be reviewed, every commit can be analyzed, creating a scalable quality improvement system.",
+      "difficulty": "advanced",
+      "howTo": {
+        "summary": "Add Claude Code to your CI/CD configuration files to run automated tasks on push, PR, or scheduled triggers.",
+        "steps": [
+          {
+            "step": 1,
+            "description": "Create a GitHub Actions workflow file",
+            "code": "mkdir -p .github/workflows"
+          },
+          {
+            "step": 2,
+            "description": "Add Claude to your workflow",
+            "code": "# .github/workflows/claude-review.yml\nname: Claude Code Review\non:\n  pull_request:\n    types: [opened, synchronize]\njobs:\n  review:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v4\n      - name: Run Claude Review\n        run: |\n          npm install -g @anthropic-ai/claude-code\n          claude -p \"Review this PR for issues\" --output-format json"
+          },
+          {
+            "step": 3,
+            "description": "Set up API authentication",
+            "code": "# Add ANTHROPIC_API_KEY to repository secrets\n# Settings > Secrets > Actions > New repository secret"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "PR review automation",
+          "description": "Automatically review pull requests",
+          "code": "# .github/workflows/claude-pr-review.yml\nname: Claude PR Review\non:\n  pull_request:\n    types: [opened, synchronize]\n\njobs:\n  review:\n    runs-on: ubuntu-latest\n    permissions:\n      pull-requests: write\n    steps:\n      - uses: actions/checkout@v4\n        with:\n          fetch-depth: 0\n      - name: Install Claude\n        run: npm install -g @anthropic-ai/claude-code\n      - name: Review PR\n        env:\n          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}\n        run: |\n          claude -p \"Review this PR. Check for bugs, security issues, and suggest improvements.\" \\\n            --print > review.md\n      - name: Post Review\n        uses: actions/github-script@v7\n        with:\n          script: |\n            const fs = require('fs');\n            const review = fs.readFileSync('review.md', 'utf8');\n            github.rest.pulls.createReview({\n              ...context.repo,\n              pull_number: context.issue.number,\n              body: review,\n              event: 'COMMENT'\n            });"
+        }
+      ],
+      "tips": [
+        "Start with non-blocking reviews before adding enforcement",
+        "Use environment variables for API keys, never commit them",
+        "Set appropriate rate limits to control costs",
+        "Consider caching Claude's npm package for faster CI runs"
+      ],
+      "relatedAchievements": ["github_action_user", "headless_operator", "pipeline_builder"]
+    },
+    "code_reviewer": {
+      "longDescription": "The Code Reviewer achievement recognizes your use of Claude Code as an automated code review assistant. By directing Claude to review pull requests, diffs, or specific code changes, you gain an always-available reviewer that catches bugs, suggests improvements, and ensures code quality. This capability is especially valuable for solo developers, small teams, or as a preliminary review before human reviewers.",
+      "whyItMatters": "Code review is essential but time-consuming. Having Claude as a first-pass reviewer catches obvious issues early, freeing human reviewers to focus on architecture and business logic concerns.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Ask Claude to review pull requests, branches, or specific code changes using the /review-pr command or natural language requests.",
+        "steps": [
+          {
+            "step": 1,
+            "description": "Review a specific PR",
+            "code": "# In Claude Code session:\n\"/review-pr 123\"\n# Or: \"Review pull request #123\""
+          },
+          {
+            "step": 2,
+            "description": "Review changes in a branch",
+            "code": "\"Review all changes in the feature/auth branch compared to main\""
+          },
+          {
+            "step": 3,
+            "description": "Get specific feedback",
+            "code": "\"Focus on security issues and potential performance problems in this PR\""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Comprehensive PR review",
+          "description": "Full review of a pull request",
+          "code": "# In Claude Code session:\n\"Review PR #42. Check for:\n1. Bug potential\n2. Security vulnerabilities\n3. Performance issues\n4. Code style consistency\n5. Test coverage gaps\"\n\n# Claude analyzes the PR diff and provides categorized feedback"
+        },
+        {
+          "title": "Focused security review",
+          "description": "Security-focused code analysis",
+          "code": "# In Claude Code session:\n\"Do a security-focused review of the changes in src/auth/. Look for:\n- SQL injection risks\n- XSS vulnerabilities\n- Authentication bypasses\n- Sensitive data exposure\""
+        }
+      ],
+      "tips": [
+        "Create a review command with your team's specific review criteria",
+        "Ask for severity ratings on found issues",
+        "Request actionable suggestions, not just problem identification",
+        "Use Claude to review your own code before creating PRs"
+      ],
+      "relatedAchievements": ["pr_generator", "test_fixer", "lint_automator"]
+    },
+    "codemod_creator": {
+      "longDescription": "The Codemod Creator achievement celebrates your mastery of automated code transformation. By working with Claude to create reusable codemod scripts using tools like jscodeshift, ast-grep, or custom transformers, you can systematically refactor entire codebases with precision. These programmatic transformations ensure consistency and eliminate the human error inherent in large-scale manual refactoring efforts.",
+      "whyItMatters": "Codemods enable safe, repeatable large-scale code changes. They document transformations as code, making them reviewable, testable, and reusable across projects.",
+      "difficulty": "advanced",
+      "howTo": {
+        "summary": "Work with Claude to create AST-based transformation scripts that can be applied across your codebase programmatically.",
+        "steps": [
+          {
+            "step": 1,
+            "description": "Describe the transformation needed",
+            "code": "# In Claude Code session:\n\"Create a jscodeshift codemod that converts all class components to functional components with hooks\""
+          },
+          {
+            "step": 2,
+            "description": "Generate the codemod script",
+            "code": "# Claude creates transform.js with AST manipulation logic"
+          },
+          {
+            "step": 3,
+            "description": "Test on a single file first",
+            "code": "npx jscodeshift -t transform.js src/components/Button.jsx --dry"
+          },
+          {
+            "step": 4,
+            "description": "Apply to entire codebase",
+            "code": "npx jscodeshift -t transform.js src/ --extensions=jsx,tsx"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "API migration codemod",
+          "description": "Transform old API calls to new format",
+          "code": "// transform.js - jscodeshift codemod\nmodule.exports = function(fileInfo, api) {\n  const j = api.jscodeshift;\n  const root = j(fileInfo.source);\n\n  // Find all calls to oldApi.fetch()\n  root.find(j.CallExpression, {\n    callee: {\n      object: { name: 'oldApi' },\n      property: { name: 'fetch' }\n    }\n  }).forEach(path => {\n    // Transform to newApi.request()\n    path.node.callee.object.name = 'newApi';\n    path.node.callee.property.name = 'request';\n  });\n\n  return root.toSource();\n};\n\n// Run with:\n// npx jscodeshift -t transform.js src/"
+        },
+        {
+          "title": "ast-grep pattern replacement",
+          "description": "Use ast-grep for simpler transformations",
+          "code": "# ast-grep rule file: convert-console-log.yml\nid: convert-debug-logs\nlanguage: typescript\nrule:\n  pattern: console.log($MSG)\nfix: logger.debug($MSG)\n\n# Run with Claude:\n\"Apply this ast-grep rule to all TypeScript files and show me the results\"\n\n# Command:\nsg scan -r convert-debug-logs.yml src/"
+        }
+      ],
+      "tips": [
+        "Always run codemods with --dry first to preview changes",
+        "Create test cases for your codemods to verify transformations",
+        "Version control your codemod scripts for future reference",
+        "Consider edge cases and ask Claude to handle them explicitly"
+      ],
+      "relatedAchievements": ["batch_processor", "refactor_ranger", "migration_assistant"]
+    },
+    "dependency_updater": {
+      "longDescription": "The Dependency Updater achievement recognizes your use of Claude Code to manage project dependencies intelligently. Rather than blindly running update commands, you leverage Claude to analyze changelogs, identify breaking changes, update dependency versions strategically, and even fix compatibility issues. This thoughtful approach to dependency management reduces the risk of update-induced bugs while keeping your project secure and modern.",
+      "whyItMatters": "Outdated dependencies pose security risks and miss performance improvements. Intelligent updates with breaking change awareness prevent the common pitfall of update-and-break cycles.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Ask Claude to analyze, update, and manage your project dependencies with awareness of breaking changes and compatibility.",
+        "steps": [
+          {
+            "step": 1,
+            "description": "Check for outdated dependencies",
+            "code": "# In Claude Code session:\n\"Check which dependencies are outdated and summarize the important updates\""
+          },
+          {
+            "step": 2,
+            "description": "Analyze update impact",
+            "code": "\"What breaking changes are in the React 18 to 19 upgrade path?\""
+          },
+          {
+            "step": 3,
+            "description": "Perform safe updates",
+            "code": "\"Update all patch versions and minor versions that don't have breaking changes\""
+          },
+          {
+            "step": 4,
+            "description": "Handle breaking changes",
+            "code": "\"Update axios to v2 and fix any breaking changes in our codebase\""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Security update workflow",
+          "description": "Update vulnerable dependencies safely",
+          "code": "# In Claude Code session:\n\"Run npm audit and update any packages with high or critical vulnerabilities. For each update, check if there are breaking changes and fix them.\"\n\n# Claude executes:\nnpm audit\n# Identifies vulnerable packages, checks changelogs\n# Updates and fixes compatibility issues"
+        },
+        {
+          "title": "Major version upgrade",
+          "description": "Handle major dependency upgrade with migrations",
+          "code": "# In Claude Code session:\n\"Upgrade to Next.js 15. Review the migration guide and make all necessary changes to our codebase.\"\n\n# Claude:\n# 1. Reads Next.js 15 migration docs\n# 2. Updates package.json\n# 3. Modifies code for breaking changes\n# 4. Updates configuration files\n# 5. Runs tests to verify"
+        }
+      ],
+      "tips": [
+        "Update patch versions frequently, minor versions regularly, major versions carefully",
+        "Ask Claude to explain breaking changes before updating",
+        "Run tests after each significant update",
+        "Keep a record of dependency update decisions in CLAUDE.md"
+      ],
+      "relatedAchievements": ["migration_assistant", "test_fixer", "lint_automator"]
+    },
+    "github_action_user": {
+      "longDescription": "The GitHub Action User achievement celebrates your implementation of Claude Code within GitHub Actions workflows. By using the official Claude Code GitHub Action or integrating Claude into custom workflows, you automate intelligent tasks like PR reviews, issue triage, documentation generation, and code analysis directly in your CI/CD pipeline. This integration brings AI-powered assistance to every repository event.",
+      "whyItMatters": "GitHub Actions integration means consistent AI assistance across your entire development workflow. Every PR gets reviewed, every issue gets analyzed, creating systematic quality improvements.",
+      "difficulty": "advanced",
+      "howTo": {
+        "summary": "Add Claude Code to GitHub Actions workflows using the official action or CLI installation for automated tasks.",
+        "steps": [
+          {
+            "step": 1,
+            "description": "Create workflow directory",
+            "code": "mkdir -p .github/workflows"
+          },
+          {
+            "step": 2,
+            "description": "Create a Claude-powered workflow",
+            "code": "# .github/workflows/claude-assist.yml\nname: Claude Assistant\non:\n  issues:\n    types: [opened]\n  pull_request:\n    types: [opened]\n\njobs:\n  assist:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v4\n      - uses: anthropics/claude-code-action@v1\n        with:\n          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}"
+          },
+          {
+            "step": 3,
+            "description": "Add your API key as a secret",
+            "code": "# Go to: Repository Settings > Secrets > Actions\n# Add: ANTHROPIC_API_KEY"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Automated issue triage",
+          "description": "Analyze and label new issues automatically",
+          "code": "# .github/workflows/issue-triage.yml\nname: Issue Triage\non:\n  issues:\n    types: [opened]\n\njobs:\n  triage:\n    runs-on: ubuntu-latest\n    permissions:\n      issues: write\n    steps:\n      - uses: actions/checkout@v4\n      - name: Setup Claude\n        run: npm install -g @anthropic-ai/claude-code\n      - name: Analyze Issue\n        env:\n          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}\n        run: |\n          ISSUE_BODY=$(gh issue view ${{ github.event.issue.number }} --json body -q .body)\n          claude -p \"Analyze this issue and suggest labels: $ISSUE_BODY\" --print > analysis.txt\n      - name: Apply Labels\n        run: |\n          # Parse analysis and apply appropriate labels\n          gh issue edit ${{ github.event.issue.number }} --add-label \"needs-triage\""
+        },
+        {
+          "title": "PR description generator",
+          "description": "Auto-generate PR descriptions from commits",
+          "code": "# .github/workflows/pr-description.yml\nname: PR Description\non:\n  pull_request:\n    types: [opened]\n\njobs:\n  describe:\n    runs-on: ubuntu-latest\n    permissions:\n      pull-requests: write\n    steps:\n      - uses: actions/checkout@v4\n        with:\n          fetch-depth: 0\n      - name: Generate Description\n        env:\n          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}\n        run: |\n          npm install -g @anthropic-ai/claude-code\n          COMMITS=$(git log origin/main..HEAD --oneline)\n          claude -p \"Generate a PR description from these commits: $COMMITS\" --print > desc.md\n          gh pr edit ${{ github.event.number }} --body-file desc.md"
+        }
+      ],
+      "tips": [
+        "Use workflow_dispatch for manual trigger testing",
+        "Set appropriate permissions for each workflow",
+        "Monitor action costs with usage limits",
+        "Cache npm packages to speed up workflow execution"
+      ],
+      "relatedAchievements": ["ci_integrator", "headless_operator", "pipeline_builder"]
+    },
+    "headless_operator": {
+      "longDescription": "The Headless Operator achievement marks your mastery of running Claude Code in non-interactive mode. Using the -p/--print flag or piping input, you can integrate Claude into shell scripts, cron jobs, and automated pipelines. This capability transforms Claude from an interactive assistant into a programmable AI engine that can be invoked from any automation context without requiring human interaction.",
+      "whyItMatters": "Headless mode unlocks true automation potential. Any task Claude can do interactively can now be scheduled, scripted, or chained with other tools programmatically.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Run Claude Code with the -p/--print flag for single-prompt execution, or pipe input for non-interactive operation.",
+        "steps": [
+          {
+            "step": 1,
+            "description": "Basic headless execution",
+            "code": "claude -p \"List all TODO comments in this project\" --print"
+          },
+          {
+            "step": 2,
+            "description": "Pipe input to Claude",
+            "code": "cat error.log | claude -p \"Analyze these errors and suggest fixes\""
+          },
+          {
+            "step": 3,
+            "description": "Chain with other tools",
+            "code": "git diff HEAD~1 | claude -p \"Summarize these changes\" --print > summary.txt"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Scheduled code analysis",
+          "description": "Cron job for weekly code review",
+          "code": "#!/bin/bash\n# weekly-review.sh - Run via cron\n\ncd /path/to/project\n\n# Generate weekly code health report\nclaude -p \"Analyze this codebase and create a code health report covering:\n1. Potential bugs\n2. Security concerns\n3. Performance issues\n4. Technical debt\nFormat as markdown.\" --print > reports/weekly-$(date +%Y%m%d).md\n\n# Send notification\nmail -s \"Weekly Code Review\" team@example.com < reports/weekly-$(date +%Y%m%d).md"
+        },
+        {
+          "title": "Pipeline integration",
+          "description": "Use Claude in a shell pipeline",
+          "code": "#!/bin/bash\n# Process test output with Claude\n\nnpm test 2>&1 | claude -p \"Parse this test output. If there are failures, explain what went wrong and suggest fixes. If all passed, just say 'All tests passed.'\" --print\n\n# Analyze git blame for a file\ngit blame src/critical.ts | claude -p \"Who are the main contributors to this file and what areas did each person work on?\" --print"
+        }
+      ],
+      "tips": [
+        "Use --print to get clean output without interactive formatting",
+        "Set ANTHROPIC_API_KEY environment variable for automated scripts",
+        "Add timeouts for scripts to prevent hanging",
+        "Capture both stdout and stderr for debugging"
+      ],
+      "relatedAchievements": ["pipeline_builder", "ci_integrator", "batch_processor"]
+    },
+    "issue_handler": {
+      "longDescription": "The Issue Handler achievement recognizes your use of Claude Code to manage GitHub issues efficiently. By leveraging the gh CLI through Claude, you can create, update, label, assign, and close issues conversationally. Claude can also analyze issue content to suggest labels, identify duplicates, and even propose implementation approaches, making issue management significantly more efficient.",
+      "whyItMatters": "Efficient issue management keeps projects organized and ensures nothing falls through the cracks. AI-assisted triage helps maintain clean backlogs and faster response times.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Use Claude to interact with GitHub issues via the gh CLI for creating, updating, triaging, and managing issues.",
+        "steps": [
+          {
+            "step": 1,
+            "description": "Create a new issue",
+            "code": "# In Claude Code session:\n\"Create a GitHub issue for the login timeout bug. Include steps to reproduce and expected behavior.\""
+          },
+          {
+            "step": 2,
+            "description": "Triage existing issues",
+            "code": "\"Look at the open issues and suggest labels and priorities for the unlabeled ones\""
+          },
+          {
+            "step": 3,
+            "description": "Link issues to PRs",
+            "code": "\"Find which issues would be resolved by PR #45 and update them accordingly\""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Issue creation from error",
+          "description": "Create an issue from an error log",
+          "code": "# In Claude Code session:\n\"I got this error in production:\n\nTypeError: Cannot read property 'id' of undefined\n  at UserService.getProfile (user-service.ts:42)\n\nCreate a GitHub issue with proper formatting, stack trace, and suggested investigation areas.\"\n\n# Claude creates:\ngh issue create --title \"TypeError in UserService.getProfile\" \\\n  --body \"## Error\\n\\n\\`\\`\\`\\nTypeError: Cannot read...\\n\\`\\`\\`\\n\\n## Investigation\\n...\""
+        },
+        {
+          "title": "Bulk issue triage",
+          "description": "Analyze and label multiple issues",
+          "code": "# In Claude Code session:\n\"List all open issues without labels and suggest appropriate labels based on their content.\"\n\n# Claude executes:\ngh issue list --state open --label '' --json number,title,body\n\n# Then suggests:\n# Issue #12: Add 'enhancement', 'frontend'\n# Issue #15: Add 'bug', 'high-priority'\n# Issue #18: Add 'documentation'\n\n# And can apply them:\ngh issue edit 12 --add-label enhancement,frontend"
+        }
+      ],
+      "tips": [
+        "Use issue templates for consistent formatting",
+        "Ask Claude to check for duplicate issues before creating new ones",
+        "Include reproduction steps and environment details automatically",
+        "Link issues to relevant code files for context"
+      ],
+      "relatedAchievements": ["pr_generator", "code_reviewer", "github_action_user"]
+    },
+    "lint_automator": {
+      "longDescription": "The Lint Automator achievement celebrates your use of Claude Code to automatically fix linting and formatting issues. Instead of manually addressing ESLint errors, Prettier formatting, or other static analysis warnings, you let Claude understand the issues and apply fixes intelligently. This goes beyond simple auto-fix commands by handling complex cases that require code understanding, like restructuring to satisfy complexity rules.",
+      "whyItMatters": "Consistent code style improves readability and reduces review friction. Automated lint fixes save time and ensure the entire codebase maintains quality standards.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Ask Claude to run linters, analyze the output, and fix issues automatically including complex cases that require code restructuring.",
+        "steps": [
+          {
+            "step": 1,
+            "description": "Run linter and analyze issues",
+            "code": "# In Claude Code session:\n\"Run ESLint and summarize the issues found\""
+          },
+          {
+            "step": 2,
+            "description": "Fix simple issues automatically",
+            "code": "\"Fix all auto-fixable ESLint errors\""
+          },
+          {
+            "step": 3,
+            "description": "Handle complex issues",
+            "code": "\"Fix the cyclomatic complexity warnings by refactoring the functions into smaller pieces\""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Comprehensive lint fix",
+          "description": "Fix all linting issues in project",
+          "code": "# In Claude Code session:\n\"Run 'npm run lint' and fix all the errors. For issues that can't be auto-fixed, refactor the code to resolve them properly.\"\n\n# Claude executes:\nnpm run lint\n# Analyzes output, then fixes:\n# - Auto-fixable: runs eslint --fix\n# - Complex: refactors code manually\n# - Suppressions: adds comments only when appropriate"
+        },
+        {
+          "title": "TypeScript strict mode fixes",
+          "description": "Fix TypeScript strict mode violations",
+          "code": "# In Claude Code session:\n\"Enable strict mode in tsconfig and fix all the resulting type errors. Add proper type annotations rather than using 'any'.\"\n\n# Claude:\n# 1. Updates tsconfig.json with strict: true\n# 2. Runs tsc to find errors\n# 3. Adds proper type definitions\n# 4. Fixes null checks\n# 5. Verifies compilation succeeds"
+        }
+      ],
+      "tips": [
+        "Fix lint issues before committing to keep history clean",
+        "Ask Claude to explain why certain rules exist when fixing violations",
+        "Create a pre-commit command that runs lint fixes automatically",
+        "Handle suppressions carefully - prefer fixes over ignoring rules"
+      ],
+      "relatedAchievements": ["test_fixer", "code_reviewer", "batch_processor"]
+    },
+    "migration_assistant": {
+      "longDescription": "The Migration Assistant achievement recognizes your use of Claude Code to handle database migrations, framework upgrades, or major code migrations. These high-stakes operations require careful planning, execution, and rollback strategies. Claude helps by generating migration files, identifying breaking changes, updating affected code, and ensuring data integrity throughout the transformation process.",
+      "whyItMatters": "Migrations are error-prone and often irreversible. AI assistance helps plan migrations thoroughly, catch edge cases, and execute transformations safely.",
+      "difficulty": "advanced",
+      "howTo": {
+        "summary": "Work with Claude to plan, generate, and execute database or code migrations with proper testing and rollback capabilities.",
+        "steps": [
+          {
+            "step": 1,
+            "description": "Plan the migration",
+            "code": "# In Claude Code session:\n\"I need to add a new 'role' column to the users table. Help me plan this migration including rollback.\""
+          },
+          {
+            "step": 2,
+            "description": "Generate migration files",
+            "code": "\"Generate the migration file using our Prisma/Drizzle/Knex setup\""
+          },
+          {
+            "step": 3,
+            "description": "Update affected code",
+            "code": "\"Update all code that queries the users table to handle the new role field\""
+          },
+          {
+            "step": 4,
+            "description": "Test migration",
+            "code": "\"Run the migration on our test database and verify the changes\""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Database schema migration",
+          "description": "Add new column with data migration",
+          "code": "# In Claude Code session:\n\"Create a migration to split the 'name' column in users into 'first_name' and 'last_name'. Include data migration logic.\"\n\n# Claude generates:\n// migrations/20250106_split_name.ts\nexport async function up(db) {\n  // Add new columns\n  await db.schema.alterTable('users', table => {\n    table.string('first_name');\n    table.string('last_name');\n  });\n  \n  // Migrate data\n  const users = await db('users').select('id', 'name');\n  for (const user of users) {\n    const [first, ...rest] = user.name.split(' ');\n    await db('users').where('id', user.id).update({\n      first_name: first,\n      last_name: rest.join(' ')\n    });\n  }\n  \n  // Remove old column\n  await db.schema.alterTable('users', table => {\n    table.dropColumn('name');\n  });\n}\n\nexport async function down(db) {\n  // Rollback logic\n}"
+        },
+        {
+          "title": "Framework migration",
+          "description": "Migrate from Express to Fastify",
+          "code": "# In Claude Code session:\n\"Help me migrate this Express app to Fastify. Start with a migration plan, then convert route by route.\"\n\n# Claude creates:\n# 1. Migration checklist\n# 2. Converts middleware\n# 3. Updates route handlers\n# 4. Changes validation approach\n# 5. Updates tests"
+        }
+      ],
+      "tips": [
+        "Always test migrations on a copy of production data",
+        "Include both up and down migrations for rollback capability",
+        "Break large migrations into smaller, reviewable steps",
+        "Document migration decisions and any manual steps required"
+      ],
+      "relatedAchievements": ["dependency_updater", "codemod_creator", "refactor_ranger"]
+    },
+    "pipeline_builder": {
+      "longDescription": "The Pipeline Builder achievement celebrates your mastery of chaining Claude Code output with other command-line tools. By piping Claude's output to parsers, filters, or other processors, you create powerful automation pipelines that combine AI intelligence with traditional Unix tools. This technique enables complex workflows where Claude's analysis feeds into automated actions.",
+      "whyItMatters": "Pipeline integration extends Claude beyond standalone use into composable automation. Complex workflows become possible by combining AI analysis with traditional tools.",
+      "difficulty": "advanced",
+      "howTo": {
+        "summary": "Chain Claude's output to other commands using pipes, or feed output from other tools into Claude for analysis.",
+        "steps": [
+          {
+            "step": 1,
+            "description": "Basic output piping",
+            "code": "claude -p \"List all deprecated functions\" --print | grep -c 'deprecated'"
+          },
+          {
+            "step": 2,
+            "description": "Input piping",
+            "code": "cat package.json | claude -p \"List all dependencies with security concerns\""
+          },
+          {
+            "step": 3,
+            "description": "Multi-stage pipeline",
+            "code": "git log --oneline -20 | claude -p \"Categorize these commits\" --print | tee report.txt"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error analysis pipeline",
+          "description": "Analyze logs and create issues automatically",
+          "code": "#!/bin/bash\n# Pipeline: Logs -> Claude Analysis -> GitHub Issue\n\n# Get recent errors\ntail -100 /var/log/app/error.log | \\\n  # Analyze with Claude\n  claude -p \"Analyze these errors. Output JSON with: {title, severity, description}\" --print | \\\n  # Parse and create issue\n  jq -r '\"gh issue create --title \\\"\\(.title)\\\" --body \\\"Severity: \\(.severity)\\n\\n\\(.description)\\\"\"' | \\\n  # Execute\n  bash"
+        },
+        {
+          "title": "Documentation pipeline",
+          "description": "Generate and format documentation",
+          "code": "#!/bin/bash\n# Pipeline: Source -> Claude Docs -> Formatted Output\n\n# Find all public functions\ngrep -rh \"export function\" src/ | \\\n  # Generate documentation\n  claude -p \"Generate JSDoc comments for these function signatures\" --print | \\\n  # Format as markdown\n  pandoc -f markdown -t html | \\\n  # Save to docs\n  tee docs/api.html"
+        }
+      ],
+      "tips": [
+        "Use --print flag for clean, pipeable output",
+        "Request specific output formats (JSON, CSV) for easier parsing",
+        "Add error handling with || for failed commands",
+        "Use tee to save intermediate results for debugging"
+      ],
+      "relatedAchievements": ["headless_operator", "ci_integrator", "batch_processor"]
+    },
+    "pr_generator": {
+      "longDescription": "The PR Generator achievement recognizes your use of Claude Code to create pull requests end-to-end. Beyond just generating descriptions, Claude can create branches, stage changes, craft meaningful PR titles and descriptions based on the actual changes, and submit the PR through the gh CLI. This comprehensive automation streamlines the entire PR workflow from code changes to review-ready submission.",
+      "whyItMatters": "Well-crafted PR descriptions speed up review cycles and improve team communication. Automated PR creation ensures consistent quality and complete documentation of changes.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Ask Claude to create a pull request from your current changes, including branch creation, commit, and PR submission.",
+        "steps": [
+          {
+            "step": 1,
+            "description": "Prepare changes",
+            "code": "# In Claude Code session:\n\"I've made changes to implement user authentication. Create a PR for this.\""
+          },
+          {
+            "step": 2,
+            "description": "Let Claude handle the workflow",
+            "code": "# Claude will:\n# 1. Create/checkout feature branch\n# 2. Stage and commit changes\n# 3. Push to remote\n# 4. Create PR with description"
+          },
+          {
+            "step": 3,
+            "description": "Or use explicit command",
+            "code": "# Using a skill:\n/commit-push-pr"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Complete PR workflow",
+          "description": "From changes to PR in one request",
+          "code": "# In Claude Code session:\n\"Create a PR for my changes. The branch should be feature/add-dark-mode. Include:\n- Summary of what changed\n- Testing instructions\n- Screenshots section placeholder\"\n\n# Claude executes:\ngit checkout -b feature/add-dark-mode\ngit add .\ngit commit -m \"feat(ui): add dark mode support\"\ngit push -u origin feature/add-dark-mode\ngh pr create --title \"feat(ui): Add dark mode support\" \\\n  --body \"## Summary\\n- Added dark mode toggle...\\n\\n## Testing\\n1. Enable dark mode...\\n\\n## Screenshots\\n[Add screenshots]\""
+        },
+        {
+          "title": "PR from diff analysis",
+          "description": "Generate PR description from code analysis",
+          "code": "# In Claude Code session:\n\"Look at my staged changes and create a PR. Analyze the code to write a detailed description explaining the implementation approach.\"\n\n# Claude analyzes:\ngit diff --staged\n\n# Then creates PR with implementation details:\ngh pr create --title \"refactor(auth): implement token refresh mechanism\" \\\n  --body \"## Changes\\nImplemented automatic token refresh using...\\n\\n## Technical Details\\n- Uses refresh token rotation\\n- Added TokenManager class...\\n\\n## Impact\\nReduces auth-related errors by...\""
+        }
+      ],
+      "tips": [
+        "Include PR templates in your repository for consistent formatting",
+        "Ask Claude to link related issues in the PR description",
+        "Request draft PRs when changes are still in progress",
+        "Have Claude suggest reviewers based on code ownership"
+      ],
+      "relatedAchievements": ["auto_committer", "code_reviewer", "branch_manager"]
+    },
+    "refactor_ranger": {
+      "longDescription": "The Refactor Ranger achievement celebrates your ability to leverage Claude Code for large-scale refactoring operations across multiple files. Whether restructuring code architecture, renaming modules, extracting shared logic, or updating patterns project-wide, Claude provides the intelligence to make sweeping changes while maintaining code correctness. This capability transforms daunting refactoring projects into manageable, well-executed improvements.",
+      "whyItMatters": "Large refactors are risky without proper tooling. AI-assisted refactoring reduces errors, maintains consistency, and makes architectural improvements feasible.",
+      "difficulty": "advanced",
+      "howTo": {
+        "summary": "Direct Claude to perform multi-file refactoring operations with attention to maintaining functionality and code quality.",
+        "steps": [
+          {
+            "step": 1,
+            "description": "Define the refactoring scope",
+            "code": "# In Claude Code session:\n\"I want to extract all API calls into a centralized api/ directory with proper typing\""
+          },
+          {
+            "step": 2,
+            "description": "Plan the refactoring",
+            "code": "\"First show me a plan for this refactoring without making changes\""
+          },
+          {
+            "step": 3,
+            "description": "Execute incrementally",
+            "code": "\"Start with the user-related API calls. Move them and update all imports.\""
+          },
+          {
+            "step": 4,
+            "description": "Verify after each step",
+            "code": "\"Run the tests to make sure nothing broke\""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Architecture refactoring",
+          "description": "Restructure to feature-based architecture",
+          "code": "# In Claude Code session:\n\"Refactor this codebase from a type-based structure (components/, hooks/, utils/) to a feature-based structure (features/auth/, features/dashboard/, features/settings/). Move related files together and update all imports.\"\n\n# Claude creates plan:\n# 1. Identify feature boundaries\n# 2. Create new directory structure\n# 3. Move files preserving git history (git mv)\n# 4. Update import paths across codebase\n# 5. Verify build succeeds"
+        },
+        {
+          "title": "Pattern modernization",
+          "description": "Update codebase to modern patterns",
+          "code": "# In Claude Code session:\n\"Refactor all class-based React components to functional components with hooks. Maintain the same functionality and props interface.\"\n\n# Claude systematically:\n# - Identifies all class components\n# - Converts each to functional\n# - Replaces lifecycle methods with useEffect\n# - Updates state to useState\n# - Runs tests after each conversion"
+        }
+      ],
+      "tips": [
+        "Always create a backup branch before large refactors",
+        "Ask for a refactoring plan before execution",
+        "Refactor in small, testable increments",
+        "Run tests frequently during refactoring"
+      ],
+      "relatedAchievements": ["batch_processor", "codemod_creator", "migration_assistant"]
+    },
+    "release_automator": {
+      "longDescription": "The Release Automator achievement recognizes your use of Claude Code to streamline the release process. From version bumping in package files to creating git tags, generating release notes, and triggering deployment pipelines, Claude orchestrates the entire release workflow. This automation ensures consistent, well-documented releases while reducing the human error that often plagues manual release processes.",
+      "whyItMatters": "Release processes are critical and error-prone. Automation ensures consistent versioning, complete documentation, and reliable deployments every time.",
+      "difficulty": "advanced",
+      "howTo": {
+        "summary": "Ask Claude to handle the complete release workflow including version bumping, tagging, changelog updates, and release creation.",
+        "steps": [
+          {
+            "step": 1,
+            "description": "Initiate release",
+            "code": "# In Claude Code session:\n\"Prepare a release for version 2.1.0\""
+          },
+          {
+            "step": 2,
+            "description": "Version bump and changelog",
+            "code": "# Claude updates:\n# - package.json version\n# - CHANGELOG.md\n# - Any other version references"
+          },
+          {
+            "step": 3,
+            "description": "Create tag and release",
+            "code": "# Claude executes:\n# git commit, git tag, git push\n# gh release create with notes"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Complete release workflow",
+          "description": "Full release automation",
+          "code": "# In Claude Code session:\n\"Create a new release v2.1.0. This is a minor release with new features.\"\n\n# Claude executes:\n# 1. Update version in package.json\nnpm version minor --no-git-tag-version\n\n# 2. Update CHANGELOG.md\n# (generates from commits since last tag)\n\n# 3. Commit version bump\ngit add .\ngit commit -m \"chore(release): v2.1.0\"\n\n# 4. Create and push tag\ngit tag -a v2.1.0 -m \"Release v2.1.0\"\ngit push origin main --tags\n\n# 5. Create GitHub release\ngh release create v2.1.0 \\\n  --title \"v2.1.0\" \\\n  --notes-file CHANGELOG.md \\\n  --latest"
+        },
+        {
+          "title": "Pre-release workflow",
+          "description": "Create beta or RC releases",
+          "code": "# In Claude Code session:\n\"Create a beta release 2.2.0-beta.1 for testing the new features\"\n\n# Claude:\n# 1. Updates version to 2.2.0-beta.1\n# 2. Creates pre-release tag\n# 3. Publishes as pre-release on GitHub\ngh release create v2.2.0-beta.1 \\\n  --title \"v2.2.0-beta.1\" \\\n  --prerelease \\\n  --notes \"Beta release for testing. Not recommended for production.\""
+        }
+      ],
+      "tips": [
+        "Create a release checklist in CLAUDE.md for Claude to follow",
+        "Use semantic versioning consistently",
+        "Test releases on staging before creating production releases",
+        "Automate release announcements to Slack/Discord"
+      ],
+      "relatedAchievements": ["changelog_generator", "pr_generator", "github_action_user"]
+    },
+    "scaffold_master": {
+      "longDescription": "The Scaffold Master achievement celebrates your use of Claude Code to generate boilerplate code quickly and consistently. Whether creating new React components, API endpoints, test files, or entire feature modules, Claude generates scaffolding that follows your project's patterns and conventions. This automation eliminates the tedious setup work and ensures all new code starts with proper structure.",
+      "whyItMatters": "Consistent scaffolding reduces setup time and ensures all new code follows project conventions. It lowers the barrier to creating properly structured features.",
+      "difficulty": "beginner",
+      "howTo": {
+        "summary": "Ask Claude to create new files, components, or features following your project's established patterns.",
+        "steps": [
+          {
+            "step": 1,
+            "description": "Request scaffolding",
+            "code": "# In Claude Code session:\n\"Create a new React component called UserProfile with TypeScript\""
+          },
+          {
+            "step": 2,
+            "description": "Specify requirements",
+            "code": "\"Include a test file, storybook story, and types file\""
+          },
+          {
+            "step": 3,
+            "description": "Follow existing patterns",
+            "code": "\"Use the same structure as our existing Button component\""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Full component scaffold",
+          "description": "Create complete component with tests",
+          "code": "# In Claude Code session:\n\"Scaffold a new DataTable component following our existing patterns. Include:\n- Main component file\n- Types\n- Tests\n- Storybook story\n- Index export\"\n\n# Claude creates:\nsrc/components/DataTable/\n  DataTable.tsx\n  DataTable.types.ts\n  DataTable.test.tsx\n  DataTable.stories.tsx\n  index.ts"
+        },
+        {
+          "title": "API endpoint scaffold",
+          "description": "Create REST endpoint with full structure",
+          "code": "# In Claude Code session:\n\"Create a new API endpoint for /api/products with CRUD operations following our existing patterns\"\n\n# Claude creates:\nsrc/api/products/\n  route.ts           # GET, POST handlers\n  [id]/route.ts      # GET, PUT, DELETE handlers\n  products.service.ts\n  products.types.ts\n  products.test.ts"
+        }
+      ],
+      "tips": [
+        "Document your scaffolding patterns in CLAUDE.md for consistency",
+        "Create scaffold commands for frequently needed structures",
+        "Ask Claude to analyze existing code before scaffolding new features",
+        "Include tests and types in scaffold requests"
+      ],
+      "relatedAchievements": ["batch_processor", "test_runner", "lint_automator"]
+    },
+    "test_fixer": {
+      "longDescription": "The Test Fixer achievement recognizes your use of Claude Code to automatically diagnose and fix failing tests. Rather than manually debugging test failures, you let Claude analyze the test output, understand what broke (test logic vs application code), and apply appropriate fixes. Claude can update test expectations, fix application bugs, or both, getting your test suite back to green efficiently.",
+      "whyItMatters": "Failing tests block deployment and indicate problems. Fast, intelligent test fixes maintain development velocity and keep the feedback loop tight.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Run your test suite, share failures with Claude, and let it analyze and fix the issues in both tests and application code.",
+        "steps": [
+          {
+            "step": 1,
+            "description": "Run tests and capture failures",
+            "code": "# In Claude Code session:\n\"Run the tests and fix any failures\""
+          },
+          {
+            "step": 2,
+            "description": "Claude analyzes the output",
+            "code": "# Claude determines whether to fix:\n# - Test expectations (if outdated)\n# - Application code (if buggy)\n# - Both (if needed)"
+          },
+          {
+            "step": 3,
+            "description": "Verify fixes",
+            "code": "\"Run the tests again to confirm all pass\""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Fix failing unit tests",
+          "description": "Analyze and fix test failures",
+          "code": "# In Claude Code session:\n\"Run npm test and fix all failing tests. Determine whether the tests are wrong or the code is wrong.\"\n\n# Claude runs:\nnpm test\n\n# Analyzes output:\n# FAIL src/utils/format.test.ts\n#   formatDate returns wrong format\n#   Expected: \"01/06/2025\"\n#   Received: \"2025-01-06\"\n\n# Claude checks if test or code is wrong:\n# - Reads formatDate implementation\n# - Checks requirements\n# - Fixes the appropriate file"
+        },
+        {
+          "title": "Update snapshot tests",
+          "description": "Handle intentional changes",
+          "code": "# In Claude Code session:\n\"The Button component was updated intentionally. Update the failing snapshot tests.\"\n\n# Claude:\n# 1. Runs tests to see snapshot diffs\n# 2. Verifies changes match intended updates\n# 3. Updates snapshots:\nnpm test -- -u --testNamePattern='Button'"
+        }
+      ],
+      "tips": [
+        "Always verify whether test or code is wrong before fixing",
+        "Ask Claude to explain why tests failed for learning",
+        "Run tests in watch mode for faster iteration",
+        "Keep test fixes in separate commits from feature changes"
+      ],
+      "relatedAchievements": ["test_runner", "lint_automator", "code_reviewer"]
+    },
+    "test_runner": {
+      "longDescription": "The Test Runner achievement marks your use of Claude Code to execute and interpret test results. Beyond just running test commands, Claude provides intelligent analysis of test output, identifying patterns in failures, suggesting fixes, and helping you understand test coverage. This collaboration between human intent and AI interpretation makes test-driven development more accessible and productive.",
+      "whyItMatters": "Tests are only valuable when you act on results. AI-interpreted test output highlights what matters and suggests next steps, improving development flow.",
+      "difficulty": "beginner",
+      "howTo": {
+        "summary": "Ask Claude to run your test suite and provide analysis of the results including pass/fail summary and failure details.",
+        "steps": [
+          {
+            "step": 1,
+            "description": "Run tests",
+            "code": "# In Claude Code session:\n\"Run the tests\""
+          },
+          {
+            "step": 2,
+            "description": "Get analysis",
+            "code": "\"Summarize what passed and what failed\""
+          },
+          {
+            "step": 3,
+            "description": "Focus on specifics",
+            "code": "\"Run only the auth-related tests and explain any failures\""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Comprehensive test run",
+          "description": "Run and analyze all tests",
+          "code": "# In Claude Code session:\n\"Run the full test suite and give me a summary\"\n\n# Claude executes:\nnpm test\n\n# Then summarizes:\n\"Test Results:\n- Total: 156 tests\n- Passed: 152\n- Failed: 4\n\nFailing tests:\n1. UserService.login - timeout issue\n2. CartComponent - missing mock\n3-4. API tests - network errors\n\nRecommended actions:\n1. Check auth service timeout settings\n2. Add missing CartContext mock\n3. Verify test environment network config\""
+        },
+        {
+          "title": "Focused test execution",
+          "description": "Run specific tests with coverage",
+          "code": "# In Claude Code session:\n\"Run tests for the payment module with coverage and highlight any gaps\"\n\n# Claude runs:\nnpm test -- --coverage --testPathPattern=payment\n\n# Analyzes coverage:\n\"Payment module coverage:\n- Statements: 87%\n- Branches: 72%\n- Functions: 91%\n\nUncovered areas:\n1. Error handling in processRefund (lines 45-52)\n2. Edge case in validateCard (line 78)\n\nSuggested tests to add:\n1. Test refund failure scenarios\n2. Test invalid card number formats\""
+        }
+      ],
+      "tips": [
+        "Run tests frequently during development",
+        "Ask for coverage analysis to identify gaps",
+        "Use watch mode for faster feedback during TDD",
+        "Create test commands in .claude/commands for quick access"
+      ],
+      "relatedAchievements": ["test_fixer", "lint_automator", "scaffold_master"]
+    }
+  }
+}

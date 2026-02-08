@@ -1,8 +1,11 @@
-# Redirect root to /quest/
-/ /quest/ 302
-
-# Redirect /quest to /quest/ (trailing slash)
-/quest /quest/ 301
-
-# SPA fallback - serve index.html for all /quest routes
+# SPA fallback for all routes
 /quest/* /index.html 200
+/memory/* /index.html 200
+
+# Workshop static files (served as-is, not SPA)
+/hello-workshop/* /hello-workshop/:splat 200
+/advanced-workshop/* /advanced-workshop/:splat 200
+/teams-workshop/* /teams-workshop/:splat 200
+
+# Root SPA fallback (must be last)
+/* /index.html 200

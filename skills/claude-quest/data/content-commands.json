@@ -1,0 +1,1312 @@
+{
+  "category": "commands",
+  "content": {
+    "bash_integrator": {
+      "longDescription": "The Bash Integrator achievement recognizes your ability to bridge Claude's natural language processing with the power of shell scripts. By embedding bash, sh, or shell code blocks within your custom commands, you enable Claude to execute system-level operations, automate file manipulations, run build processes, or interact with external tools. This integration transforms simple prompts into powerful automation workflows that leverage the full capabilities of your operating system.",
+      "whyItMatters": "Shell integration unlocks system-level automation that would otherwise require manual terminal work. Commands that run scripts can orchestrate complex build pipelines, manage files, and interact with external services.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Create a command that includes bash/shell code blocks for Claude to execute",
+        "steps": [
+          {
+            "instruction": "Create a command file that includes shell operations",
+            "code": {
+              "language": "markdown",
+              "content": "---\ndescription: Build and test the project\n---\n\nRun the following build and test sequence:\n\n```bash\nnpm run lint\nnpm run build\nnpm test\n```\n\nReport any errors found and suggest fixes.",
+              "filename": ".claude/commands/build-test.md"
+            }
+          },
+          {
+            "instruction": "Use the command to trigger the shell execution",
+            "code": {
+              "language": "plaintext",
+              "content": "/build-test"
+            }
+          }
+        ],
+        "estimatedTime": "5 minutes"
+      },
+      "examples": [
+        {
+          "title": "Git Status Reporter",
+          "description": "A command that checks git status and summarizes changes",
+          "code": {
+            "language": "markdown",
+            "content": "---\ndescription: Analyze current git status\n---\n\nRun these commands and summarize the state of the repository:\n\n```bash\ngit status\ngit log --oneline -5\ngit diff --stat\n```\n\nProvide a brief summary of uncommitted changes and recent commits.",
+            "filename": ".claude/commands/git-summary.md"
+          },
+          "explanation": "This command runs multiple git operations and asks Claude to synthesize the output into a readable summary."
+        },
+        {
+          "title": "Dependency Checker",
+          "description": "Check for outdated npm packages",
+          "code": {
+            "language": "markdown",
+            "content": "---\ndescription: Check for outdated dependencies\n---\n\n```bash\nnpm outdated\n```\n\nAnalyze the output and categorize updates by severity:\n- Major updates (breaking changes likely)\n- Minor updates (new features)\n- Patch updates (bug fixes)\n\nRecommend which to update first.",
+            "filename": ".claude/commands/check-deps.md"
+          }
+        }
+      ],
+      "tips": [
+        "Use bash for complex scripts, sh for broader compatibility",
+        "Include error handling in your shell commands with || operators",
+        "Combine multiple commands with && for sequential execution",
+        "Capture and analyze command output by asking Claude to interpret results"
+      ],
+      "relatedAchievements": ["first_command", "workflow_builder", "error_handler_cmd"]
+    },
+    "command_composer": {
+      "longDescription": "The Command Composer achievement celebrates the art of building meta-commands that orchestrate other slash commands. By creating commands that reference and invoke other commands, you can build sophisticated automation pipelines where each component handles a specific task. This compositional approach enables complex workflows while keeping individual commands simple and maintainable.",
+      "whyItMatters": "Composing commands creates modular automation where complex workflows are built from simpler, reusable pieces. This promotes code reuse and makes it easier to update individual steps without breaking the entire workflow.",
+      "difficulty": "advanced",
+      "howTo": {
+        "summary": "Create a command that references and triggers other slash commands in sequence",
+        "steps": [
+          {
+            "instruction": "First, ensure you have base commands to compose",
+            "code": {
+              "language": "markdown",
+              "content": "---\ndescription: Run linting\n---\nRun `npm run lint` and report issues.",
+              "filename": ".claude/commands/lint.md"
+            }
+          },
+          {
+            "instruction": "Create a composer command that calls other commands",
+            "code": {
+              "language": "markdown",
+              "content": "---\ndescription: Full code review workflow\n---\n\nExecute the following workflow by running each slash command in order:\n\n1. First, run /lint to check for code style issues\n2. Then, run /test to ensure tests pass\n3. Finally, run /security-scan to check for vulnerabilities\n\nProvide a combined summary of all findings.",
+              "filename": ".claude/commands/full-review.md"
+            }
+          }
+        ],
+        "estimatedTime": "10 minutes"
+      },
+      "examples": [
+        {
+          "title": "Release Preparation Workflow",
+          "description": "A command that orchestrates multiple pre-release checks",
+          "code": {
+            "language": "markdown",
+            "content": "---\ndescription: Prepare for release\n---\n\nRun the complete release preparation workflow:\n\n1. Execute /changelog to generate changelog from commits\n2. Execute /version-bump to update version numbers\n3. Execute /build-test to ensure everything compiles\n4. Execute /docs-update to refresh documentation\n\nAfter all commands complete, provide a release readiness report.",
+            "filename": ".claude/commands/prepare-release.md"
+          },
+          "explanation": "This meta-command chains four separate commands into a cohesive release workflow."
+        },
+        {
+          "title": "Morning Standup Helper",
+          "description": "Aggregate information from multiple sources",
+          "code": {
+            "language": "markdown",
+            "content": "---\ndescription: Generate standup summary\n---\n\nGather information for standup by running:\n\n1. /git-summary to see what was worked on\n2. /todo-list to check pending tasks\n3. /calendar to see today's meetings\n\nFormat as a standup update with:\n- What I did yesterday\n- What I'm doing today\n- Any blockers",
+            "filename": ".claude/commands/standup.md"
+          }
+        }
+      ],
+      "tips": [
+        "Keep individual commands focused on single tasks for better composability",
+        "Document the expected order of command execution",
+        "Consider error handling - what happens if one command fails?",
+        "Use consistent naming conventions to make command relationships clear"
+      ],
+      "relatedAchievements": ["workflow_builder", "command_library", "first_command"]
+    },
+    "command_importer": {
+      "longDescription": "The Command Importer achievement recognizes users who expand their toolkit by adopting commands from the broader Claude Code community. Whether downloading from GitHub repositories, copying from shared configurations, or adapting examples from documentation, importing commands accelerates your workflow by leveraging solutions others have already perfected. This collaborative approach embodies the open-source spirit of sharing and building upon collective knowledge.",
+      "whyItMatters": "The Claude Code community has created hundreds of useful commands. Importing them saves time and exposes you to new patterns and techniques you might not have discovered on your own.",
+      "difficulty": "beginner",
+      "howTo": {
+        "summary": "Find and import community-created commands into your commands directory",
+        "steps": [
+          {
+            "instruction": "Find commands from community sources like GitHub",
+            "code": {
+              "language": "bash",
+              "content": "# Clone a community commands repository\ngit clone https://github.com/anthropics/claude-code-commands ~/.claude/community-commands\n\n# Or download individual command files\ncurl -o ~/.claude/commands/review.md https://example.com/commands/review.md"
+            }
+          },
+          {
+            "instruction": "Copy commands to your commands directory",
+            "code": {
+              "language": "bash",
+              "content": "# Copy specific commands you want to use\ncp ~/.claude/community-commands/productivity/*.md ~/.claude/commands/"
+            }
+          },
+          {
+            "instruction": "Review and customize imported commands for your needs",
+            "code": {
+              "language": "markdown",
+              "content": "---\ndescription: Code review (imported from community, customized)\n---\n\n# Original by @username, modified for our team's standards\n\nReview the selected code for:\n- Our team's style guide compliance\n- Security best practices\n- Performance considerations",
+              "filename": ".claude/commands/review.md"
+            }
+          }
+        ],
+        "estimatedTime": "5 minutes"
+      },
+      "examples": [
+        {
+          "title": "Import from GitHub Gist",
+          "description": "Download a single command from a gist",
+          "code": {
+            "language": "bash",
+            "content": "# Download a command from a GitHub gist\ncurl -o ~/.claude/commands/explain.md \\\n  https://gist.githubusercontent.com/user/abc123/raw/explain.md\n\n# Verify it was downloaded\ncat ~/.claude/commands/explain.md"
+          },
+          "explanation": "GitHub gists are a great way to share individual commands with the community."
+        },
+        {
+          "title": "Clone Full Command Collection",
+          "description": "Import an entire library of commands",
+          "code": {
+            "language": "bash",
+            "content": "# Clone a curated command collection\ngit clone https://github.com/example/claude-commands ~/claude-commands-temp\n\n# Selectively copy what you need\ncp ~/claude-commands-temp/git/*.md ~/.claude/commands/git/\ncp ~/claude-commands-temp/testing/*.md ~/.claude/commands/testing/\n\n# Clean up\nrm -rf ~/claude-commands-temp"
+          }
+        }
+      ],
+      "tips": [
+        "Always review imported commands before using them - understand what they do",
+        "Check for updates to imported commands periodically",
+        "Customize imported commands to match your coding style and preferences",
+        "Consider contributing your own commands back to the community",
+        "Keep track of where commands came from for attribution"
+      ],
+      "relatedAchievements": ["first_command", "command_library", "team_commands"]
+    },
+    "command_library": {
+      "longDescription": "The Command Library achievement marks you as a power user who has built an extensive collection of custom commands. Having 10 or more commands demonstrates a commitment to optimizing your workflow through automation. Your library likely spans multiple domains - from code review and testing to documentation and deployment - making Claude Code a truly personalized development companion tailored to your specific needs.",
+      "whyItMatters": "A comprehensive command library transforms Claude Code from a general-purpose assistant into a specialized tool optimized for your workflow. Each command represents a pattern you've automated, saving cumulative hours over time.",
+      "difficulty": "advanced",
+      "howTo": {
+        "summary": "Build a collection of 10 or more custom commands covering various aspects of your workflow",
+        "steps": [
+          {
+            "instruction": "Audit your repetitive tasks to identify command opportunities",
+            "code": {
+              "language": "plaintext",
+              "content": "Common automation candidates:\n- Code review checklists\n- Test generation\n- Documentation updates\n- Git workflows\n- Deployment steps\n- Bug investigation\n- Performance analysis\n- Security scanning\n- Refactoring patterns\n- API integration"
+            }
+          },
+          {
+            "instruction": "Organize commands into namespaced directories",
+            "code": {
+              "language": "bash",
+              "content": "mkdir -p ~/.claude/commands/{git,test,docs,deploy,review}"
+            }
+          },
+          {
+            "instruction": "Create commands for each category",
+            "code": {
+              "language": "bash",
+              "content": "# Example library structure:\n~/.claude/commands/\n  git/\n    commit-smart.md\n    branch-cleanup.md\n    pr-prepare.md\n  test/\n    generate-tests.md\n    coverage-report.md\n  docs/\n    readme-update.md\n    api-docs.md\n  review/\n    security-scan.md\n    code-review.md\n    performance-check.md"
+            }
+          }
+        ],
+        "estimatedTime": "1-2 hours to build initial library"
+      },
+      "examples": [
+        {
+          "title": "Complete Developer Toolkit",
+          "description": "A well-organized library covering all development phases",
+          "code": {
+            "language": "plaintext",
+            "content": ".claude/commands/\n  planning/\n    estimate.md         # Estimate task complexity\n    break-down.md       # Break feature into tasks\n  coding/\n    implement.md        # Implement from spec\n    refactor.md         # Suggest refactoring\n  testing/\n    unit-tests.md       # Generate unit tests\n    integration.md      # Create integration tests\n  review/\n    pr-review.md        # Review pull request\n    security.md         # Security analysis\n  docs/\n    readme.md           # Update README\n    changelog.md        # Generate changelog\n  deploy/\n    release.md          # Prepare release\n    rollback.md         # Rollback assistance"
+          },
+          "explanation": "This library covers the complete software development lifecycle with organized namespaces."
+        }
+      ],
+      "tips": [
+        "Start with commands for your most frequent tasks",
+        "Use consistent naming conventions across your library",
+        "Keep a changelog or version history for important commands",
+        "Review and prune unused commands periodically",
+        "Share your best commands with your team or the community"
+      ],
+      "relatedAchievements": ["first_command", "namespace_user", "team_commands", "command_composer"]
+    },
+    "conditional_command": {
+      "longDescription": "The Conditional Command achievement recognizes your mastery of dynamic command logic. By incorporating conditional statements like if/else, when, or depending on clauses, your commands can adapt their behavior based on context, user input, or file characteristics. This creates intelligent workflows that handle multiple scenarios gracefully instead of requiring separate commands for each situation.",
+      "whyItMatters": "Conditional logic makes commands flexible and context-aware. A single smart command can replace multiple simple ones, adapting its behavior to different file types, project states, or user preferences.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Create a command that includes conditional branching based on context or input",
+        "steps": [
+          {
+            "instruction": "Identify scenarios that require different handling",
+            "code": {
+              "language": "plaintext",
+              "content": "Example scenarios for conditional logic:\n- Different file types need different review criteria\n- Debug vs production environments\n- Frontend vs backend code\n- New vs existing features"
+            }
+          },
+          {
+            "instruction": "Create a command with conditional instructions",
+            "code": {
+              "language": "markdown",
+              "content": "---\ndescription: Smart code review based on file type\n---\n\nReview the code in $FILE:\n\nIf the file is a test file (*.test.*, *.spec.*):\n- Check test coverage completeness\n- Verify assertions are meaningful\n- Look for missing edge cases\n\nIf the file is a React component (*.tsx, *.jsx):\n- Check for accessibility issues\n- Review state management\n- Verify proper prop types\n\nOtherwise:\n- Perform general code review\n- Check for code smells\n- Suggest refactoring opportunities",
+              "filename": ".claude/commands/smart-review.md"
+            }
+          }
+        ],
+        "estimatedTime": "10 minutes"
+      },
+      "examples": [
+        {
+          "title": "Environment-Aware Deploy",
+          "description": "Different deployment steps based on target environment",
+          "code": {
+            "language": "markdown",
+            "content": "---\ndescription: Deploy to specified environment\n---\n\nDeploy to $ARGUMENTS environment:\n\nIf deploying to 'production':\n- Run full test suite first\n- Create backup of current state\n- Deploy with zero-downtime strategy\n- Send notification to #releases channel\n\nIf deploying to 'staging':\n- Run smoke tests only\n- Deploy with standard strategy\n- Update staging environment docs\n\nWhen deploying to 'development':\n- Skip tests (assume CI passed)\n- Quick deploy for fast iteration",
+            "filename": ".claude/commands/deploy.md"
+          },
+          "explanation": "This command adapts the entire deployment workflow based on which environment is targeted."
+        },
+        {
+          "title": "Adaptive Explanation",
+          "description": "Adjust explanation depth based on audience",
+          "code": {
+            "language": "markdown",
+            "content": "---\ndescription: Explain code at appropriate level\n---\n\nExplain $SELECTION:\n\nIf the user says 'beginner' or 'simple':\n- Use analogies and avoid jargon\n- Explain foundational concepts\n- Provide learning resources\n\nIf the user says 'expert' or 'deep':\n- Include implementation details\n- Discuss performance implications\n- Reference design patterns\n\nOtherwise (default):\n- Balanced explanation\n- Define technical terms when used\n- Include practical examples",
+            "filename": ".claude/commands/explain.md"
+          }
+        }
+      ],
+      "tips": [
+        "Use clear trigger words: If, When, Otherwise, Else, depending on",
+        "Consider default behavior for unmatched conditions",
+        "Test commands with different inputs to verify all branches work",
+        "Keep conditions mutually exclusive to avoid confusion"
+      ],
+      "relatedAchievements": ["context_injector", "parameterized", "workflow_builder"]
+    },
+    "context_injector": {
+      "longDescription": "The Context Injector achievement celebrates your use of built-in context variables to make commands dynamic and file-aware. Variables like $FILE, $SELECTION, $DIRECTORY, and $PROJECT automatically capture context from your editor or workspace, eliminating the need to manually specify targets. This creates seamless workflows where commands intelligently operate on whatever you're currently working with.",
+      "whyItMatters": "Context variables bridge the gap between your editor and Claude. Instead of copying paths or selecting text manually, commands can automatically act on your current file, selection, or project context.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Create a command that uses built-in context variables like $FILE, $SELECTION, or $DIRECTORY",
+        "steps": [
+          {
+            "instruction": "Understand available context variables",
+            "code": {
+              "language": "plaintext",
+              "content": "Available context variables:\n$FILE       - Path to current file\n$SELECTION  - Currently selected text\n$DIRECTORY  - Current working directory\n$PROJECT    - Project root directory"
+            }
+          },
+          {
+            "instruction": "Create a command using context variables",
+            "code": {
+              "language": "markdown",
+              "content": "---\ndescription: Explain the selected code\n---\n\nExplain this code from $FILE:\n\n```\n$SELECTION\n```\n\nProvide:\n1. What this code does\n2. How it works\n3. Any potential issues or improvements",
+              "filename": ".claude/commands/explain-selection.md"
+            }
+          },
+          {
+            "instruction": "Use the command with selected text",
+            "code": {
+              "language": "plaintext",
+              "content": "1. Select code in your editor\n2. Run: /explain-selection\n3. Claude receives both file path and selection"
+            }
+          }
+        ],
+        "estimatedTime": "5 minutes"
+      },
+      "examples": [
+        {
+          "title": "File Analyzer",
+          "description": "Analyze the structure of the current file",
+          "code": {
+            "language": "markdown",
+            "content": "---\ndescription: Analyze current file structure\n---\n\nAnalyze $FILE and provide:\n\n1. File purpose and responsibility\n2. Key functions/classes and their roles\n3. Dependencies and imports\n4. Suggestions for improvement\n5. Test coverage recommendations",
+            "filename": ".claude/commands/analyze-file.md"
+          },
+          "explanation": "The $FILE variable automatically captures whichever file you're working in."
+        },
+        {
+          "title": "Directory Scanner",
+          "description": "Summarize contents of current directory",
+          "code": {
+            "language": "markdown",
+            "content": "---\ndescription: Summarize directory structure\n---\n\nScan $DIRECTORY and provide:\n\n1. Overview of file organization\n2. Main file types present\n3. Suggested improvements to structure\n4. Any files that seem misplaced",
+            "filename": ".claude/commands/scan-dir.md"
+          }
+        },
+        {
+          "title": "Refactor Selection",
+          "description": "Refactor selected code with context",
+          "code": {
+            "language": "markdown",
+            "content": "---\ndescription: Refactor selected code\n---\n\nRefactor this code from $FILE:\n\n```\n$SELECTION\n```\n\nConsidering the project context in $PROJECT:\n- Follow existing patterns\n- Maintain consistency with codebase style\n- Preserve functionality",
+            "filename": ".claude/commands/refactor.md"
+          }
+        }
+      ],
+      "tips": [
+        "$SELECTION is powerful for targeted operations on specific code",
+        "$FILE provides full path context for file-specific operations",
+        "Combine multiple variables for rich context (e.g., $FILE + $SELECTION)",
+        "Use $PROJECT to ensure consistency with codebase conventions",
+        "Variables are replaced before the command is sent to Claude"
+      ],
+      "relatedAchievements": ["parameterized", "multi_param", "file_reader"]
+    },
+    "documented": {
+      "longDescription": "The Documented achievement recognizes your commitment to making commands discoverable and understandable through proper documentation. By adding the description field to your command's frontmatter, you ensure that when you or your team browse available commands, each one clearly explains its purpose. Good documentation transforms a collection of files into a navigable toolkit.",
+      "whyItMatters": "Description frontmatter makes commands self-documenting and discoverable. When browsing commands or using tab completion, clear descriptions help you quickly find the right tool for the job.",
+      "difficulty": "beginner",
+      "howTo": {
+        "summary": "Add YAML frontmatter with a description field to your command file",
+        "steps": [
+          {
+            "instruction": "Create or open a command file",
+            "code": {
+              "language": "bash",
+              "content": "touch ~/.claude/commands/my-command.md"
+            }
+          },
+          {
+            "instruction": "Add frontmatter with description at the top of the file",
+            "code": {
+              "language": "markdown",
+              "content": "---\ndescription: Brief description of what this command does\n---\n\nYour command instructions here...",
+              "filename": ".claude/commands/my-command.md"
+            }
+          },
+          {
+            "instruction": "Write a clear, concise description",
+            "code": {
+              "language": "markdown",
+              "content": "---\ndescription: Generate unit tests for the selected function\n---\n\nAnalyze $SELECTION and generate comprehensive unit tests...",
+              "filename": ".claude/commands/gen-tests.md"
+            }
+          }
+        ],
+        "estimatedTime": "2 minutes"
+      },
+      "examples": [
+        {
+          "title": "Well-Documented Command",
+          "description": "A command with clear, actionable description",
+          "code": {
+            "language": "markdown",
+            "content": "---\ndescription: Review PR for security vulnerabilities and suggest fixes\n---\n\nReview the current pull request for:\n1. SQL injection risks\n2. XSS vulnerabilities\n3. Authentication issues\n4. Sensitive data exposure\n\nProvide severity ratings and remediation steps.",
+            "filename": ".claude/commands/security-review.md"
+          },
+          "explanation": "The description clearly states both what the command does and the value it provides."
+        },
+        {
+          "title": "Multiple Frontmatter Fields",
+          "description": "Frontmatter can include other metadata too",
+          "code": {
+            "language": "markdown",
+            "content": "---\ndescription: Complex analysis requiring extended thinking\nmodel: claude-sonnet-4-20250514\n---\n\nPerform deep analysis of the codebase architecture...",
+            "filename": ".claude/commands/analyze-architecture.md"
+          },
+          "explanation": "The description field can coexist with other frontmatter fields like model or allowed-tools."
+        }
+      ],
+      "tips": [
+        "Keep descriptions under 80 characters for clean display",
+        "Start with a verb: Generate, Review, Analyze, Create",
+        "Be specific about what the command operates on",
+        "Include the key benefit or output in the description",
+        "Use consistent style across all your command descriptions"
+      ],
+      "relatedAchievements": ["first_command", "model_picker", "tool_restrictor"]
+    },
+    "error_handler_cmd": {
+      "longDescription": "The Error Handler achievement recognizes commands that gracefully handle failure scenarios. By explicitly addressing error cases, edge conditions, and failure modes in your command instructions, you create robust workflows that provide helpful guidance even when things go wrong. This defensive approach to command design prevents cryptic failures and helps users understand and recover from problems.",
+      "whyItMatters": "Commands that handle errors gracefully prevent user frustration and wasted time. Explicit error handling transforms failures from dead ends into opportunities for guided troubleshooting.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Create a command that explicitly handles error cases and edge conditions",
+        "steps": [
+          {
+            "instruction": "Identify potential failure modes for your command",
+            "code": {
+              "language": "plaintext",
+              "content": "Common error scenarios:\n- Missing or invalid input\n- File not found\n- Permission denied\n- Network failures\n- Invalid state/context\n- Resource limitations"
+            }
+          },
+          {
+            "instruction": "Add error handling instructions to your command",
+            "code": {
+              "language": "markdown",
+              "content": "---\ndescription: Build project with error recovery\n---\n\nBuild the project:\n\n```bash\nnpm run build\n```\n\nIf the build fails:\n1. Identify the error type (syntax, type, dependency)\n2. Locate the problematic file and line\n3. Suggest a specific fix\n4. If it's a dependency error, run `npm install` first\n\nIf node_modules is missing:\n- Run `npm install` before building\n\nIf package.json is not found:\n- Report that this doesn't appear to be a Node.js project",
+              "filename": ".claude/commands/build.md"
+            }
+          }
+        ],
+        "estimatedTime": "10 minutes"
+      },
+      "examples": [
+        {
+          "title": "Robust File Processor",
+          "description": "A command that handles various file-related errors",
+          "code": {
+            "language": "markdown",
+            "content": "---\ndescription: Process configuration file\n---\n\nRead and validate $FILE as a config file.\n\nHandle these cases:\n\nIf file doesn't exist:\n- List similar files in the directory\n- Suggest creating from template\n\nIf file is empty:\n- Provide a starter template\n\nIf JSON/YAML is malformed:\n- Identify syntax error location\n- Show the problematic section\n- Provide corrected version\n\nIf required fields are missing:\n- List missing fields\n- Provide default values",
+            "filename": ".claude/commands/validate-config.md"
+          },
+          "explanation": "This command anticipates multiple failure modes and provides specific recovery guidance for each."
+        },
+        {
+          "title": "API Integration with Fallback",
+          "description": "Handle external service failures",
+          "code": {
+            "language": "markdown",
+            "content": "---\ndescription: Fetch data from API\n---\n\nFetch data from the API endpoint.\n\nIf the request fails:\n- Check if the service is reachable\n- If 401/403: Check API key configuration\n- If 404: Verify endpoint URL\n- If 500: Report server error, suggest retry\n- If timeout: Suggest checking network\n\nIf API key is not set:\n- Explain how to configure it\n- Provide the environment variable name",
+            "filename": ".claude/commands/api-fetch.md"
+          }
+        }
+      ],
+      "tips": [
+        "Anticipate the most common failure modes first",
+        "Provide actionable recovery steps, not just error descriptions",
+        "Include validation checks before destructive operations",
+        "Consider cascading errors - one failure may cause others",
+        "Test your error handling by intentionally triggering failures"
+      ],
+      "relatedAchievements": ["validation_command", "conditional_command", "workflow_builder"]
+    },
+    "file_reader": {
+      "longDescription": "The File Reader achievement marks your ability to create commands that intelligently incorporate file contents as context. By instructing Claude to read specific files, your commands can analyze codebases, process configurations, review documentation, or compare files. This capability transforms commands from simple instructions into context-aware operations that understand the full picture.",
+      "whyItMatters": "Commands that read files can perform meaningful analysis on real code and data. Without file reading, commands are limited to operating on manual input or selections.",
+      "difficulty": "beginner",
+      "howTo": {
+        "summary": "Create a command that instructs Claude to read and analyze file contents",
+        "steps": [
+          {
+            "instruction": "Create a command that references specific files",
+            "code": {
+              "language": "markdown",
+              "content": "---\ndescription: Review package.json dependencies\n---\n\nRead the package.json file and analyze:\n1. Are all dependencies up to date?\n2. Are there security vulnerabilities?\n3. Are there unused dependencies?\n4. Should any devDependencies be regular dependencies?",
+              "filename": ".claude/commands/review-deps.md"
+            }
+          },
+          {
+            "instruction": "Or use context variables for dynamic file reading",
+            "code": {
+              "language": "markdown",
+              "content": "---\ndescription: Analyze current file\n---\n\nRead the file at $FILE and provide:\n1. Summary of purpose\n2. Code quality assessment\n3. Suggestions for improvement",
+              "filename": ".claude/commands/analyze.md"
+            }
+          }
+        ],
+        "estimatedTime": "5 minutes"
+      },
+      "examples": [
+        {
+          "title": "Configuration Validator",
+          "description": "Read and validate config files",
+          "code": {
+            "language": "markdown",
+            "content": "---\ndescription: Validate project configuration\n---\n\nRead the following configuration files:\n- package.json\n- tsconfig.json  \n- .eslintrc (if exists)\n- .prettierrc (if exists)\n\nCheck for:\n1. Consistency between configs\n2. Best practice violations\n3. Missing recommended settings",
+            "filename": ".claude/commands/validate-configs.md"
+          },
+          "explanation": "This command reads multiple config files and cross-references them for consistency."
+        },
+        {
+          "title": "Test Coverage Reporter",
+          "description": "Read source and test files for coverage analysis",
+          "code": {
+            "language": "markdown",
+            "content": "---\ndescription: Analyze test coverage\n---\n\nRead the source file: $FILE\n\nThen find and read its corresponding test file (look for .test.ts, .spec.ts, or __tests__ directory).\n\nAnalyze:\n1. Which functions have tests?\n2. Which functions are missing tests?\n3. Are edge cases covered?\n4. Suggest additional test cases.",
+            "filename": ".claude/commands/coverage.md"
+          }
+        }
+      ],
+      "tips": [
+        "Specify file paths clearly or use context variables",
+        "Handle cases where files might not exist",
+        "Consider reading multiple related files for better context",
+        "For large files, focus analysis on specific sections",
+        "Use glob patterns when appropriate for multiple files"
+      ],
+      "relatedAchievements": ["context_injector", "first_command", "conditional_command"]
+    },
+    "first_command": {
+      "longDescription": "The First Command achievement celebrates your entry into the world of custom slash commands. By creating your first command file in the commands directory, you've taken the initial step toward automating repetitive tasks and building personalized workflows. Custom commands transform frequently-used prompts into reusable shortcuts, making Claude Code an extension of your own working style.",
+      "whyItMatters": "Your first command is the foundation of a personalized toolkit. It demonstrates understanding of how to extend Claude Code and opens the door to unlimited automation possibilities.",
+      "difficulty": "beginner",
+      "howTo": {
+        "summary": "Create a markdown file in your commands directory with instructions for Claude",
+        "steps": [
+          {
+            "instruction": "Create the commands directory if it doesn't exist",
+            "code": {
+              "language": "bash",
+              "content": "mkdir -p ~/.claude/commands"
+            }
+          },
+          {
+            "instruction": "Create your first command file",
+            "code": {
+              "language": "markdown",
+              "content": "---\ndescription: Explain the selected code simply\n---\n\nExplain this code in simple terms that a beginner could understand.\nAvoid jargon and use analogies where helpful.",
+              "filename": "~/.claude/commands/explain.md"
+            }
+          },
+          {
+            "instruction": "Use your new command",
+            "code": {
+              "language": "plaintext",
+              "content": "In Claude Code, type: /explain\n\nThe command will be available after restarting your session."
+            }
+          }
+        ],
+        "estimatedTime": "2 minutes"
+      },
+      "examples": [
+        {
+          "title": "Simple Review Command",
+          "description": "A basic code review command",
+          "code": {
+            "language": "markdown",
+            "content": "---\ndescription: Quick code review\n---\n\nReview this code for:\n1. Bugs and errors\n2. Code style issues\n3. Performance concerns\n\nBe concise and actionable.",
+            "filename": "~/.claude/commands/review.md"
+          },
+          "explanation": "A simple command that packages common review criteria into a reusable shortcut."
+        },
+        {
+          "title": "Documentation Generator",
+          "description": "Generate docs for selected code",
+          "code": {
+            "language": "markdown",
+            "content": "---\ndescription: Generate documentation\n---\n\nGenerate documentation for this code including:\n- Brief description\n- Parameters/arguments\n- Return values\n- Usage examples",
+            "filename": "~/.claude/commands/doc.md"
+          }
+        }
+      ],
+      "tips": [
+        "Start with commands for tasks you do frequently",
+        "Keep first commands simple - you can add complexity later",
+        "Use the description frontmatter to remember what each command does",
+        "Restart your Claude Code session to see new commands",
+        "Store personal commands in ~/.claude/commands for global access"
+      ],
+      "relatedAchievements": ["documented", "team_commands", "parameterized"]
+    },
+    "interactive_command": {
+      "longDescription": "The Interactive Command achievement recognizes commands designed to engage in dialogue rather than just execute tasks. By instructing Claude to ask clarifying questions, gather requirements, or confirm assumptions before proceeding, your commands become collaborative conversations. This interactive approach prevents wasted effort on misunderstood requirements and produces more accurate, tailored results.",
+      "whyItMatters": "Interactive commands gather the right information before acting, reducing rework from misunderstandings. They guide users through complex decisions and surface important considerations they might have missed.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Create a command that prompts for clarification or gathers information before proceeding",
+        "steps": [
+          {
+            "instruction": "Design a command that asks questions before acting",
+            "code": {
+              "language": "markdown",
+              "content": "---\ndescription: Generate component with requirements gathering\n---\n\nBefore generating the component, ask the following:\n\n1. What should the component be named?\n2. Will it need state management? (local state, context, or external store)\n3. Should it include TypeScript types?\n4. Does it need to fetch data? If so, from where?\n5. What styling approach? (CSS modules, Tailwind, styled-components)\n\nOnce I've answered, generate the component according to my specifications.",
+              "filename": ".claude/commands/gen-component.md"
+            }
+          },
+          {
+            "instruction": "The command initiates a dialogue when run",
+            "code": {
+              "language": "plaintext",
+              "content": "/gen-component\n\nClaude: I'll help create a component. Let me ask a few questions:\n1. What should the component be named?\n..."
+            }
+          }
+        ],
+        "estimatedTime": "5 minutes"
+      },
+      "examples": [
+        {
+          "title": "API Design Interview",
+          "description": "Gather requirements before designing an API",
+          "code": {
+            "language": "markdown",
+            "content": "---\ndescription: Design API endpoint interactively\n---\n\nI'll help design an API endpoint. First, I need to understand your requirements:\n\n1. What resource does this endpoint manage?\n2. What operations are needed? (CRUD, specific actions)\n3. What authentication is required?\n4. What are the request/response formats?\n5. Are there rate limits or pagination needs?\n\nAsk these questions one at a time, then design the endpoint based on my answers.",
+            "filename": ".claude/commands/design-api.md"
+          },
+          "explanation": "This command walks through API design decisions systematically before generating specifications."
+        },
+        {
+          "title": "Bug Investigation Interview",
+          "description": "Gather context before debugging",
+          "code": {
+            "language": "markdown",
+            "content": "---\ndescription: Debug with guided questions\n---\n\nLet's investigate this bug together. Please tell me:\n\n1. What behavior did you expect?\n2. What behavior are you seeing?\n3. When did this start happening?\n4. Can you reproduce it consistently?\n5. What have you already tried?\n\nBased on your answers, I'll suggest debugging strategies.",
+            "filename": ".claude/commands/debug.md"
+          }
+        }
+      ],
+      "tips": [
+        "Ask questions one at a time to avoid overwhelming users",
+        "Include sensible defaults for optional questions",
+        "Confirm understanding before taking action",
+        "Use numbered questions for easy reference",
+        "Allow users to skip optional questions"
+      ],
+      "relatedAchievements": ["conditional_command", "workflow_builder", "validation_command"]
+    },
+    "mcp_command": {
+      "longDescription": "The MCP Command achievement celebrates your integration of Model Context Protocol (MCP) servers into custom commands. By referencing MCP tools in your commands, you extend Claude's capabilities to interact with external services, databases, file systems, and APIs. This powerful combination of natural language commands with protocol-based tool access creates sophisticated automation that bridges Claude with your entire technology stack.",
+      "whyItMatters": "MCP integration multiplies what your commands can do. Instead of just generating text or code, commands can query databases, manage cloud resources, interact with APIs, and perform real-world actions through MCP servers.",
+      "difficulty": "advanced",
+      "howTo": {
+        "summary": "Create a command that leverages MCP server tools for extended functionality",
+        "steps": [
+          {
+            "instruction": "Ensure you have MCP servers configured",
+            "code": {
+              "language": "json",
+              "content": "{\n  \"mcpServers\": {\n    \"github\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"@modelcontextprotocol/server-github\"]\n    },\n    \"postgres\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"@modelcontextprotocol/server-postgres\"],\n      \"env\": {\n        \"DATABASE_URL\": \"postgresql://...\"\n      }\n    }\n  }\n}",
+              "filename": ".mcp.json"
+            }
+          },
+          {
+            "instruction": "Create a command that uses MCP server tools",
+            "code": {
+              "language": "markdown",
+              "content": "---\ndescription: Create GitHub issue from code comment\n---\n\nAnalyze the TODO comments in $FILE.\n\nFor each TODO found:\n1. Extract the task description\n2. Determine appropriate labels (bug, enhancement, etc.)\n3. Use the GitHub MCP server to create an issue\n4. Report created issue numbers\n\nUse the mcp__github tools to create the issues.",
+              "filename": ".claude/commands/todos-to-issues.md"
+            }
+          }
+        ],
+        "estimatedTime": "15 minutes"
+      },
+      "examples": [
+        {
+          "title": "Database Query Command",
+          "description": "Query database via MCP server",
+          "code": {
+            "language": "markdown",
+            "content": "---\ndescription: Analyze database schema\n---\n\nUsing the postgres MCP server tools:\n\n1. Query the database schema\n2. List all tables and their relationships\n3. Identify potential optimization opportunities:\n   - Missing indexes\n   - Unused tables\n   - Redundant columns\n4. Generate an ER diagram description",
+            "filename": ".claude/commands/analyze-db.md"
+          },
+          "explanation": "This command uses a database MCP server to perform schema analysis without manual queries."
+        },
+        {
+          "title": "Browser Automation Command",
+          "description": "Use Playwright MCP for web tasks",
+          "code": {
+            "language": "markdown",
+            "content": "---\ndescription: Take screenshots of deployed site\n---\n\nUsing the Playwright MCP server:\n\n1. Navigate to the production URL\n2. Take screenshots of:\n   - Homepage\n   - Login page\n   - Dashboard\n3. Check for visual regressions\n4. Report any broken layouts or errors",
+            "filename": ".claude/commands/visual-check.md"
+          }
+        }
+      ],
+      "tips": [
+        "Ensure MCP servers are properly configured before using them in commands",
+        "Reference MCP tools by their full name (mcp__servername__toolname)",
+        "Test MCP server connectivity before creating dependent commands",
+        "Combine multiple MCP servers for complex workflows",
+        "Handle cases where MCP servers might be unavailable"
+      ],
+      "relatedAchievements": ["bash_integrator", "command_composer", "workflow_builder"]
+    },
+    "model_picker": {
+      "longDescription": "The Model Picker achievement recognizes your strategic use of model selection in command frontmatter. Different models have different strengths - some excel at creative tasks, others at reasoning or speed. By specifying the model field in your command's frontmatter, you can optimize each command for its specific purpose, using more capable models for complex analysis and faster models for simple tasks.",
+      "whyItMatters": "Choosing the right model for each task optimizes both quality and cost. Complex reasoning tasks benefit from more capable models, while simple formatting tasks work well with faster, more economical options.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Add the model field to your command's YAML frontmatter to specify which Claude model to use",
+        "steps": [
+          {
+            "instruction": "Understand available models and their strengths",
+            "code": {
+              "language": "plaintext",
+              "content": "Model selection considerations:\n- claude-opus-4-*: Complex reasoning, nuanced analysis\n- claude-sonnet-4-*: Balanced capability and speed  \n- claude-haiku-*: Fast responses, simple tasks"
+            }
+          },
+          {
+            "instruction": "Add model to frontmatter for your command",
+            "code": {
+              "language": "markdown",
+              "content": "---\ndescription: Deep architecture analysis\nmodel: claude-sonnet-4-20250514\n---\n\nPerform comprehensive analysis of the system architecture:\n1. Identify design patterns\n2. Evaluate scalability\n3. Find potential bottlenecks\n4. Suggest improvements",
+              "filename": ".claude/commands/deep-analysis.md"
+            }
+          }
+        ],
+        "estimatedTime": "2 minutes"
+      },
+      "examples": [
+        {
+          "title": "Quick Format Command",
+          "description": "Use a fast model for simple formatting",
+          "code": {
+            "language": "markdown",
+            "content": "---\ndescription: Format JSON quickly\nmodel: claude-haiku-3-5-20241022\n---\n\nFormat this JSON with proper indentation.\nDo not change any values, only formatting.",
+            "filename": ".claude/commands/format-json.md"
+          },
+          "explanation": "Simple formatting doesn't need the most capable model - Haiku handles it efficiently."
+        },
+        {
+          "title": "Complex Security Audit",
+          "description": "Use a powerful model for security analysis",
+          "code": {
+            "language": "markdown",
+            "content": "---\ndescription: Comprehensive security audit\nmodel: claude-sonnet-4-20250514\n---\n\nPerform a thorough security audit of this codebase:\n\n1. Identify OWASP Top 10 vulnerabilities\n2. Review authentication/authorization logic\n3. Check for data exposure risks\n4. Analyze dependency security\n5. Review cryptographic implementations\n6. Check for injection vulnerabilities\n\nProvide severity ratings and remediation guidance.",
+            "filename": ".claude/commands/security-audit.md"
+          },
+          "explanation": "Security analysis requires nuanced understanding and should use a more capable model."
+        }
+      ],
+      "tips": [
+        "Match model capability to task complexity",
+        "Use faster models for formatting, conversion, and simple lookups",
+        "Reserve more capable models for analysis, architecture, and security",
+        "Consider cost implications of model selection",
+        "Test commands with different models to find the right balance"
+      ],
+      "relatedAchievements": ["documented", "tool_restrictor", "prompt_engineer"]
+    },
+    "multi_param": {
+      "longDescription": "The Multi Param achievement celebrates your use of multiple numbered parameters ($1, $2, $3) in commands. This parameterization pattern enables commands that accept structured input - like source and destination paths, old and new names, or any scenario where distinct pieces of information need to be captured separately. Each numbered parameter maps to space-separated arguments when the command is invoked.",
+      "whyItMatters": "Numbered parameters enable precise, structured input for commands that need multiple distinct values. This is cleaner than parsing a single $ARGUMENTS string and makes command intentions clearer.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Create a command that uses $1, $2, and optionally $3+ for multiple distinct arguments",
+        "steps": [
+          {
+            "instruction": "Understand how numbered parameters work",
+            "code": {
+              "language": "plaintext",
+              "content": "Command: /rename old-name new-name\n\n$1 = \"old-name\"\n$2 = \"new-name\"\n$ARGUMENTS = \"old-name new-name\""
+            }
+          },
+          {
+            "instruction": "Create a command with multiple parameters",
+            "code": {
+              "language": "markdown",
+              "content": "---\ndescription: Rename symbol across codebase\n---\n\nRename all occurrences of `$1` to `$2` in the codebase.\n\n1. Find all files containing `$1`\n2. Preview the changes\n3. Apply the renaming\n4. Update any related documentation",
+              "filename": ".claude/commands/rename-symbol.md"
+            }
+          },
+          {
+            "instruction": "Invoke with multiple arguments",
+            "code": {
+              "language": "plaintext",
+              "content": "/rename-symbol getUserById fetchUserById\n\nClaude receives:\n$1 = getUserById\n$2 = fetchUserById"
+            }
+          }
+        ],
+        "estimatedTime": "5 minutes"
+      },
+      "examples": [
+        {
+          "title": "File Comparison",
+          "description": "Compare two files using positional parameters",
+          "code": {
+            "language": "markdown",
+            "content": "---\ndescription: Compare two files and show differences\n---\n\nCompare these two files:\n- File 1: $1\n- File 2: $2\n\nShow:\n1. Structural differences\n2. Content differences\n3. Which file is more recent\n4. Suggestions for reconciliation",
+            "filename": ".claude/commands/compare.md"
+          },
+          "explanation": "Usage: /compare src/old.ts src/new.ts"
+        },
+        {
+          "title": "Environment Migration",
+          "description": "Migrate configuration between environments",
+          "code": {
+            "language": "markdown",
+            "content": "---\ndescription: Migrate config from source to target environment\n---\n\nMigrate configuration from $1 to $2 environment:\n\nSource: config/$1.json\nTarget: config/$2.json\n\n1. Read source configuration\n2. Identify environment-specific values to transform\n3. Generate target configuration\n4. Highlight values that need manual review",
+            "filename": ".claude/commands/migrate-config.md"
+          },
+          "explanation": "Usage: /migrate-config staging production"
+        },
+        {
+          "title": "Three-Way Operation",
+          "description": "Command using three parameters",
+          "code": {
+            "language": "markdown",
+            "content": "---\ndescription: Create API endpoint with model and action\n---\n\nCreate a $3 endpoint for the $1 resource in the $2 module.\n\nResource: $1 (e.g., 'user')\nModule: $2 (e.g., 'auth')\nAction: $3 (e.g., 'create', 'read', 'update', 'delete')",
+            "filename": ".claude/commands/create-endpoint.md"
+          },
+          "explanation": "Usage: /create-endpoint user auth create"
+        }
+      ],
+      "tips": [
+        "Use descriptive comments to document what each parameter expects",
+        "Consider providing defaults for optional parameters",
+        "Parameter order should be intuitive (source before destination, old before new)",
+        "$ARGUMENTS contains all parameters as a single string if needed",
+        "Validate parameters at the start of complex commands"
+      ],
+      "relatedAchievements": ["parameterized", "context_injector", "documented"]
+    },
+    "namespace_user": {
+      "longDescription": "The Namespace User achievement recognizes your organization skills in managing commands through subdirectories. By placing commands in subdirectories within the commands folder, you create logical namespaces that group related functionality. This organization pattern keeps large command libraries manageable and creates intuitive command paths like /git/commit or /test/unit.",
+      "whyItMatters": "Namespaces prevent command name collisions and make large command libraries navigable. Grouping related commands helps you and your team find the right tool quickly.",
+      "difficulty": "beginner",
+      "howTo": {
+        "summary": "Create commands within subdirectories to establish namespaces",
+        "steps": [
+          {
+            "instruction": "Create subdirectories for command categories",
+            "code": {
+              "language": "bash",
+              "content": "mkdir -p ~/.claude/commands/{git,test,docs,deploy}"
+            }
+          },
+          {
+            "instruction": "Place related commands in their namespace",
+            "code": {
+              "language": "markdown",
+              "content": "---\ndescription: Smart commit with conventional format\n---\n\nAnalyze staged changes and create a commit with:\n- Conventional commit format (feat/fix/docs/etc.)\n- Clear description\n- Reference related issues",
+              "filename": "~/.claude/commands/git/commit.md"
+            }
+          },
+          {
+            "instruction": "Use namespaced commands",
+            "code": {
+              "language": "plaintext",
+              "content": "/git/commit\n/test/unit\n/docs/readme"
+            }
+          }
+        ],
+        "estimatedTime": "5 minutes"
+      },
+      "examples": [
+        {
+          "title": "Git Operations Namespace",
+          "description": "Group all git-related commands",
+          "code": {
+            "language": "plaintext",
+            "content": ".claude/commands/git/\n  commit.md      -> /git/commit\n  branch.md      -> /git/branch  \n  pr.md          -> /git/pr\n  rebase.md      -> /git/rebase\n  cleanup.md     -> /git/cleanup"
+          },
+          "explanation": "All git operations live under the /git/ namespace, making them easy to discover and remember."
+        },
+        {
+          "title": "Testing Namespace",
+          "description": "Organize testing commands",
+          "code": {
+            "language": "plaintext",
+            "content": ".claude/commands/test/\n  unit.md        -> /test/unit\n  integration.md -> /test/integration\n  e2e.md         -> /test/e2e\n  coverage.md    -> /test/coverage\n  generate.md    -> /test/generate"
+          }
+        },
+        {
+          "title": "Multi-Level Namespaces",
+          "description": "Deeper nesting for complex organization",
+          "code": {
+            "language": "plaintext",
+            "content": ".claude/commands/aws/\n  lambda/\n    deploy.md    -> /aws/lambda/deploy\n    logs.md      -> /aws/lambda/logs\n  s3/\n    sync.md      -> /aws/s3/sync\n    list.md      -> /aws/s3/list"
+          },
+          "explanation": "For large toolkits, multi-level nesting keeps everything organized without overwhelming top-level listings."
+        }
+      ],
+      "tips": [
+        "Use consistent, descriptive namespace names",
+        "Keep namespace depth to 2-3 levels maximum",
+        "Place the most-used commands in shorter paths",
+        "Consider your team's mental model when organizing",
+        "Document your namespace structure in CLAUDE.md"
+      ],
+      "relatedAchievements": ["first_command", "command_library", "team_commands"]
+    },
+    "output_formatter": {
+      "longDescription": "The Output Formatter achievement recognizes commands that specify particular output formats for results. By instructing Claude to return responses as JSON, markdown tables, bullet lists, or other structured formats, your commands produce consistent, parse-able output. This is especially valuable when command output will be consumed by other tools, displayed in specific contexts, or needs to match team documentation standards.",
+      "whyItMatters": "Structured output formats make command results predictable and reusable. JSON output can be piped to other tools, tables work well in documentation, and consistent formatting improves readability.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Create a command that specifies the output format Claude should use",
+        "steps": [
+          {
+            "instruction": "Decide on the appropriate output format for your use case",
+            "code": {
+              "language": "plaintext",
+              "content": "Common output formats:\n- JSON: Machine-readable, good for tool integration\n- Markdown table: Documentation-friendly\n- Bullet list: Quick scanning\n- Code block: Ready to copy/paste\n- Report: Structured sections with headers"
+            }
+          },
+          {
+            "instruction": "Specify the format explicitly in your command",
+            "code": {
+              "language": "markdown",
+              "content": "---\ndescription: List all TODOs as JSON\n---\n\nScan the codebase for TODO comments and return as JSON:\n\n```json\n{\n  \"todos\": [\n    {\n      \"file\": \"path/to/file\",\n      \"line\": 42,\n      \"text\": \"TODO comment text\",\n      \"priority\": \"high|medium|low\"\n    }\n  ],\n  \"summary\": {\n    \"total\": 0,\n    \"by_priority\": {}\n  }\n}\n```",
+              "filename": ".claude/commands/list-todos.md"
+            }
+          }
+        ],
+        "estimatedTime": "5 minutes"
+      },
+      "examples": [
+        {
+          "title": "Table Output",
+          "description": "Format results as a markdown table",
+          "code": {
+            "language": "markdown",
+            "content": "---\ndescription: List dependencies as table\n---\n\nRead package.json and format dependencies as a markdown table:\n\n| Package | Version | Type | Latest | Status |\n|---------|---------|------|--------|--------|\n| ...     | ...     | ...  | ...    | ...    |\n\nInclude columns for: name, current version, type (dep/devDep), latest version, update status.",
+            "filename": ".claude/commands/deps-table.md"
+          },
+          "explanation": "Table format is perfect for documentation and easy comparison of values."
+        },
+        {
+          "title": "Report Format",
+          "description": "Structured report with sections",
+          "code": {
+            "language": "markdown",
+            "content": "---\ndescription: Generate code review report\n---\n\nReview the code and format as a report:\n\n## Summary\n[1-2 sentence overview]\n\n## Issues Found\n### Critical\n- ...\n\n### Warnings\n- ...\n\n### Suggestions\n- ...\n\n## Metrics\n- Lines of code: X\n- Complexity score: Y\n- Test coverage: Z%\n\n## Recommendations\n1. ...",
+            "filename": ".claude/commands/review-report.md"
+          }
+        },
+        {
+          "title": "Machine-Readable JSON",
+          "description": "JSON for tool integration",
+          "code": {
+            "language": "markdown",
+            "content": "---\ndescription: Analyze file structure as JSON\n---\n\nAnalyze $DIRECTORY and output as JSON:\n\n```json\n{\n  \"root\": \"path\",\n  \"files\": [...],\n  \"directories\": [...],\n  \"stats\": {\n    \"totalFiles\": 0,\n    \"totalSize\": \"0 KB\",\n    \"fileTypes\": {}\n  }\n}\n```\n\nReturn ONLY the JSON, no additional text.",
+            "filename": ".claude/commands/dir-json.md"
+          }
+        }
+      ],
+      "tips": [
+        "Include example output structure in your command",
+        "Specify 'only' or 'just' when you want pure formatted output",
+        "Consider who/what will consume the output when choosing format",
+        "JSON is best when piping to other tools",
+        "Tables work well for human comparison and documentation"
+      ],
+      "relatedAchievements": ["prompt_engineer", "documented", "file_reader"]
+    },
+    "parameterized": {
+      "longDescription": "The Parameterized achievement marks your use of the $ARGUMENTS variable to create flexible, reusable commands. Instead of hard-coding values, $ARGUMENTS captures everything the user types after the command name, allowing a single command to handle many variations. This transforms static commands into dynamic tools that adapt to different inputs.",
+      "whyItMatters": "$ARGUMENTS makes commands versatile and reusable. One parameterized command can replace many static variants, reducing maintenance and making your command library more powerful.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Use $ARGUMENTS in your command to capture user input provided after the command name",
+        "steps": [
+          {
+            "instruction": "Understand how $ARGUMENTS works",
+            "code": {
+              "language": "plaintext",
+              "content": "When user runs: /explain async await promises\n$ARGUMENTS = \"async await promises\"\n\nWhen user runs: /explain\n$ARGUMENTS = \"\" (empty)"
+            }
+          },
+          {
+            "instruction": "Create a command using $ARGUMENTS",
+            "code": {
+              "language": "markdown",
+              "content": "---\ndescription: Explain any programming concept\n---\n\nExplain the following concept in simple terms:\n\n$ARGUMENTS\n\nInclude:\n- Definition\n- When to use it\n- Common pitfalls\n- Code example",
+              "filename": ".claude/commands/explain.md"
+            }
+          },
+          {
+            "instruction": "Use the parameterized command",
+            "code": {
+              "language": "plaintext",
+              "content": "/explain dependency injection\n/explain React hooks\n/explain async/await vs promises"
+            }
+          }
+        ],
+        "estimatedTime": "5 minutes"
+      },
+      "examples": [
+        {
+          "title": "Universal Search",
+          "description": "Search codebase for anything",
+          "code": {
+            "language": "markdown",
+            "content": "---\ndescription: Search codebase for pattern\n---\n\nSearch the codebase for: $ARGUMENTS\n\nFind:\n1. All occurrences in code\n2. Related patterns or usages\n3. Potential issues or improvements\n\nGroup results by file.",
+            "filename": ".claude/commands/find.md"
+          },
+          "explanation": "Usage: /find authentication, /find database connection, /find memory leak"
+        },
+        {
+          "title": "Flexible Generator",
+          "description": "Generate various code elements",
+          "code": {
+            "language": "markdown",
+            "content": "---\ndescription: Generate code for described feature\n---\n\nGenerate code for: $ARGUMENTS\n\nFollow project conventions found in:\n- Existing similar code\n- CLAUDE.md guidelines\n- Package.json scripts\n\nInclude tests if the project has a test framework.",
+            "filename": ".claude/commands/generate.md"
+          },
+          "explanation": "Usage: /generate user registration form, /generate API rate limiter"
+        },
+        {
+          "title": "Handling Empty Arguments",
+          "description": "Command that validates argument presence",
+          "code": {
+            "language": "markdown",
+            "content": "---\ndescription: Translate text to specified language\n---\n\nTranslate to: $ARGUMENTS\n\nIf no language is specified, ask which language to translate to.\n\nSupported: Spanish, French, German, Japanese, Chinese, Korean",
+            "filename": ".claude/commands/translate.md"
+          }
+        }
+      ],
+      "tips": [
+        "Handle the case when $ARGUMENTS is empty",
+        "Document expected arguments in the command description",
+        "Use $1, $2, etc. when you need distinct parameters",
+        "$ARGUMENTS captures everything as one string",
+        "Consider validation for expected argument formats"
+      ],
+      "relatedAchievements": ["multi_param", "context_injector", "first_command"]
+    },
+    "prompt_engineer": {
+      "longDescription": "The Prompt Engineer achievement recognizes commands that demonstrate sophisticated prompt design. Commands with 500+ characters of detailed instructions show thoughtful engineering of how Claude should approach tasks, including context, constraints, output format, and edge case handling. These well-crafted prompts produce more consistent, higher-quality results by leaving less to interpretation.",
+      "whyItMatters": "Detailed prompts guide Claude precisely, reducing ambiguity and improving output quality. Well-engineered prompts produce consistent results and handle edge cases gracefully.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Create a command with comprehensive, detailed instructions (500+ characters)",
+        "steps": [
+          {
+            "instruction": "Identify all aspects of the task that need specification",
+            "code": {
+              "language": "plaintext",
+              "content": "Elements of a thorough prompt:\n- Clear objective statement\n- Context and background\n- Step-by-step process\n- Output format specification\n- Constraints and requirements\n- Edge case handling\n- Examples of good output"
+            }
+          },
+          {
+            "instruction": "Write comprehensive instructions",
+            "code": {
+              "language": "markdown",
+              "content": "---\ndescription: Comprehensive code review with detailed criteria\n---\n\nPerform a thorough code review of the provided code. Your review should be actionable, specific, and educational.\n\n## Review Process\n\n1. **First Pass - Understanding**\n   - Read through the code to understand its purpose\n   - Identify the main components and their relationships\n   - Note any immediate concerns\n\n2. **Security Review**\n   - Check for injection vulnerabilities (SQL, XSS, command injection)\n   - Verify authentication and authorization logic\n   - Look for sensitive data exposure\n   - Review cryptographic implementations\n\n3. **Code Quality**\n   - Evaluate naming conventions and clarity\n   - Check for code duplication\n   - Assess function/method length and complexity\n   - Review error handling completeness\n\n4. **Performance**\n   - Identify N+1 query patterns\n   - Look for unnecessary computations\n   - Check for memory leaks or inefficient memory usage\n   - Review algorithm complexity\n\n5. **Maintainability**\n   - Assess test coverage needs\n   - Check documentation adequacy\n   - Evaluate modularity and coupling\n\n## Output Format\n\nFor each issue found:\n- **Location**: File and line number\n- **Severity**: Critical / High / Medium / Low\n- **Issue**: Clear description of the problem\n- **Why It Matters**: Impact explanation\n- **Recommendation**: Specific fix suggestion\n- **Example**: Code snippet showing the fix (when applicable)\n\nEnd with a summary including:\n- Overall code quality score (1-10)\n- Top 3 priorities to address\n- Positive aspects worth highlighting",
+              "filename": ".claude/commands/thorough-review.md"
+            }
+          }
+        ],
+        "estimatedTime": "15 minutes"
+      },
+      "examples": [
+        {
+          "title": "Comprehensive API Designer",
+          "description": "Detailed prompt for API design",
+          "code": {
+            "language": "markdown",
+            "content": "---\ndescription: Design REST API with comprehensive specification\n---\n\nDesign a REST API for the described functionality. Create a complete specification following industry best practices.\n\n## Requirements Gathering\nFirst, identify from the request:\n- Core resources and their relationships\n- Required operations (CRUD and custom actions)\n- Authentication requirements\n- Rate limiting needs\n- Versioning strategy\n\n## API Design Principles to Follow\n- Use plural nouns for resource names\n- Proper HTTP method semantics (GET=read, POST=create, etc.)\n- Consistent error response format\n- HATEOAS links where beneficial\n- Idempotency for PUT/DELETE\n\n## For Each Endpoint, Specify:\n1. HTTP method and path\n2. Request headers (auth, content-type)\n3. Request body schema (with examples)\n4. Response status codes and bodies\n5. Error scenarios and responses\n6. Rate limit considerations\n7. Caching strategy\n\n## Output as OpenAPI 3.0\nProvide the full OpenAPI specification in YAML format, including:\n- Info section with version and description\n- Server URLs for environments\n- Security schemes\n- All paths with complete schemas\n- Reusable component schemas",
+            "filename": ".claude/commands/design-api.md"
+          }
+        }
+      ],
+      "tips": [
+        "Break complex prompts into clear sections",
+        "Use markdown formatting for readability",
+        "Include examples of expected output",
+        "Specify what NOT to do for common mistakes",
+        "Iterate on prompts based on output quality"
+      ],
+      "relatedAchievements": ["documented", "workflow_builder", "output_formatter"]
+    },
+    "team_commands": {
+      "longDescription": "The Team Commands achievement recognizes your creation of project-level commands that can be shared with your entire team. By placing commands in the project's .claude/commands directory rather than your personal ~/.claude/commands, you enable collaboration through shared automation. These commands become part of the project itself, version-controlled alongside the code, ensuring every team member has access to the same productivity tools.",
+      "whyItMatters": "Project-level commands standardize workflows across your team. Everyone uses the same review checklist, deployment process, and coding standards, reducing inconsistency and onboarding time.",
+      "difficulty": "beginner",
+      "howTo": {
+        "summary": "Create commands in your project's .claude/commands directory instead of your personal directory",
+        "steps": [
+          {
+            "instruction": "Create the project commands directory",
+            "code": {
+              "language": "bash",
+              "content": "mkdir -p .claude/commands"
+            }
+          },
+          {
+            "instruction": "Create a team command",
+            "code": {
+              "language": "markdown",
+              "content": "---\ndescription: Team code review checklist\n---\n\nReview this code according to our team standards:\n\n## Our Review Checklist\n- [ ] Follows our naming conventions\n- [ ] Includes unit tests\n- [ ] No console.log statements\n- [ ] Error handling follows our patterns\n- [ ] Types are properly defined\n- [ ] Documentation updated if needed",
+              "filename": ".claude/commands/review.md"
+            }
+          },
+          {
+            "instruction": "Commit to version control",
+            "code": {
+              "language": "bash",
+              "content": "git add .claude/commands/\ngit commit -m \"Add team Claude commands for code review\""
+            }
+          }
+        ],
+        "estimatedTime": "5 minutes"
+      },
+      "examples": [
+        {
+          "title": "Project-Specific Deploy",
+          "description": "Deployment command with project-specific steps",
+          "code": {
+            "language": "markdown",
+            "content": "---\ndescription: Deploy to our infrastructure\n---\n\nDeploy following our team's process:\n\n1. Run our test suite: `npm run test:ci`\n2. Build for production: `npm run build`\n3. Run database migrations if needed\n4. Deploy to our Kubernetes cluster\n5. Verify health checks pass\n6. Notify #deployments channel\n\nOur environments:\n- staging: k8s-staging.company.internal\n- production: k8s-prod.company.internal",
+            "filename": ".claude/commands/deploy.md"
+          },
+          "explanation": "This command embeds team-specific infrastructure details that everyone needs."
+        },
+        {
+          "title": "Onboarding Command",
+          "description": "Help new team members get started",
+          "code": {
+            "language": "markdown",
+            "content": "---\ndescription: Setup guide for new team members\n---\n\nWelcome to the team! Let me help you get set up:\n\n1. Check prerequisites are installed\n2. Verify environment variables from .env.example\n3. Run database setup scripts\n4. Explain our project structure\n5. Point out key documentation\n6. Show how to run tests\n\nAsk any questions about our codebase!",
+            "filename": ".claude/commands/onboard.md"
+          }
+        }
+      ],
+      "tips": [
+        "Keep team commands generic enough to work for everyone",
+        "Document team-specific conventions in the commands",
+        "Include project-level commands in version control",
+        "Create a README.md in .claude/commands explaining available commands",
+        "Review team commands during code review like any other code"
+      ],
+      "relatedAchievements": ["first_command", "namespace_user", "command_library"]
+    },
+    "tool_restrictor": {
+      "longDescription": "The Tool Restrictor achievement recognizes your use of the allowed-tools frontmatter field to constrain which tools Claude can use during command execution. This security and focus feature lets you create commands that can only read files but not write, only use specific MCP servers, or avoid certain operations entirely. Tool restriction creates safer, more predictable command behavior.",
+      "whyItMatters": "Restricting tools prevents unintended side effects and creates safer commands. A review command that can't modify files, or an analysis command that can only read, gives users confidence in what will happen.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Add the allowed-tools field to your command's frontmatter to limit available tools",
+        "steps": [
+          {
+            "instruction": "Identify which tools your command actually needs",
+            "code": {
+              "language": "plaintext",
+              "content": "Common tool categories:\n- Read: File reading, grep, glob\n- Write: Edit, Write tools\n- Bash: Shell command execution\n- MCP: Specific MCP server tools"
+            }
+          },
+          {
+            "instruction": "Add allowed-tools to restrict capabilities",
+            "code": {
+              "language": "markdown",
+              "content": "---\ndescription: Read-only code analysis\nallowed-tools: [Read, Grep, Glob]\n---\n\nAnalyze the codebase structure and quality.\n\nThis command can only read files - it cannot make any modifications.\nProvide analysis and recommendations only.",
+              "filename": ".claude/commands/analyze-readonly.md"
+            }
+          }
+        ],
+        "estimatedTime": "5 minutes"
+      },
+      "examples": [
+        {
+          "title": "Safe Review Command",
+          "description": "Review that cannot modify code",
+          "code": {
+            "language": "markdown",
+            "content": "---\ndescription: Safe code review (read-only)\nallowed-tools: [Read, Grep, Glob]\n---\n\nReview this code for issues.\n\nIMPORTANT: This review is read-only. I will:\n- Identify issues and improvements\n- Explain problems found\n- Suggest changes (but not apply them)\n\nYou remain in full control of any modifications.",
+            "filename": ".claude/commands/safe-review.md"
+          },
+          "explanation": "Users can trust this command won't accidentally modify their code."
+        },
+        {
+          "title": "Shell-Only Command",
+          "description": "Command restricted to bash operations",
+          "code": {
+            "language": "markdown",
+            "content": "---\ndescription: Run test suite\nallowed-tools: [Bash]\n---\n\nRun the test suite and report results.\n\n```bash\nnpm test\n```\n\nParse the output and summarize:\n- Tests passed/failed\n- Coverage percentage\n- Slowest tests",
+            "filename": ".claude/commands/test.md"
+          }
+        },
+        {
+          "title": "MCP-Specific Command",
+          "description": "Limit to specific MCP server tools",
+          "code": {
+            "language": "markdown",
+            "content": "---\ndescription: GitHub-only operations\nallowed-tools: [mcp__github__*]\n---\n\nThis command can only interact with GitHub.\n\nList open issues and PRs for this repository.\nProvide status summary and any blockers.",
+            "filename": ".claude/commands/gh-status.md"
+          }
+        }
+      ],
+      "tips": [
+        "Use wildcards for MCP tools: mcp__servername__*",
+        "Read-only commands build user trust",
+        "Restrict bash access for security-sensitive commands",
+        "Document restrictions in the command description",
+        "Test that restricted commands still work for their purpose"
+      ],
+      "relatedAchievements": ["documented", "model_picker", "mcp_command"]
+    },
+    "validation_command": {
+      "longDescription": "The Validation Command achievement recognizes commands that verify prerequisites, check requirements, or validate input before proceeding with their main task. By front-loading validation, these commands catch problems early, provide clear error messages, and prevent wasted effort on operations that would fail later. This defensive approach creates more robust and user-friendly automation.",
+      "whyItMatters": "Early validation saves time by catching problems before work begins. Clear validation messages help users fix issues quickly instead of debugging mysterious failures.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Create a command that checks requirements or validates input before proceeding",
+        "steps": [
+          {
+            "instruction": "Identify what needs to be validated",
+            "code": {
+              "language": "plaintext",
+              "content": "Common validations:\n- Required files exist\n- Configuration is valid\n- Dependencies are installed\n- Environment variables are set\n- Input format is correct\n- User has necessary permissions"
+            }
+          },
+          {
+            "instruction": "Add validation steps to your command",
+            "code": {
+              "language": "markdown",
+              "content": "---\ndescription: Deploy with pre-flight checks\n---\n\n## Pre-Deployment Validation\n\nBefore deploying, verify:\n\n1. **Check required files exist:**\n   - package.json\n   - Dockerfile\n   - .env.production (or environment config)\n\n2. **Validate configuration:**\n   - package.json has build script\n   - Dockerfile is valid\n   - Required env vars are set\n\n3. **Check build readiness:**\n   - No uncommitted changes\n   - Tests pass\n   - Build completes successfully\n\nIf any check fails, report clearly and do not proceed.\nOnly continue to deployment if all checks pass.",
+              "filename": ".claude/commands/deploy-safe.md"
+            }
+          }
+        ],
+        "estimatedTime": "10 minutes"
+      },
+      "examples": [
+        {
+          "title": "Environment Validator",
+          "description": "Check environment is ready for development",
+          "code": {
+            "language": "markdown",
+            "content": "---\ndescription: Validate development environment\n---\n\nValidate that the development environment is properly set up:\n\n## Required Tools\n- [ ] Node.js >= 18\n- [ ] npm or yarn\n- [ ] Git\n- [ ] Docker (if used)\n\n## Project Setup\n- [ ] node_modules exists\n- [ ] .env file configured\n- [ ] Database accessible\n- [ ] Required services running\n\nReport any missing requirements with installation instructions.",
+            "filename": ".claude/commands/validate-env.md"
+          },
+          "explanation": "This command ensures everything is ready before developers start working."
+        },
+        {
+          "title": "Input Validator",
+          "description": "Validate command input before processing",
+          "code": {
+            "language": "markdown",
+            "content": "---\ndescription: Create migration with validation\n---\n\nCreate database migration for: $ARGUMENTS\n\n## Input Validation\nThe migration name must:\n- Be provided (not empty)\n- Use snake_case format\n- Start with action verb (create_, add_, remove_, modify_)\n- Not duplicate existing migration names\n\nIf validation fails, explain the requirement and show correct format.\n\n## If Valid\nGenerate migration file following our conventions.",
+            "filename": ".claude/commands/migration.md"
+          }
+        }
+      ],
+      "tips": [
+        "Validate early, fail fast",
+        "Provide actionable error messages with fix suggestions",
+        "Check the most likely failure points first",
+        "Consider both presence and format validation",
+        "Include a summary of what was validated when successful"
+      ],
+      "relatedAchievements": ["error_handler_cmd", "conditional_command", "workflow_builder"]
+    },
+    "workflow_builder": {
+      "longDescription": "The Workflow Builder achievement recognizes commands that orchestrate multi-step processes with clear sequencing. By numbering steps, defining phases, or creating explicit workflows, these commands guide Claude through complex operations in a predictable order. Well-structured workflows are easier to debug, modify, and understand than monolithic instructions.",
+      "whyItMatters": "Multi-step workflows break complex tasks into manageable pieces. Each step can be verified before proceeding, making it easier to identify where things go wrong and iterate on specific parts.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Create a command that defines explicit steps or phases for a multi-part task",
+        "steps": [
+          {
+            "instruction": "Break down the task into logical steps",
+            "code": {
+              "language": "plaintext",
+              "content": "Workflow design questions:\n- What are the distinct phases?\n- What order must they happen in?\n- What are the inputs/outputs of each step?\n- Where are the decision points?\n- What can fail and how to handle it?"
+            }
+          },
+          {
+            "instruction": "Create a command with numbered steps",
+            "code": {
+              "language": "markdown",
+              "content": "---\ndescription: Complete feature implementation workflow\n---\n\n# Feature Implementation Workflow\n\n## Step 1: Requirements Analysis\n- Review the feature request\n- Identify affected components\n- List technical requirements\n\n## Step 2: Design\n- Propose architecture changes\n- Define interfaces and data models\n- Get confirmation before proceeding\n\n## Step 3: Implementation\n- Create necessary files\n- Implement core logic\n- Follow project patterns\n\n## Step 4: Testing\n- Write unit tests\n- Add integration tests if needed\n- Verify edge cases\n\n## Step 5: Documentation\n- Update relevant docs\n- Add code comments\n- Update changelog\n\nComplete each step fully before moving to the next. Report progress after each step.",
+              "filename": ".claude/commands/implement-feature.md"
+            }
+          }
+        ],
+        "estimatedTime": "10 minutes"
+      },
+      "examples": [
+        {
+          "title": "PR Review Workflow",
+          "description": "Structured approach to reviewing pull requests",
+          "code": {
+            "language": "markdown",
+            "content": "---\ndescription: Structured PR review workflow\n---\n\n# PR Review Workflow\n\nStep 1: Understand Context\n- Read PR description\n- Check linked issues\n- Understand the goal\n\nStep 2: Review Changes\n- Examine each changed file\n- Note concerns and questions\n\nStep 3: Test Considerations\n- Verify tests are added/updated\n- Check test coverage\n- Consider edge cases\n\nStep 4: Security Check\n- Look for vulnerabilities\n- Check for sensitive data\n\nStep 5: Summarize\n- Overall assessment\n- Blocking issues\n- Suggestions\n- Approval recommendation",
+            "filename": ".claude/commands/pr-review.md"
+          }
+        },
+        {
+          "title": "Refactoring Workflow",
+          "description": "Safe refactoring with verification steps",
+          "code": {
+            "language": "markdown",
+            "content": "---\ndescription: Safe refactoring workflow\n---\n\n# Refactoring Workflow\n\n1. **Analyze Current State**\n   - Understand existing code\n   - Identify dependencies\n   - Note test coverage\n\n2. **Plan Changes**\n   - Describe proposed changes\n   - Identify risks\n   - Get confirmation\n\n3. **Ensure Safety Net**\n   - Verify tests exist\n   - Add tests if needed\n   - Run tests (must pass)\n\n4. **Make Changes**\n   - Apply refactoring\n   - Keep changes minimal\n   - Maintain behavior\n\n5. **Verify**\n   - Run tests again\n   - Compare behavior\n   - Check for regressions\n\n6. **Clean Up**\n   - Remove dead code\n   - Update documentation\n   - Format code",
+            "filename": ".claude/commands/refactor.md"
+          }
+        }
+      ],
+      "tips": [
+        "Number steps explicitly for clarity",
+        "Define clear completion criteria for each step",
+        "Include checkpoints where user confirmation is needed",
+        "Consider parallel steps when order doesn't matter",
+        "Add rollback procedures for critical workflows"
+      ],
+      "relatedAchievements": ["command_composer", "conditional_command", "validation_command", "prompt_engineer"]
+    }
+  }
+}

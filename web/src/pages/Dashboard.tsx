@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { Copy, ExternalLink, Sword, Trophy, Zap, Target, ChevronDown, ChevronUp } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
 import { useProgress } from '../context/ProgressContext';
+import { useHead } from '../hooks/useHead';
 import {
   achievements,
   categories,
@@ -18,6 +19,12 @@ export default function Dashboard() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [headerExpanded, setHeaderExpanded] = useState(false);
   const setupSectionRef = useRef<HTMLElement>(null);
+
+  useHead({
+    title: 'Claude Quest - Master Claude Code Through Adventure',
+    description: 'Transform learning Claude Code into an RPG adventure. Unlock 365 achievements, earn XP, and level up. Stop reading docs. Start playing.',
+    canonical: '/quest',
+  });
 
   const totalPossibleXP = getTotalXP();
 
@@ -63,7 +70,7 @@ export default function Dashboard() {
       {/* Header */}
       <header className={`border-b border-white/10 bg-[#0a0a1a] ${isScrolled ? 'sticky top-0 z-50' : ''}`}>
         <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-3">
+          <Link to="/quest" className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-amber-500 to-purple-600 flex items-center justify-center">
               <Sword className="w-6 h-6 text-white" />
             </div>
@@ -80,7 +87,10 @@ export default function Dashboard() {
                 {headerExpanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
               </button>
             )}
-            <Link to="/achievements" className="text-gray-400 hover:text-white transition-colors">
+            <Link to="/memory" className="text-gray-400 hover:text-white transition-colors">
+              Memory
+            </Link>
+            <Link to="/quest/achievements" className="text-gray-400 hover:text-white transition-colors">
               All Achievements
             </Link>
             <a
@@ -212,7 +222,7 @@ export default function Dashboard() {
               return (
                 <Link
                   key={category.id}
-                  to={`/achievements?category=${category.id}`}
+                  to={`/quest/achievements?category=${category.id}`}
                   className="p-4 rounded-xl bg-white/5 border border-white/10 hover:border-white/30 transition-all hover:scale-[1.02]"
                 >
                   <div className="flex items-center gap-3 mb-3">
@@ -255,7 +265,7 @@ export default function Dashboard() {
               return (
                 <Link
                   key={achievement.id}
-                  to={`/achievement/${achievement.id}`}
+                  to={`/quest/achievement/${achievement.id}`}
                   className="p-4 rounded-xl bg-gradient-to-br from-white/5 to-white/0 border border-white/10 hover:border-amber-500/50 transition-all group"
                 >
                   <div className="flex items-start justify-between mb-2">
@@ -276,7 +286,7 @@ export default function Dashboard() {
           </div>
           <div className="text-center mt-6">
             <Link
-              to="/achievements"
+              to="/quest/achievements"
               className="inline-flex items-center gap-2 px-6 py-3 bg-amber-500 hover:bg-amber-600 text-black font-bold rounded-lg transition-colors"
             >
               View All {achievements.length} Achievements

@@ -2,6 +2,7 @@ import { useState, useMemo } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { Search, Grid, List, ExternalLink, Sword, Check } from 'lucide-react';
 import { useProgress } from '../context/ProgressContext';
+import { useHead } from '../hooks/useHead';
 import {
   achievements,
   categories,
@@ -16,6 +17,12 @@ type SortOption = 'category' | 'xp' | 'name';
 export default function AllAchievements() {
   const [searchParams, setSearchParams] = useSearchParams();
   const { progress } = useProgress();
+
+  useHead({
+    title: 'All Achievements - Claude Quest',
+    description: 'Browse all 365 Claude Code achievements. Filter by category, search by name, and track your progress toward mastery.',
+    canonical: '/quest/achievements',
+  });
 
   const [search, setSearch] = useState('');
   const [viewMode, setViewMode] = useState<ViewMode>('grid');
@@ -62,7 +69,7 @@ export default function AllAchievements() {
       {/* Header */}
       <header className="border-b border-white/10 bg-[#0a0a1a] sticky top-0 z-10">
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-3">
+          <Link to="/quest" className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-amber-500 to-purple-600 flex items-center justify-center">
               <Sword className="w-6 h-6 text-white" />
             </div>
@@ -204,7 +211,7 @@ export default function AllAchievements() {
               return (
                 <Link
                   key={achievement.id}
-                  to={`/achievement/${achievement.id}`}
+                  to={`/quest/achievement/${achievement.id}`}
                   className={`p-4 rounded-xl border transition-all hover:scale-[1.02] ${
                     isUnlocked
                       ? 'border-green-500/30 bg-green-500/5'
@@ -238,7 +245,7 @@ export default function AllAchievements() {
               return (
                 <Link
                   key={achievement.id}
-                  to={`/achievement/${achievement.id}`}
+                  to={`/quest/achievement/${achievement.id}`}
                   className={`flex items-center gap-4 p-4 rounded-xl border transition-all hover:scale-[1.01] ${
                     isUnlocked
                       ? 'border-green-500/30 bg-green-500/5'
@@ -281,7 +288,7 @@ export default function AllAchievements() {
 
       {/* Footer */}
       <footer className="border-t border-white/10 mt-12 py-8 text-center text-gray-500 text-sm">
-        <Link to="/" className="text-amber-400 hover:underline">← Back to Dashboard</Link>
+        <Link to="/quest" className="text-amber-400 hover:underline">← Back to Dashboard</Link>
       </footer>
     </div>
   );

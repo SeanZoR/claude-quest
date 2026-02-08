@@ -1,0 +1,1101 @@
+{
+  "category": "memory",
+  "content": {
+    "first_memory": {
+      "longDescription": "Your first step into persistent memory with Claude Code. Creating a CLAUDE.md file establishes a knowledge base that Claude reads at the start of every conversation. This file can contain project context, coding preferences, workflow guidelines, and any information you want Claude to remember across sessions. Think of it as giving Claude a briefing document before each interaction.",
+      "whyItMatters": "Without CLAUDE.md, Claude starts every session with zero context about your project or preferences. This file is the foundation for all other memory features.",
+      "difficulty": "beginner",
+      "howTo": {
+        "summary": "Create a CLAUDE.md file in your project root or user config directory",
+        "steps": [
+          {
+            "instruction": "Create a project-level CLAUDE.md in your repository root",
+            "code": {
+              "language": "bash",
+              "content": "touch CLAUDE.md",
+              "filename": "terminal"
+            }
+          },
+          {
+            "instruction": "Add some basic content about your project",
+            "code": {
+              "language": "markdown",
+              "content": "# Project Guidelines\n\nThis is a Node.js REST API using Express and TypeScript.\n\n## Key Information\n- Use npm, not yarn\n- Tests use Jest\n- Database is PostgreSQL",
+              "filename": "CLAUDE.md"
+            }
+          },
+          {
+            "instruction": "Start a new Claude Code session - Claude will automatically read this file"
+          }
+        ],
+        "estimatedTime": "2 minutes"
+      },
+      "examples": [
+        {
+          "title": "Minimal Project Memory",
+          "description": "A simple starting point for any project",
+          "code": {
+            "language": "markdown",
+            "content": "# My Project\n\nA web application built with React and Node.js.\n\n## Stack\n- Frontend: React 18 with TypeScript\n- Backend: Express.js\n- Database: MongoDB",
+            "filename": "CLAUDE.md"
+          },
+          "explanation": "Even minimal context helps Claude make better suggestions aligned with your tech stack."
+        }
+      ],
+      "tips": [
+        "Start simple - you can always add more content later",
+        "Claude reads CLAUDE.md at conversation start, so changes take effect on the next session"
+      ],
+      "relatedAchievements": ["personal_scribe", "project_memory", "well_organized"]
+    },
+    "personal_scribe": {
+      "longDescription": "Establish your personal coding identity by creating a user-level CLAUDE.md file. This file lives in ~/.claude/CLAUDE.md and applies to ALL your Claude Code sessions, regardless of which project you're working on. Perfect for documenting your universal preferences like preferred languages, coding style, communication preferences, and tools you always use.",
+      "whyItMatters": "User-level memory ensures Claude knows your personal preferences everywhere, eliminating the need to repeat yourself in every project.",
+      "difficulty": "beginner",
+      "howTo": {
+        "summary": "Create CLAUDE.md in your ~/.claude directory for global preferences",
+        "steps": [
+          {
+            "instruction": "Create the .claude directory if it doesn't exist",
+            "code": {
+              "language": "bash",
+              "content": "mkdir -p ~/.claude",
+              "filename": "terminal"
+            }
+          },
+          {
+            "instruction": "Create your personal CLAUDE.md file",
+            "code": {
+              "language": "bash",
+              "content": "touch ~/.claude/CLAUDE.md",
+              "filename": "terminal"
+            }
+          },
+          {
+            "instruction": "Add your personal preferences and style guide",
+            "code": {
+              "language": "markdown",
+              "content": "# My Coding Preferences\n\n## Language & Style\n- Prefer TypeScript over JavaScript\n- Use functional programming patterns when possible\n- Always add JSDoc comments to exported functions\n\n## Communication\n- Be concise in explanations\n- Show code examples rather than lengthy descriptions\n\n## Tools\n- Use pnpm for package management\n- Prefer Vitest over Jest for testing",
+              "filename": "~/.claude/CLAUDE.md"
+            }
+          }
+        ],
+        "estimatedTime": "5 minutes"
+      },
+      "examples": [
+        {
+          "title": "Personal Style Guide",
+          "code": {
+            "language": "markdown",
+            "content": "# Personal Preferences\n\n## Code Style\n- 2-space indentation\n- Single quotes for strings\n- Trailing commas in multi-line arrays/objects\n- Prefer async/await over .then() chains\n\n## When Writing Code\n- Include error handling\n- Add TypeScript types, avoid 'any'\n- Write self-documenting code with clear variable names",
+            "filename": "~/.claude/CLAUDE.md"
+          },
+          "explanation": "These preferences apply to every project you work on with Claude Code."
+        }
+      ],
+      "tips": [
+        "Keep user-level preferences general - project-specific details belong in project CLAUDE.md",
+        "User preferences are merged with project preferences, with project taking priority for conflicts"
+      ],
+      "relatedAchievements": ["first_memory", "dual_wielder", "preference_keeper"]
+    },
+    "project_memory": {
+      "longDescription": "Create a project-specific CLAUDE.md file that lives in your repository root. This file contains context unique to one project: architecture decisions, coding conventions, important file locations, deployment processes, and team agreements. Unlike user-level memory, project memory can be shared with your team through version control.",
+      "whyItMatters": "Project-level memory keeps Claude aligned with your specific codebase conventions and can be shared across your entire team for consistent AI assistance.",
+      "difficulty": "beginner",
+      "howTo": {
+        "summary": "Create CLAUDE.md in your project root with project-specific guidelines",
+        "steps": [
+          {
+            "instruction": "Create CLAUDE.md in your project root directory",
+            "code": {
+              "language": "bash",
+              "content": "touch ./CLAUDE.md",
+              "filename": "terminal"
+            }
+          },
+          {
+            "instruction": "Document your project architecture and conventions",
+            "code": {
+              "language": "markdown",
+              "content": "# Project: E-Commerce API\n\n## Architecture\n- Monorepo with packages/ directory\n- Each package is independently deployable\n- Shared types in packages/shared\n\n## Conventions\n- Controllers in src/controllers/\n- Services in src/services/\n- Use dependency injection via tsyringe\n\n## Commands\n- `npm run dev` - Start development server\n- `npm run test` - Run tests\n- `npm run build` - Build for production",
+              "filename": "CLAUDE.md"
+            }
+          },
+          {
+            "instruction": "Commit the file to share with your team",
+            "code": {
+              "language": "bash",
+              "content": "git add CLAUDE.md && git commit -m 'Add Claude Code project memory'",
+              "filename": "terminal"
+            }
+          }
+        ],
+        "estimatedTime": "10 minutes"
+      },
+      "examples": [
+        {
+          "title": "Full Project Context",
+          "code": {
+            "language": "markdown",
+            "content": "# TaskManager Pro\n\nA task management SaaS application.\n\n## Tech Stack\n- Frontend: Next.js 14 with App Router\n- Backend: tRPC\n- Database: Prisma with PostgreSQL\n- Auth: NextAuth.js\n\n## Important Directories\n- /src/app - Next.js app router pages\n- /src/server - tRPC routers and procedures\n- /prisma - Database schema and migrations\n\n## Environment\n- Development: `npm run dev`\n- Database migrations: `npx prisma migrate dev`",
+            "filename": "CLAUDE.md"
+          },
+          "explanation": "Comprehensive project context helps Claude navigate your codebase and follow established patterns."
+        }
+      ],
+      "tips": [
+        "Include your .gitignore patterns if you want Claude to respect them",
+        "Document non-obvious architectural decisions and their rationale"
+      ],
+      "relatedAchievements": ["first_memory", "dual_wielder", "the_archivist"]
+    },
+    "dual_wielder": {
+      "longDescription": "Master the memory hierarchy by maintaining both user-level and project-level CLAUDE.md files simultaneously. This setup gives you the best of both worlds: your personal preferences apply everywhere while project-specific rules override them when needed. Claude merges these files intelligently, applying user preferences first, then layering project preferences on top.",
+      "whyItMatters": "The dual-file approach lets you maintain consistent personal style while respecting each project's unique requirements and team conventions.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Create and maintain both ~/.claude/CLAUDE.md and ./CLAUDE.md files",
+        "steps": [
+          {
+            "instruction": "Ensure you have a user-level CLAUDE.md with personal preferences",
+            "code": {
+              "language": "markdown",
+              "content": "# Personal Defaults\n\n## My Style\n- TypeScript with strict mode\n- Functional patterns preferred\n- Comprehensive error handling\n\n## Communication\n- Concise explanations\n- Show code first, explain after",
+              "filename": "~/.claude/CLAUDE.md"
+            }
+          },
+          {
+            "instruction": "Create a project-level CLAUDE.md with project-specific overrides",
+            "code": {
+              "language": "markdown",
+              "content": "# Legacy Project Maintenance\n\n## Important: Project Overrides\n- This project uses JavaScript (not TypeScript)\n- Follow existing OOP patterns, not functional\n- Use callbacks, not async/await (legacy compatibility)\n\n## Context\n- Maintaining a legacy codebase\n- Minimize refactoring, match existing style",
+              "filename": "./CLAUDE.md"
+            }
+          },
+          {
+            "instruction": "Verify both files exist",
+            "code": {
+              "language": "bash",
+              "content": "ls -la ~/.claude/CLAUDE.md ./CLAUDE.md",
+              "filename": "terminal"
+            }
+          }
+        ],
+        "estimatedTime": "5 minutes"
+      },
+      "examples": [
+        {
+          "title": "Hierarchical Memory Setup",
+          "description": "User preferences with project overrides",
+          "code": {
+            "language": "markdown",
+            "content": "# ~/.claude/CLAUDE.md (user level)\n# Sets defaults: TypeScript, 2-space indent, prefer const\n\n# ./CLAUDE.md (project level)\n# Override: This Python project uses 4-space indent\n# Override: Use snake_case not camelCase\n# Additional: Django conventions apply",
+            "filename": "example-hierarchy"
+          },
+          "explanation": "Project-level settings override user-level when they conflict, while non-conflicting settings merge."
+        }
+      ],
+      "tips": [
+        "Put stable, universal preferences at user level",
+        "Put project-specific exceptions and context at project level",
+        "Document when project rules intentionally differ from your personal style"
+      ],
+      "relatedAchievements": ["personal_scribe", "project_memory", "modular_mind"]
+    },
+    "well_organized": {
+      "longDescription": "Structure your CLAUDE.md with markdown headers to create clear sections that Claude can navigate efficiently. Using ## headers creates logical divisions in your memory file, making it easier for both you and Claude to find relevant information. Well-organized memory files are easier to maintain and update as your project evolves.",
+      "whyItMatters": "Organized memory files help Claude quickly locate relevant context and make your instructions easier to maintain as projects grow.",
+      "difficulty": "beginner",
+      "howTo": {
+        "summary": "Use ## markdown headers to create distinct sections in your CLAUDE.md",
+        "steps": [
+          {
+            "instruction": "Plan your section structure before writing",
+            "note": "Common sections: Overview, Tech Stack, Conventions, Commands, Important Files"
+          },
+          {
+            "instruction": "Add level-2 headers (##) for main sections",
+            "code": {
+              "language": "markdown",
+              "content": "# Project Name\n\n## Overview\nBrief project description here.\n\n## Tech Stack\n- Language and frameworks\n\n## Conventions\n- Coding standards\n\n## Commands\n- Useful scripts and commands",
+              "filename": "CLAUDE.md"
+            }
+          },
+          {
+            "instruction": "Keep sections focused on a single topic"
+          }
+        ],
+        "estimatedTime": "5 minutes"
+      },
+      "examples": [
+        {
+          "title": "Well-Structured Project Memory",
+          "code": {
+            "language": "markdown",
+            "content": "# API Gateway Service\n\n## Overview\nCentral API gateway handling authentication and routing.\n\n## Architecture\n- Express.js middleware chain\n- Redis for session storage\n- Rate limiting via express-rate-limit\n\n## Key Files\n- src/middleware/auth.ts - Authentication logic\n- src/routes/index.ts - Route definitions\n- src/config/redis.ts - Redis configuration\n\n## Testing\n- Run `npm test` for unit tests\n- Run `npm run test:e2e` for integration tests",
+            "filename": "CLAUDE.md"
+          },
+          "explanation": "Clear sections help Claude understand project structure at a glance."
+        }
+      ],
+      "tips": [
+        "Use descriptive header names that clearly indicate content",
+        "Keep sections in a logical order (overview first, details later)"
+      ],
+      "relatedAchievements": ["first_memory", "deep_hierarchy", "the_archivist"]
+    },
+    "deep_hierarchy": {
+      "longDescription": "Create detailed documentation structure using nested headers (### or deeper) in your CLAUDE.md. This advanced organization technique allows you to break down complex topics into sub-sections, making large memory files navigable and well-organized. Deep hierarchy is especially valuable for projects with multiple subsystems or detailed conventions.",
+      "whyItMatters": "Nested headers enable fine-grained organization for complex projects, making it easy to document detailed guidelines without creating wall-of-text sections.",
+      "difficulty": "beginner",
+      "howTo": {
+        "summary": "Use ### headers to create subsections within your main sections",
+        "steps": [
+          {
+            "instruction": "Start with main sections using ##",
+            "code": {
+              "language": "markdown",
+              "content": "## API Conventions",
+              "filename": "CLAUDE.md"
+            }
+          },
+          {
+            "instruction": "Add subsections with ### for detailed breakdowns",
+            "code": {
+              "language": "markdown",
+              "content": "## API Conventions\n\n### Request Handling\n- Validate all inputs with Zod schemas\n- Return 400 for validation errors\n\n### Response Format\n- Always return JSON\n- Include `success` boolean field\n- Include `data` or `error` field\n\n### Error Codes\n- 400: Bad Request\n- 401: Unauthorized\n- 404: Not Found\n- 500: Internal Server Error",
+              "filename": "CLAUDE.md"
+            }
+          },
+          {
+            "instruction": "Use #### for even deeper nesting when needed",
+            "code": {
+              "language": "markdown",
+              "content": "### Authentication\n\n#### JWT Tokens\n- Access tokens expire in 15 minutes\n- Refresh tokens expire in 7 days\n\n#### API Keys\n- Used for service-to-service communication\n- Stored in environment variables",
+              "filename": "CLAUDE.md"
+            }
+          }
+        ],
+        "estimatedTime": "10 minutes"
+      },
+      "examples": [
+        {
+          "title": "Complex Project with Deep Hierarchy",
+          "code": {
+            "language": "markdown",
+            "content": "# Microservices Platform\n\n## Services\n\n### User Service\n#### Endpoints\n- POST /users - Create user\n- GET /users/:id - Get user\n\n#### Database\n- PostgreSQL with Prisma ORM\n\n### Order Service\n#### Endpoints\n- POST /orders - Create order\n- GET /orders/:id - Get order\n\n#### Events\n- Publishes: order.created, order.shipped\n- Subscribes: payment.completed",
+            "filename": "CLAUDE.md"
+          },
+          "explanation": "Deep hierarchy keeps complex multi-service documentation organized and scannable."
+        }
+      ],
+      "tips": [
+        "Don't go deeper than #### unless truly necessary",
+        "Use consistent hierarchy depth across similar sections"
+      ],
+      "relatedAchievements": ["well_organized", "the_archivist", "list_builder"]
+    },
+    "the_archivist": {
+      "longDescription": "Build a comprehensive knowledge base by creating a CLAUDE.md with 5 or more distinct sections. The Archivist achievement recognizes thorough documentation that covers multiple aspects of your project or preferences. A well-archived memory file might include sections for architecture, conventions, commands, deployment, troubleshooting, and more.",
+      "whyItMatters": "Comprehensive documentation ensures Claude has full context about your project, leading to more accurate and helpful responses across diverse tasks.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Create a CLAUDE.md with at least 5 distinct ## sections covering different aspects",
+        "steps": [
+          {
+            "instruction": "Plan your sections to cover key project aspects",
+            "note": "Consider: Overview, Stack, Architecture, Conventions, Commands, Testing, Deployment, Troubleshooting"
+          },
+          {
+            "instruction": "Create a comprehensive CLAUDE.md with 5+ sections",
+            "code": {
+              "language": "markdown",
+              "content": "# E-Commerce Platform\n\n## Overview\nFull-stack e-commerce platform with React frontend and Node.js backend.\n\n## Tech Stack\n- Frontend: React 18, Redux Toolkit, Tailwind CSS\n- Backend: Node.js, Express, TypeScript\n- Database: PostgreSQL with Prisma\n- Cache: Redis\n- Queue: Bull for background jobs\n\n## Architecture\n- Monorepo structure with Turborepo\n- packages/web - React frontend\n- packages/api - Express backend\n- packages/shared - Shared types and utilities\n\n## Conventions\n- Use barrel exports (index.ts) for clean imports\n- Controllers handle HTTP, services handle business logic\n- All database queries go through repositories\n\n## Commands\n- `npm run dev` - Start all services\n- `npm run test` - Run all tests\n- `npm run db:migrate` - Run migrations\n- `npm run db:seed` - Seed database\n\n## Deployment\n- Frontend: Vercel\n- Backend: Railway\n- Database: Railway PostgreSQL",
+              "filename": "CLAUDE.md"
+            }
+          }
+        ],
+        "estimatedTime": "20 minutes"
+      },
+      "examples": [
+        {
+          "title": "Complete Project Archive",
+          "code": {
+            "language": "markdown",
+            "content": "# SaaS Analytics Dashboard\n\n## Overview\nReal-time analytics dashboard for SaaS metrics.\n\n## Stack\nNext.js 14, tRPC, Prisma, PostgreSQL, Redis\n\n## Architecture\nApp Router with RSC, tRPC for API, Prisma for data\n\n## Conventions\nUse server components by default, client only when needed\n\n## Commands\nnpm run dev, npm run build, npm run db:push\n\n## Testing\nVitest for unit, Playwright for E2E\n\n## Environment\nDevelopment uses local Docker compose stack",
+            "filename": "CLAUDE.md"
+          },
+          "explanation": "Seven sections covering all major aspects of the project."
+        }
+      ],
+      "tips": [
+        "Quality over quantity - each section should provide useful context",
+        "Update sections as the project evolves"
+      ],
+      "relatedAchievements": ["well_organized", "deep_hierarchy", "preference_keeper"]
+    },
+    "code_keeper": {
+      "longDescription": "Enhance your memory files by including code blocks with examples, templates, or reference implementations. Code blocks in CLAUDE.md help Claude understand your exact coding style, preferred patterns, and expected output formats. This is particularly valuable for documenting code conventions that are easier to show than describe.",
+      "whyItMatters": "Code examples in memory files give Claude concrete patterns to follow, resulting in generated code that matches your exact style and conventions.",
+      "difficulty": "beginner",
+      "howTo": {
+        "summary": "Add fenced code blocks with examples to your CLAUDE.md",
+        "steps": [
+          {
+            "instruction": "Identify patterns you want Claude to follow",
+            "note": "Think about: function signatures, error handling, component structure, API responses"
+          },
+          {
+            "instruction": "Add code blocks with triple backticks and language identifier",
+            "code": {
+              "language": "markdown",
+              "content": "## Code Conventions\n\n### Function Signatures\nAlways use this pattern for async service functions:\n\n```typescript\nasync function getUserById(id: string): Promise<Result<User, AppError>> {\n  try {\n    const user = await db.user.findUnique({ where: { id } });\n    if (!user) {\n      return err(new NotFoundError('User not found'));\n    }\n    return ok(user);\n  } catch (error) {\n    return err(new DatabaseError('Failed to fetch user', error));\n  }\n}\n```",
+              "filename": "CLAUDE.md"
+            }
+          },
+          {
+            "instruction": "Include examples for different scenarios",
+            "code": {
+              "language": "markdown",
+              "content": "### API Response Format\n\nSuccess response:\n```json\n{\n  \"success\": true,\n  \"data\": { \"id\": 1, \"name\": \"Example\" }\n}\n```\n\nError response:\n```json\n{\n  \"success\": false,\n  \"error\": {\n    \"code\": \"VALIDATION_ERROR\",\n    \"message\": \"Invalid input\"\n  }\n}\n```",
+              "filename": "CLAUDE.md"
+            }
+          }
+        ],
+        "estimatedTime": "10 minutes"
+      },
+      "examples": [
+        {
+          "title": "React Component Template",
+          "code": {
+            "language": "markdown",
+            "content": "## Component Structure\n\nFollow this pattern for React components:\n\n```tsx\nimport { type FC } from 'react';\n\ninterface ButtonProps {\n  label: string;\n  onClick: () => void;\n  variant?: 'primary' | 'secondary';\n}\n\nexport const Button: FC<ButtonProps> = ({ \n  label, \n  onClick, \n  variant = 'primary' \n}) => {\n  return (\n    <button\n      className={`btn btn-${variant}`}\n      onClick={onClick}\n    >\n      {label}\n    </button>\n  );\n};\n```",
+            "filename": "CLAUDE.md"
+          },
+          "explanation": "Claude will follow this exact pattern when creating new React components."
+        }
+      ],
+      "tips": [
+        "Always specify the language after the opening backticks for syntax highlighting",
+        "Include both good and bad examples to clarify what to avoid"
+      ],
+      "relatedAchievements": ["well_organized", "preference_keeper", "pattern_recognizer"]
+    },
+    "list_builder": {
+      "longDescription": "Master structured documentation by creating lists with 10 or more items in your CLAUDE.md. Lists are ideal for documenting available commands, configuration options, environment variables, supported features, or any enumerable information. Well-structured lists make information scannable and easy to reference.",
+      "whyItMatters": "Comprehensive lists ensure Claude knows all available options, commands, or features in your project, preventing incomplete suggestions.",
+      "difficulty": "beginner",
+      "howTo": {
+        "summary": "Create detailed lists with 10+ items using markdown list syntax",
+        "steps": [
+          {
+            "instruction": "Identify information that works well as a list",
+            "note": "Good candidates: commands, dependencies, env vars, routes, features"
+          },
+          {
+            "instruction": "Create a comprehensive list using - or * syntax",
+            "code": {
+              "language": "markdown",
+              "content": "## Available NPM Scripts\n\n- `npm run dev` - Start development server with hot reload\n- `npm run build` - Build production bundle\n- `npm run start` - Start production server\n- `npm run test` - Run Jest test suite\n- `npm run test:watch` - Run tests in watch mode\n- `npm run test:coverage` - Generate coverage report\n- `npm run lint` - Run ESLint\n- `npm run lint:fix` - Fix auto-fixable lint errors\n- `npm run format` - Format code with Prettier\n- `npm run typecheck` - Run TypeScript type checking\n- `npm run db:migrate` - Run database migrations\n- `npm run db:seed` - Seed the database",
+              "filename": "CLAUDE.md"
+            }
+          }
+        ],
+        "estimatedTime": "10 minutes"
+      },
+      "examples": [
+        {
+          "title": "Environment Variables List",
+          "code": {
+            "language": "markdown",
+            "content": "## Required Environment Variables\n\n- `DATABASE_URL` - PostgreSQL connection string\n- `REDIS_URL` - Redis connection string\n- `JWT_SECRET` - Secret for signing JWT tokens\n- `JWT_EXPIRES_IN` - Token expiration time (e.g., '7d')\n- `SMTP_HOST` - Email server host\n- `SMTP_PORT` - Email server port\n- `SMTP_USER` - Email server username\n- `SMTP_PASS` - Email server password\n- `AWS_ACCESS_KEY` - AWS access key for S3\n- `AWS_SECRET_KEY` - AWS secret key\n- `AWS_BUCKET` - S3 bucket name\n- `STRIPE_SECRET_KEY` - Stripe API key\n- `WEBHOOK_SECRET` - Stripe webhook secret",
+            "filename": "CLAUDE.md"
+          },
+          "explanation": "A comprehensive list ensures Claude knows all required configuration."
+        }
+      ],
+      "tips": [
+        "Keep list items concise but descriptive",
+        "Group related items together under sub-headers"
+      ],
+      "relatedAchievements": ["well_organized", "the_archivist", "deep_hierarchy"]
+    },
+    "link_collector": {
+      "longDescription": "Enrich your memory files by including links to external documentation, design specs, API references, or other resources. Link Collector recognizes the value of pointing Claude to authoritative sources. While Claude cannot browse these links during conversation, documenting them creates a reference library and signals important external resources.",
+      "whyItMatters": "External links document where authoritative information lives, helping both you and Claude know where to look for detailed specifications.",
+      "difficulty": "beginner",
+      "howTo": {
+        "summary": "Include URLs to relevant documentation and resources in your CLAUDE.md",
+        "steps": [
+          {
+            "instruction": "Identify key external resources for your project",
+            "note": "Documentation, API specs, design systems, style guides, wikis"
+          },
+          {
+            "instruction": "Add a resources or references section with links",
+            "code": {
+              "language": "markdown",
+              "content": "## References\n\n### Documentation\n- Framework docs: https://nextjs.org/docs\n- UI library: https://ui.shadcn.com/docs\n- Database ORM: https://www.prisma.io/docs\n\n### API Specifications\n- Internal API: https://company.notion.so/api-spec\n- Third-party API: https://stripe.com/docs/api\n\n### Design\n- Figma designs: https://figma.com/file/abc123\n- Brand guidelines: https://company.com/brand",
+              "filename": "CLAUDE.md"
+            }
+          },
+          {
+            "instruction": "Use markdown link syntax for cleaner formatting",
+            "code": {
+              "language": "markdown",
+              "content": "## Documentation Links\n\n- [Next.js Documentation](https://nextjs.org/docs)\n- [Prisma Reference](https://www.prisma.io/docs/reference)\n- [Project Wiki](https://github.com/org/repo/wiki)",
+              "filename": "CLAUDE.md"
+            }
+          }
+        ],
+        "estimatedTime": "5 minutes"
+      },
+      "examples": [
+        {
+          "title": "Project Resource Hub",
+          "code": {
+            "language": "markdown",
+            "content": "## Resources\n\n### Official Docs\n- [React Documentation](https://react.dev)\n- [TypeScript Handbook](https://www.typescriptlang.org/docs/handbook/)\n- [Tailwind CSS](https://tailwindcss.com/docs)\n\n### Project Resources\n- [API Documentation](https://api.example.com/docs)\n- [Component Storybook](https://storybook.example.com)\n- [Architecture Decision Records](https://github.com/org/repo/tree/main/docs/adr)",
+            "filename": "CLAUDE.md"
+          },
+          "explanation": "Organized links create a reference library for your project."
+        }
+      ],
+      "tips": [
+        "Use descriptive link text rather than raw URLs when possible",
+        "Group links by category for easier navigation"
+      ],
+      "relatedAchievements": ["the_archivist", "well_organized", "code_keeper"]
+    },
+    "preference_keeper": {
+      "longDescription": "Document your personal coding style and preferences in CLAUDE.md. Preference Keeper celebrates the art of teaching Claude your unique coding DNA - whether you prefer tabs over spaces, functional over OOP, verbose over terse. These preferences help Claude generate code that feels like you wrote it yourself.",
+      "whyItMatters": "Documented preferences mean less time correcting Claude's output and more time building. Claude matches your style automatically.",
+      "difficulty": "beginner",
+      "howTo": {
+        "summary": "Document your coding preferences and style conventions in CLAUDE.md",
+        "steps": [
+          {
+            "instruction": "Consider your preferences across different dimensions",
+            "note": "Formatting, naming, patterns, libraries, verbosity, comments"
+          },
+          {
+            "instruction": "Create a preferences section with clear guidelines",
+            "code": {
+              "language": "markdown",
+              "content": "## Coding Preferences\n\n### Formatting\n- Use 2-space indentation\n- Prefer single quotes for strings\n- Always use trailing commas\n- Max line length: 100 characters\n\n### Naming Conventions\n- Use camelCase for variables and functions\n- Use PascalCase for classes and components\n- Use SCREAMING_SNAKE_CASE for constants\n- Prefix boolean variables with is/has/should\n\n### Patterns\n- Prefer async/await over Promise chains\n- Use early returns to reduce nesting\n- Prefer const over let when possible\n- Use destructuring for object parameters",
+              "filename": "CLAUDE.md"
+            }
+          }
+        ],
+        "estimatedTime": "10 minutes"
+      },
+      "examples": [
+        {
+          "title": "Complete Style Preferences",
+          "code": {
+            "language": "markdown",
+            "content": "## My Coding Style\n\n### I Prefer\n- Functional programming over OOP\n- Composition over inheritance\n- Explicit over implicit\n- Small functions (< 20 lines)\n- Immutable data structures\n\n### Always Use\n- TypeScript strict mode\n- ESLint with strict config\n- Prettier for formatting\n\n### Avoid\n- Any type in TypeScript\n- Nested callbacks\n- Magic numbers (use named constants)\n- Abbreviations in variable names",
+            "filename": "CLAUDE.md"
+          },
+          "explanation": "Clear preferences guide Claude to generate code matching your exact style."
+        }
+      ],
+      "tips": [
+        "Include both positive preferences (do this) and negative ones (avoid that)",
+        "Be specific about edge cases where your preference differs from common convention"
+      ],
+      "relatedAchievements": ["personal_scribe", "forbidden_patterns", "code_keeper"]
+    },
+    "forbidden_patterns": {
+      "longDescription": "Protect your codebase by documenting anti-patterns, deprecated approaches, and things to explicitly avoid. Forbidden Patterns helps you create guardrails that prevent Claude from using problematic code patterns, outdated libraries, or approaches that have caused issues in the past. These negative rules are just as valuable as positive guidance.",
+      "whyItMatters": "Explicit anti-patterns prevent Claude from repeating mistakes and keep deprecated or problematic code out of your codebase.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Document anti-patterns and things to avoid using NEVER, DON'T, AVOID keywords",
+        "steps": [
+          {
+            "instruction": "Identify problematic patterns from past experience",
+            "note": "Deprecated APIs, security issues, performance problems, team decisions"
+          },
+          {
+            "instruction": "Create a dedicated section for things to avoid",
+            "code": {
+              "language": "markdown",
+              "content": "## Anti-Patterns - DO NOT USE\n\n### NEVER\n- NEVER use `any` type in TypeScript - always define proper types\n- NEVER store secrets in code - use environment variables\n- NEVER use `eval()` or `new Function()` - security risk\n- NEVER mutate function parameters directly\n\n### AVOID\n- AVOID using `var` - use `const` or `let` instead\n- AVOID nested ternaries - use if/else for complex logic\n- AVOID default exports - use named exports for better refactoring\n\n### DEPRECATED\n- DO NOT use moment.js - use date-fns instead\n- DO NOT use class components - use functional components with hooks\n- DO NOT use enzyme - use React Testing Library",
+              "filename": "CLAUDE.md"
+            }
+          },
+          {
+            "instruction": "Explain why something is forbidden when it's not obvious",
+            "code": {
+              "language": "markdown",
+              "content": "### Forbidden: jQuery\nDO NOT use jQuery in this project.\nReason: We use React for DOM manipulation. jQuery conflicts with React's virtual DOM and causes unpredictable behavior.",
+              "filename": "CLAUDE.md"
+            }
+          }
+        ],
+        "estimatedTime": "15 minutes"
+      },
+      "examples": [
+        {
+          "title": "Security and Quality Guardrails",
+          "code": {
+            "language": "markdown",
+            "content": "## Prohibited Patterns\n\n### Security\n- NEVER use `dangerouslySetInnerHTML` without sanitization\n- NEVER log sensitive data (passwords, tokens, PII)\n- NEVER disable CORS in production\n\n### Quality\n- DON'T use console.log for debugging - use proper logger\n- DON'T catch errors without handling them\n- DON'T use magic strings - define constants\n\n### Architecture\n- AVOID direct database queries in controllers\n- AVOID circular dependencies between modules\n- DON'T import from parent directories (no ../..)",
+            "filename": "CLAUDE.md"
+          },
+          "explanation": "Clear prohibitions with context help Claude avoid common pitfalls."
+        }
+      ],
+      "tips": [
+        "Use strong language (NEVER, DON'T, AVOID) to signal importance",
+        "Include the reason why something is forbidden when it's a team/project decision"
+      ],
+      "relatedAchievements": ["preference_keeper", "the_archivist", "code_keeper"]
+    },
+    "environment_detector": {
+      "longDescription": "Account for cross-platform differences by including platform-specific instructions in your CLAUDE.md. Environment Detector recognizes developers who work across macOS, Linux, and Windows, or who manage projects that need to behave differently in various environments. Document platform quirks, OS-specific commands, and environment-conditional behavior.",
+      "whyItMatters": "Platform-aware instructions ensure Claude gives you the right commands and patterns regardless of which operating system you're using.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Include platform-specific instructions using OS names or conditional patterns",
+        "steps": [
+          {
+            "instruction": "Identify platform-specific behaviors in your project",
+            "note": "File paths, shell commands, environment variables, package managers"
+          },
+          {
+            "instruction": "Document platform differences explicitly",
+            "code": {
+              "language": "markdown",
+              "content": "## Platform-Specific Notes\n\n### macOS\n- Use `brew` for system dependencies\n- File paths are case-insensitive by default\n- Use `open` command to open files/URLs\n\n### Linux\n- Use `apt` or `dnf` for system dependencies\n- File paths are case-sensitive\n- Use `xdg-open` for opening files/URLs\n\n### Windows\n- Use PowerShell or WSL for scripts\n- Use `\\` for path separators in native commands\n- Environment variables: `%VAR%` (cmd) or `$env:VAR` (PowerShell)",
+              "filename": "CLAUDE.md"
+            }
+          },
+          {
+            "instruction": "Add conditional instructions when needed",
+            "code": {
+              "language": "markdown",
+              "content": "## Development Setup\n\nOn macOS/Linux:\n```bash\nexport DATABASE_URL=\"postgresql://localhost:5432/mydb\"\nnpm run dev\n```\n\nOn Windows (PowerShell):\n```powershell\n$env:DATABASE_URL=\"postgresql://localhost:5432/mydb\"\nnpm run dev\n```",
+              "filename": "CLAUDE.md"
+            }
+          }
+        ],
+        "estimatedTime": "10 minutes"
+      },
+      "examples": [
+        {
+          "title": "Cross-Platform Development Guide",
+          "code": {
+            "language": "markdown",
+            "content": "## Cross-Platform Notes\n\n### File Paths\n- Use `path.join()` in Node.js, never hardcode separators\n- Store paths with forward slashes in config files\n\n### Docker\n- On macOS/Windows: Docker Desktop required\n- On Linux: Native Docker installation\n\n### Platform Detection\nUse `process.platform` to check:\n- `darwin` = macOS\n- `linux` = Linux\n- `win32` = Windows",
+            "filename": "CLAUDE.md"
+          },
+          "explanation": "Platform awareness prevents OS-specific bugs and incorrect command suggestions."
+        }
+      ],
+      "tips": [
+        "Focus on differences that actually affect development workflow",
+        "Test commands on all platforms your team uses"
+      ],
+      "relatedAchievements": ["the_archivist", "code_keeper", "conditional_memory"]
+    },
+    "conditional_memory": {
+      "longDescription": "Create dynamic, context-aware instructions using conditional language in your CLAUDE.md. Conditional Memory allows you to specify different behaviors based on context: 'When debugging, show verbose output' or 'If this is a test file, use mocking patterns.' This creates intelligent rules that adapt to different situations within your project.",
+      "whyItMatters": "Conditional rules let Claude adapt its behavior based on context, providing more nuanced and situation-appropriate assistance.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Use When/If/Only when/Unless patterns to create conditional instructions",
+        "steps": [
+          {
+            "instruction": "Identify situations that require different approaches",
+            "note": "Testing vs production, different file types, debugging, specific workflows"
+          },
+          {
+            "instruction": "Write conditional rules using clear trigger phrases",
+            "code": {
+              "language": "markdown",
+              "content": "## Conditional Guidelines\n\n### When working with tests:\n- Use Jest mock functions for external dependencies\n- Follow AAA pattern (Arrange, Act, Assert)\n- Name tests: 'should [expected behavior] when [condition]'\n\n### If modifying API endpoints:\n- Update the OpenAPI spec in /docs/openapi.yaml\n- Add migration if database schema changes\n- Update related integration tests\n\n### Only when in production mode:\n- Enable error tracking with Sentry\n- Use minified bundles\n- Enable CDN caching headers",
+              "filename": "CLAUDE.md"
+            }
+          },
+          {
+            "instruction": "Use negative conditions when appropriate",
+            "code": {
+              "language": "markdown",
+              "content": "### Unless explicitly requested:\n- Don't add comments explaining obvious code\n- Don't create backup files\n- Don't modify unrelated files",
+              "filename": "CLAUDE.md"
+            }
+          }
+        ],
+        "estimatedTime": "10 minutes"
+      },
+      "examples": [
+        {
+          "title": "Context-Aware Rules",
+          "code": {
+            "language": "markdown",
+            "content": "## Situational Guidelines\n\n### When creating new components:\n- Generate a test file alongside the component\n- Add Storybook story if it's a UI component\n- Export from the nearest index.ts barrel file\n\n### If the file is in /src/legacy:\n- Match existing code style (even if outdated)\n- Don't refactor surrounding code\n- Add TODO comments for future improvements\n\n### When debugging issues:\n- Add console.logs with [DEBUG] prefix\n- Clean up debug statements before committing\n- Check error boundaries are in place",
+            "filename": "CLAUDE.md"
+          },
+          "explanation": "Conditional rules adapt Claude's behavior to match the current context."
+        }
+      ],
+      "tips": [
+        "Keep conditions specific and unambiguous",
+        "Test that Claude correctly identifies when conditions apply"
+      ],
+      "relatedAchievements": ["preference_keeper", "environment_detector", "template_master"]
+    },
+    "importer": {
+      "longDescription": "Leverage the @import syntax to include external files into your CLAUDE.md. This powerful feature lets you modularize your memory by keeping detailed content in separate files and importing them into your main CLAUDE.md. Perfect for large codebases where you want to maintain topic-specific documentation files.",
+      "whyItMatters": "The @import syntax enables modular, maintainable memory files that don't become unwieldy as your documentation grows.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Use @import statements to include content from external files",
+        "steps": [
+          {
+            "instruction": "Create separate documentation files for detailed topics",
+            "code": {
+              "language": "markdown",
+              "content": "# API Conventions\n\nDetailed API documentation that would clutter main CLAUDE.md...\n\n## Endpoint Naming\n- Use plural nouns for resources\n- Use kebab-case for multi-word paths\n\n## Request/Response Formats\n...",
+              "filename": ".claude/docs/api-conventions.md"
+            }
+          },
+          {
+            "instruction": "Import the files in your main CLAUDE.md",
+            "code": {
+              "language": "markdown",
+              "content": "# Project Guidelines\n\n## Overview\nBrief project overview here.\n\n## API Documentation\n@import .claude/docs/api-conventions.md\n\n## Testing Guidelines\n@import .claude/docs/testing.md",
+              "filename": "CLAUDE.md"
+            }
+          },
+          {
+            "instruction": "Use relative paths from the CLAUDE.md location",
+            "note": "Paths are relative to where the CLAUDE.md file is located"
+          }
+        ],
+        "estimatedTime": "15 minutes"
+      },
+      "examples": [
+        {
+          "title": "Modular Documentation Structure",
+          "code": {
+            "language": "markdown",
+            "content": "# Main Project Memory\n\n## Core Principles\nOur core development principles.\n\n## Detailed Guides\n@import .claude/docs/architecture.md\n@import .claude/docs/conventions.md\n@import .claude/docs/deployment.md\n\n## Quick Reference\n- Run tests: npm test\n- Start dev: npm run dev",
+            "filename": "CLAUDE.md"
+          },
+          "explanation": "The main file stays clean while detailed docs live in separate importable files."
+        }
+      ],
+      "tips": [
+        "Keep imported files focused on a single topic",
+        "Use descriptive filenames that indicate content",
+        "Import order matters - earlier imports can be referenced by later content"
+      ],
+      "relatedAchievements": ["multi_import", "modular_mind", "the_archivist"]
+    },
+    "multi_import": {
+      "longDescription": "Build a sophisticated documentation architecture by using @import to include 3 or more external files into your CLAUDE.md. Multi Import recognizes advanced users who have decomposed their memory into multiple focused documents, creating a clean separation of concerns while maintaining a unified context for Claude.",
+      "whyItMatters": "Multiple imports enable enterprise-grade memory organization, keeping topics isolated for easier maintenance while providing comprehensive context.",
+      "difficulty": "advanced",
+      "howTo": {
+        "summary": "Structure your memory as multiple importable files with a lean main CLAUDE.md",
+        "steps": [
+          {
+            "instruction": "Plan your documentation modules",
+            "note": "Think about logical groupings: architecture, conventions, commands, testing, deployment"
+          },
+          {
+            "instruction": "Create dedicated documentation files",
+            "code": {
+              "language": "bash",
+              "content": "mkdir -p .claude/docs\ntouch .claude/docs/architecture.md\ntouch .claude/docs/conventions.md\ntouch .claude/docs/testing.md\ntouch .claude/docs/deployment.md",
+              "filename": "terminal"
+            }
+          },
+          {
+            "instruction": "Create a main CLAUDE.md that imports all modules",
+            "code": {
+              "language": "markdown",
+              "content": "# Project Documentation Hub\n\nThis file imports modular documentation from .claude/docs/\n\n## Architecture\n@import .claude/docs/architecture.md\n\n## Coding Conventions\n@import .claude/docs/conventions.md\n\n## Testing Strategy\n@import .claude/docs/testing.md\n\n## Deployment Process\n@import .claude/docs/deployment.md\n\n## Quick Commands\n- Dev: `npm run dev`\n- Test: `npm test`\n- Deploy: `npm run deploy`",
+              "filename": "CLAUDE.md"
+            }
+          },
+          {
+            "instruction": "Populate each imported file with detailed content specific to that topic"
+          }
+        ],
+        "estimatedTime": "30 minutes"
+      },
+      "examples": [
+        {
+          "title": "Enterprise Documentation Structure",
+          "code": {
+            "language": "markdown",
+            "content": "# Enterprise SaaS Platform\n\n## Quick Reference\nCore info that doesn't need importing.\n\n## Modular Documentation\n\n### System Design\n@import .claude/docs/architecture.md\n@import .claude/docs/data-model.md\n@import .claude/docs/integrations.md\n\n### Development\n@import .claude/docs/conventions.md\n@import .claude/docs/testing.md\n@import .claude/docs/code-review.md\n\n### Operations\n@import .claude/docs/deployment.md\n@import .claude/docs/monitoring.md",
+              "filename": "CLAUDE.md"
+          },
+          "explanation": "Eight imports create comprehensive coverage while keeping each topic maintainable."
+        }
+      ],
+      "tips": [
+        "Create a table of contents in your main CLAUDE.md showing what's imported",
+        "Version control all imported files alongside your code"
+      ],
+      "relatedAchievements": ["importer", "modular_mind", "rule_library"]
+    },
+    "rule_maker": {
+      "longDescription": "Discover the .claude/rules/ directory for organizing modular rule files. Rule Maker introduces you to creating separate .md files in the rules directory, which Claude automatically loads alongside your CLAUDE.md. This is the first step toward a truly modular memory system where different rules can be maintained independently.",
+      "whyItMatters": "The rules directory enables team members to contribute rules independently and keeps different concerns in separate, focused files.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Create your first rule file in .claude/rules/",
+        "steps": [
+          {
+            "instruction": "Create the rules directory structure",
+            "code": {
+              "language": "bash",
+              "content": "mkdir -p .claude/rules",
+              "filename": "terminal"
+            }
+          },
+          {
+            "instruction": "Create your first rule file",
+            "code": {
+              "language": "bash",
+              "content": "touch .claude/rules/testing.md",
+              "filename": "terminal"
+            }
+          },
+          {
+            "instruction": "Add focused content to the rule file",
+            "code": {
+              "language": "markdown",
+              "content": "# Testing Rules\n\n## Unit Tests\n- Place tests next to source files: `foo.ts` -> `foo.test.ts`\n- Use descriptive test names: 'should return null when input is empty'\n- One assertion per test when possible\n\n## Mocking\n- Mock external dependencies, not internal modules\n- Use jest.mock() at module level\n- Reset mocks in beforeEach\n\n## Coverage\n- Minimum 80% coverage for new code\n- Don't test implementation details",
+              "filename": ".claude/rules/testing.md"
+            }
+          },
+          {
+            "instruction": "Claude will automatically load rules from this directory"
+          }
+        ],
+        "estimatedTime": "10 minutes"
+      },
+      "examples": [
+        {
+          "title": "First Rule File",
+          "code": {
+            "language": "markdown",
+            "content": "# Git Workflow Rules\n\n## Branches\n- Feature branches: `feature/description`\n- Bug fixes: `fix/description`\n- Always branch from `main`\n\n## Commits\n- Use conventional commits: `feat:`, `fix:`, `docs:`\n- Keep commits atomic and focused\n- Write meaningful commit messages\n\n## Pull Requests\n- Require at least one review\n- Squash merge to main\n- Delete branch after merge",
+            "filename": ".claude/rules/git-workflow.md"
+          },
+          "explanation": "A focused rule file for git conventions, separate from other project rules."
+        }
+      ],
+      "tips": [
+        "Name rule files descriptively (git.md, testing.md, security.md)",
+        "Keep each rule file focused on one topic"
+      ],
+      "relatedAchievements": ["modular_mind", "rule_library", "first_memory"]
+    },
+    "modular_mind": {
+      "longDescription": "Embrace modular documentation by organizing your rules into 3 or more separate files in .claude/rules/. Modular Mind recognizes the power of separation of concerns in your memory system. Each rule file can focus on a specific domain - testing, security, API design - making rules easier to find, update, and share.",
+      "whyItMatters": "Multiple rule files create a maintainable knowledge base where different team members can own different domains without merge conflicts.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Create 3+ focused rule files in your .claude/rules/ directory",
+        "steps": [
+          {
+            "instruction": "Plan your rule modules by domain",
+            "note": "Consider: code style, testing, git, security, API design, database, frontend"
+          },
+          {
+            "instruction": "Create multiple focused rule files",
+            "code": {
+              "language": "bash",
+              "content": "mkdir -p .claude/rules\ntouch .claude/rules/code-style.md\ntouch .claude/rules/testing.md\ntouch .claude/rules/security.md",
+              "filename": "terminal"
+            }
+          },
+          {
+            "instruction": "Populate each file with domain-specific rules",
+            "code": {
+              "language": "markdown",
+              "content": "# Code Style Rules\n\n## Formatting\n- 2-space indentation\n- Single quotes\n- No semicolons\n\n## Naming\n- camelCase for variables\n- PascalCase for classes",
+              "filename": ".claude/rules/code-style.md"
+            }
+          },
+          {
+            "instruction": "Verify your rules are loaded",
+            "code": {
+              "language": "bash",
+              "content": "ls .claude/rules/*.md",
+              "filename": "terminal"
+            }
+          }
+        ],
+        "estimatedTime": "20 minutes"
+      },
+      "examples": [
+        {
+          "title": "Modular Rules Structure",
+          "code": {
+            "language": "bash",
+            "content": ".claude/rules/\n  code-style.md    # Formatting and naming conventions\n  testing.md       # Test patterns and coverage\n  security.md      # Security best practices\n  api-design.md    # REST API conventions\n  database.md      # Query patterns and migrations",
+            "filename": "directory structure"
+          },
+          "explanation": "Five rule files covering distinct domains, each independently maintainable."
+        }
+      ],
+      "tips": [
+        "Avoid overlap between rule files - each domain once",
+        "Name files consistently (kebab-case recommended)"
+      ],
+      "relatedAchievements": ["rule_maker", "rule_library", "multi_import"]
+    },
+    "rule_library": {
+      "longDescription": "Build an extensive knowledge base with 5 or more rule files in your .claude/rules/ directory. Rule Library represents mastery of modular memory organization, creating a comprehensive reference library that covers all aspects of your project or development practice. This level of organization is typically found in mature projects with detailed conventions.",
+      "whyItMatters": "A complete rule library provides comprehensive coverage of your project's conventions, enabling Claude to give consistently appropriate guidance.",
+      "difficulty": "advanced",
+      "howTo": {
+        "summary": "Create a comprehensive set of 5+ rule files covering all project domains",
+        "steps": [
+          {
+            "instruction": "Audit your project for all areas needing documentation",
+            "note": "Code, testing, git, deployment, security, performance, accessibility, etc."
+          },
+          {
+            "instruction": "Create a comprehensive rules structure",
+            "code": {
+              "language": "bash",
+              "content": "mkdir -p .claude/rules\ntouch .claude/rules/code-style.md\ntouch .claude/rules/testing.md\ntouch .claude/rules/security.md\ntouch .claude/rules/api-design.md\ntouch .claude/rules/database.md\ntouch .claude/rules/deployment.md\ntouch .claude/rules/performance.md",
+              "filename": "terminal"
+            }
+          },
+          {
+            "instruction": "Fill each rule file with comprehensive domain-specific guidance",
+            "note": "Each file should have multiple sections with detailed rules"
+          },
+          {
+            "instruction": "Create an index or README for the rules directory",
+            "code": {
+              "language": "markdown",
+              "content": "# Rules Index\n\n## Code Quality\n- [Code Style](code-style.md) - Formatting, naming, patterns\n- [Testing](testing.md) - Test strategies and coverage\n- [Security](security.md) - Security best practices\n\n## Architecture\n- [API Design](api-design.md) - REST conventions\n- [Database](database.md) - Schema and query patterns\n\n## Operations\n- [Deployment](deployment.md) - CI/CD and releases\n- [Performance](performance.md) - Optimization guidelines",
+              "filename": ".claude/rules/README.md"
+            }
+          }
+        ],
+        "estimatedTime": "1 hour"
+      },
+      "examples": [
+        {
+          "title": "Enterprise Rule Library",
+          "code": {
+            "language": "bash",
+            "content": ".claude/rules/\n  README.md           # Index and overview\n  code-style.md       # 50+ formatting rules\n  testing.md          # Unit, integration, E2E\n  security.md         # Auth, input validation, secrets\n  api-design.md       # REST patterns, versioning\n  database.md         # Schema, migrations, queries\n  frontend.md         # Components, state, styling\n  performance.md      # Caching, optimization\n  accessibility.md    # WCAG compliance",
+            "filename": "directory structure"
+          },
+          "explanation": "Nine rule files creating comprehensive coverage of an enterprise project."
+        }
+      ],
+      "tips": [
+        "Add a README.md to index and describe your rule files",
+        "Review and update rules regularly as practices evolve"
+      ],
+      "relatedAchievements": ["modular_mind", "rule_maker", "the_archivist"]
+    },
+    "template_master": {
+      "longDescription": "Unlock dynamic memory capabilities by using template variables like {{variable}} in your CLAUDE.md. Template Master recognizes the use of placeholder patterns that can represent dynamic values, making your memory files more flexible and reusable. While not all placeholders are automatically substituted, they document where dynamic content belongs.",
+      "whyItMatters": "Template variables create flexible documentation that adapts to different contexts, making your memory files more reusable and maintainable.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Use {{variable}} syntax in your CLAUDE.md for dynamic or placeholder content",
+        "steps": [
+          {
+            "instruction": "Identify values that might change or vary by context",
+            "note": "Project names, version numbers, environment-specific values, user names"
+          },
+          {
+            "instruction": "Add template variables using double curly braces",
+            "code": {
+              "language": "markdown",
+              "content": "# {{project_name}} Guidelines\n\n## Environment Configuration\n- Database: {{database_name}}\n- API URL: {{api_base_url}}\n- Current Version: {{version}}\n\n## Team Contacts\n- Lead: {{tech_lead}}\n- PM: {{product_manager}}",
+              "filename": "CLAUDE.md"
+            }
+          },
+          {
+            "instruction": "Document what each variable represents",
+            "code": {
+              "language": "markdown",
+              "content": "## Template Variables\n\n| Variable | Description | Example |\n|----------|-------------|----------|\n| {{project_name}} | Project display name | My SaaS App |\n| {{api_base_url}} | API endpoint base | https://api.example.com |\n| {{version}} | Current release version | 2.3.1 |",
+              "filename": "CLAUDE.md"
+            }
+          }
+        ],
+        "estimatedTime": "10 minutes"
+      },
+      "examples": [
+        {
+          "title": "Reusable Project Template",
+          "code": {
+            "language": "markdown",
+            "content": "# {{project_name}}\n\n## Overview\n{{project_description}}\n\n## Tech Stack\n- Frontend: {{frontend_framework}}\n- Backend: {{backend_framework}}\n- Database: {{database}}\n\n## Deployment\n- Staging: https://staging.{{domain}}\n- Production: https://{{domain}}\n\n## Version\nCurrent: v{{version}}",
+            "filename": "CLAUDE.md"
+          },
+          "explanation": "Template variables make this documentation reusable across multiple projects."
+        }
+      ],
+      "tips": [
+        "Use descriptive variable names that indicate their purpose",
+        "Create a variable reference section documenting all placeholders"
+      ],
+      "relatedAchievements": ["conditional_memory", "the_archivist", "code_keeper"]
+    },
+    "memory_curator": {
+      "longDescription": "Evolve your memory over time by updating CLAUDE.md based on new learnings, discoveries, or changes in your workflow. Memory Curator celebrates the practice of maintaining living documentation - recognizing that the best memory files grow and improve based on real-world experience with Claude Code.",
+      "whyItMatters": "Living documentation stays relevant. Regular updates ensure Claude always has current, accurate context about your project and preferences.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Actively maintain and update your CLAUDE.md based on Claude interactions and project changes",
+        "steps": [
+          {
+            "instruction": "Notice when Claude makes repeated mistakes or asks the same questions",
+            "note": "These are signals to add missing context to your memory"
+          },
+          {
+            "instruction": "When you teach Claude something new, add it to CLAUDE.md",
+            "code": {
+              "language": "markdown",
+              "content": "## Learned Patterns\n\n### Error Handling (Added 2024-01-15)\nAfter debugging session: always wrap async operations in try/catch with specific error types.\n\n### Database Queries (Added 2024-01-20)\nUse query builder for complex queries, raw SQL only for performance-critical paths.",
+              "filename": "CLAUDE.md"
+            }
+          },
+          {
+            "instruction": "Ask Claude to help update your memory",
+            "code": {
+              "language": "text",
+              "content": "Based on what we learned in this session, what should we add to CLAUDE.md?",
+              "filename": "prompt example"
+            }
+          },
+          {
+            "instruction": "Review and prune outdated information periodically",
+            "note": "Remove deprecated patterns, update changed conventions"
+          }
+        ],
+        "estimatedTime": "Ongoing"
+      },
+      "examples": [
+        {
+          "title": "Curated Memory with Changelog",
+          "code": {
+            "language": "markdown",
+            "content": "# Project Guidelines\n\n## Changelog\n- 2024-01-20: Added database query patterns\n- 2024-01-15: Added error handling standards\n- 2024-01-10: Initial creation\n\n## Active Guidelines\n...\n\n## Archived (No Longer Applicable)\n- ~~Use Moment.js for dates~~ - Migrated to date-fns",
+            "filename": "CLAUDE.md"
+          },
+          "explanation": "A changelog tracks evolution, and archived sections preserve history."
+        }
+      ],
+      "tips": [
+        "Add dates when you add new sections so you can track freshness",
+        "Ask Claude what's missing after complex debugging sessions"
+      ],
+      "relatedAchievements": ["memory_archaeologist", "the_archivist", "preference_keeper"]
+    },
+    "memory_archaeologist": {
+      "longDescription": "Document lessons learned from past Claude conversations by referencing historical discoveries in your CLAUDE.md. Memory Archaeologist honors the practice of excavating insights from previous sessions and preserving them for future reference. This transforms ephemeral conversation knowledge into permanent institutional memory.",
+      "whyItMatters": "Past sessions contain valuable discoveries that get lost without documentation. Preserving these insights prevents repeating the same learning process.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Document learnings from past Claude sessions in your CLAUDE.md",
+        "steps": [
+          {
+            "instruction": "After solving difficult problems, capture the solution",
+            "code": {
+              "language": "markdown",
+              "content": "## Lessons Learned\n\n### Session 2024-01-15: Authentication Bug\n**Problem:** Users randomly logged out during page navigation\n**Root Cause:** JWT refresh happening after token expiry check\n**Solution:** Implement proactive token refresh 5 minutes before expiry\n**File changed:** src/auth/tokenManager.ts",
+              "filename": "CLAUDE.md"
+            }
+          },
+          {
+            "instruction": "Document workarounds for known issues",
+            "code": {
+              "language": "markdown",
+              "content": "### Known Issues & Workarounds\n\n#### Prisma Hot Reload (Discovered 2024-01-10)\nPrisma client doesn't hot reload properly in development.\n**Workaround:** Run `npx prisma generate` after schema changes, then restart dev server.",
+              "filename": "CLAUDE.md"
+            }
+          },
+          {
+            "instruction": "Create a 'discoveries' or 'learnings' section for patterns discovered with Claude"
+          }
+        ],
+        "estimatedTime": "10 minutes per session"
+      },
+      "examples": [
+        {
+          "title": "Archaeological Record",
+          "code": {
+            "language": "markdown",
+            "content": "## Discovered Patterns\n\n### Performance (Session 2024-01-18)\nDiscovered that our GraphQL queries were n+1 due to DataLoader not being initialized per-request. Solution: Create new DataLoader instance in context factory.\n\n### Testing (Session 2024-01-12)\nFound that our test database wasn't isolating transactions properly. Solution: Wrap each test in a transaction and rollback after.\n\n### Deployment (Session 2024-01-08)\nCloud Run cold starts were 8s due to Prisma connection pooling. Solution: Use PgBouncer with transaction mode.",
+            "filename": "CLAUDE.md"
+          },
+          "explanation": "Each entry preserves valuable problem/solution knowledge from past sessions."
+        }
+      ],
+      "tips": [
+        "Capture learnings immediately while context is fresh",
+        "Include enough context that future-you (or teammates) can understand"
+      ],
+      "relatedAchievements": ["memory_curator", "the_archivist", "code_keeper"]
+    },
+    "pattern_recognizer": {
+      "longDescription": "Document code patterns and architectural decisions in your CLAUDE.md using the word 'pattern' to describe reusable solutions. Pattern Recognizer celebrates developers who identify and codify recurring solutions, making it easy for Claude to apply the same patterns consistently throughout the codebase.",
+      "whyItMatters": "Documented patterns ensure consistency across your codebase and help Claude apply proven solutions to similar problems.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Document named patterns in your CLAUDE.md that Claude should follow",
+        "steps": [
+          {
+            "instruction": "Identify recurring patterns in your codebase",
+            "note": "Repository patterns, factory patterns, error handling patterns, etc."
+          },
+          {
+            "instruction": "Document patterns with names and examples",
+            "code": {
+              "language": "markdown",
+              "content": "## Code Patterns\n\n### Repository Pattern\nAll database access goes through repository classes.\n```typescript\nclass UserRepository {\n  async findById(id: string): Promise<User | null> {\n    return this.db.user.findUnique({ where: { id } });\n  }\n}\n```\n\n### Result Pattern\nReturn Result<T, E> instead of throwing errors.\n```typescript\ntype Result<T, E> = { ok: true; value: T } | { ok: false; error: E };\n```\n\n### Factory Pattern\nUse factories for creating complex objects with validation.",
+              "filename": "CLAUDE.md"
+            }
+          },
+          {
+            "instruction": "Reference patterns by name in your codebase",
+            "code": {
+              "language": "markdown",
+              "content": "## When to Apply Patterns\n\n- **Repository Pattern**: Any direct database access\n- **Result Pattern**: Any function that can fail\n- **Factory Pattern**: Creating entities with validation",
+              "filename": "CLAUDE.md"
+            }
+          }
+        ],
+        "estimatedTime": "20 minutes"
+      },
+      "examples": [
+        {
+          "title": "Pattern Catalog",
+          "code": {
+            "language": "markdown",
+            "content": "## Our Patterns\n\n### Service Layer Pattern\nBusiness logic lives in service classes, not controllers.\n\n### DTO Pattern\nData transfer objects validate and transform API data.\n\n### Event Pattern\nUse domain events for cross-module communication.\n\n### Guard Pattern\nValidate preconditions at function entry with early returns.\n\n### Wrapper Pattern\nWrap third-party libraries for easier testing and migration.",
+            "filename": "CLAUDE.md"
+          },
+          "explanation": "Named patterns create a shared vocabulary for the codebase."
+        }
+      ],
+      "tips": [
+        "Include code examples with each pattern",
+        "Explain when and why to use each pattern"
+      ],
+      "relatedAchievements": ["code_keeper", "preference_keeper", "the_archivist"]
+    }
+  }
+}

@@ -1,0 +1,1403 @@
+{
+  "category": "integrations",
+  "content": {
+    "ai_provider": {
+      "longDescription": "Configure an AI-related MCP server to extend Claude's capabilities with additional AI services. This achievement recognizes your ability to integrate external AI providers like OpenAI, Gemini, Ollama, or embedding services into your Claude Code workflow. By connecting multiple AI systems, you can leverage specialized models for tasks like image generation, embeddings, or alternative reasoning approaches while keeping Claude as your primary interface.",
+      "whyItMatters": "Integrating AI providers expands your toolkit beyond Claude's native capabilities, enabling specialized workflows like semantic search with embeddings or hybrid AI approaches.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Add an AI provider MCP server to your configuration file with appropriate credentials and settings.",
+        "steps": [
+          {
+            "instruction": "Choose an AI provider MCP server (e.g., OpenAI, Ollama, or embedding service)",
+            "code": {
+              "language": "bash",
+              "content": "# Search for available AI MCP servers\nnpx -y @modelcontextprotocol/inspector --list | grep -i ai"
+            }
+          },
+          {
+            "instruction": "Create or edit your .mcp.json file with the AI server configuration",
+            "code": {
+              "language": "json",
+              "content": "{\n  \"mcpServers\": {\n    \"openai\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"@modelcontextprotocol/server-openai\"],\n      \"env\": {\n        \"OPENAI_API_KEY\": \"sk-your-api-key\"\n      }\n    }\n  }\n}"
+            }
+          },
+          {
+            "instruction": "Restart Claude Code to load the new server",
+            "code": {
+              "language": "bash",
+              "content": "# Exit Claude Code and restart\n/exit"
+            }
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Ollama Local LLM Integration",
+          "description": "Connect to locally-running Ollama for on-device inference",
+          "code": {
+            "language": "json",
+            "content": "{\n  \"mcpServers\": {\n    \"ollama\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"mcp-server-ollama\"],\n      \"env\": {\n        \"OLLAMA_HOST\": \"http://localhost:11434\"\n      }\n    }\n  }\n}"
+          }
+        },
+        {
+          "title": "Embedding Service for RAG",
+          "description": "Add embedding capabilities for semantic search workflows",
+          "code": {
+            "language": "json",
+            "content": "{\n  \"mcpServers\": {\n    \"embeddings\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"mcp-server-embeddings\"],\n      \"env\": {\n        \"EMBEDDING_MODEL\": \"text-embedding-ada-002\",\n        \"OPENAI_API_KEY\": \"sk-your-key\"\n      }\n    }\n  }\n}"
+          }
+        }
+      ],
+      "tips": [
+        "Store API keys in environment variables rather than directly in config files",
+        "Local AI providers like Ollama work offline and keep data private",
+        "Use embeddings servers for building semantic search over your codebase"
+      ],
+      "relatedAchievements": ["first_server", "mcp_collector", "custom_server"]
+    },
+    "aws_architect": {
+      "longDescription": "Work with AWS infrastructure configurations using Claude Code. This achievement recognizes your expertise in cloud architecture by detecting AWS-related files like serverless.yml, SAM templates, CDK configurations, or AWS credential files in your project. Managing cloud infrastructure with Claude enables intelligent assistance for deploying, updating, and troubleshooting your AWS services directly from your development environment.",
+      "whyItMatters": "AWS powers a significant portion of cloud infrastructure. Having Claude assist with AWS configurations reduces deployment errors and accelerates infrastructure development.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Create AWS infrastructure files in your project to enable Claude's cloud architecture assistance.",
+        "steps": [
+          {
+            "instruction": "Initialize an AWS project structure (Serverless, SAM, or CDK)",
+            "code": {
+              "language": "bash",
+              "content": "# For Serverless Framework\nnpx serverless create --template aws-nodejs --path my-service\n\n# Or for AWS SAM\nsam init --runtime nodejs18.x"
+            }
+          },
+          {
+            "instruction": "Create a serverless.yml or SAM template file",
+            "code": {
+              "language": "yaml",
+              "content": "# serverless.yml\nservice: my-aws-service\nframeworkVersion: '3'\nprovider:\n  name: aws\n  runtime: nodejs18.x\n  region: us-east-1\nfunctions:\n  hello:\n    handler: handler.hello"
+            }
+          },
+          {
+            "instruction": "Open the project in Claude Code and ask about your AWS configuration"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "CDK Infrastructure Setup",
+          "description": "Initialize an AWS CDK project for infrastructure as code",
+          "code": {
+            "language": "bash",
+            "content": "mkdir my-cdk-app && cd my-cdk-app\nnpx cdk init app --language typescript"
+          }
+        }
+      ],
+      "tips": [
+        "Claude can help write IAM policies with least-privilege principles",
+        "Use Claude to review CloudFormation/CDK templates for security issues",
+        "Ask Claude to explain complex AWS architectures in your configs"
+      ],
+      "relatedAchievements": ["cloud_connected", "terraform_tamer", "docker_developer"]
+    },
+    "browser_automator": {
+      "longDescription": "Configure a Playwright or Puppeteer MCP server to enable browser automation capabilities within Claude Code. This powerful integration allows Claude to interact with web pages, take screenshots, fill forms, and automate testing workflows. Browser automation transforms Claude from a code assistant into a full-stack automation platform capable of web scraping, end-to-end testing, and visual verification tasks.",
+      "whyItMatters": "Browser automation enables Claude to verify UI changes, automate repetitive web tasks, and perform end-to-end testing without leaving your development workflow.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Add a Playwright MCP server to enable browser control and automation from Claude Code.",
+        "steps": [
+          {
+            "instruction": "Install Playwright browsers if not already installed",
+            "code": {
+              "language": "bash",
+              "content": "npx playwright install chromium"
+            }
+          },
+          {
+            "instruction": "Add the Playwright MCP server to your configuration",
+            "code": {
+              "language": "json",
+              "content": "{\n  \"mcpServers\": {\n    \"playwright\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"@anthropic/mcp-playwright\"]\n    }\n  }\n}"
+            }
+          },
+          {
+            "instruction": "Restart Claude Code and ask Claude to navigate to a webpage",
+            "code": {
+              "language": "text",
+              "content": "Navigate to example.com and take a screenshot"
+            }
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Playwright with Custom Browser Path",
+          "description": "Configure Playwright with specific browser executable",
+          "code": {
+            "language": "json",
+            "content": "{\n  \"mcpServers\": {\n    \"playwright\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"@anthropic/mcp-playwright\"],\n      \"env\": {\n        \"PLAYWRIGHT_BROWSERS_PATH\": \"/opt/browsers\"\n      }\n    }\n  }\n}"
+          }
+        }
+      ],
+      "tips": [
+        "Browser automation requires proper browser installation - run playwright install first",
+        "Use headless mode for faster automation in CI/CD environments",
+        "Claude can capture screenshots to visually verify UI changes"
+      ],
+      "relatedAchievements": ["first_server", "custom_server", "mcp_collector"]
+    },
+    "cloud_connected": {
+      "longDescription": "Configure an MCP server for AWS, Google Cloud Platform, Azure, or Cloudflare to enable cloud management directly from Claude Code. This achievement recognizes your ability to bridge Claude with major cloud providers, enabling infrastructure queries, resource management, and deployment workflows. Cloud-connected Claude becomes a powerful DevOps assistant that can inspect resources, deploy changes, and troubleshoot issues across your cloud infrastructure.",
+      "whyItMatters": "Direct cloud provider integration eliminates context switching between Claude and cloud consoles, enabling faster infrastructure management and deployment workflows.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Add a cloud provider MCP server with appropriate credentials to enable infrastructure management.",
+        "steps": [
+          {
+            "instruction": "Choose your cloud provider and install the corresponding MCP server",
+            "code": {
+              "language": "bash",
+              "content": "# Test the Cloudflare MCP server\nnpx -y @cloudflare/mcp-server --help"
+            }
+          },
+          {
+            "instruction": "Configure the cloud MCP server with API credentials",
+            "code": {
+              "language": "json",
+              "content": "{\n  \"mcpServers\": {\n    \"cloudflare\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"@cloudflare/mcp-server\"],\n      \"env\": {\n        \"CLOUDFLARE_API_TOKEN\": \"your-api-token\"\n      }\n    }\n  }\n}"
+            }
+          },
+          {
+            "instruction": "Restart Claude Code and verify the connection"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "AWS Integration via SDK",
+          "description": "Connect to AWS using credential chain",
+          "code": {
+            "language": "json",
+            "content": "{\n  \"mcpServers\": {\n    \"aws\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"mcp-server-aws\"],\n      \"env\": {\n        \"AWS_PROFILE\": \"development\",\n        \"AWS_REGION\": \"us-west-2\"\n      }\n    }\n  }\n}"
+          }
+        },
+        {
+          "title": "Google Cloud Integration",
+          "description": "Connect to GCP with service account",
+          "code": {
+            "language": "json",
+            "content": "{\n  \"mcpServers\": {\n    \"gcp\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"mcp-server-gcp\"],\n      \"env\": {\n        \"GOOGLE_APPLICATION_CREDENTIALS\": \"/path/to/service-account.json\"\n      }\n    }\n  }\n}"
+          }
+        }
+      ],
+      "tips": [
+        "Use read-only API tokens for safer exploration of cloud resources",
+        "Cloud MCP servers can help audit security configurations",
+        "Combine with terraform_tamer for infrastructure-as-code workflows"
+      ],
+      "relatedAchievements": ["aws_architect", "terraform_tamer", "first_server"]
+    },
+    "custom_server": {
+      "longDescription": "Build your own MCP server to extend Claude's capabilities with custom tools and integrations. This achievement celebrates your journey from MCP consumer to creator, demonstrating deep understanding of the Model Context Protocol. Custom servers enable organization-specific integrations, proprietary API access, and unique tooling that doesn't exist in the MCP ecosystem. You become a contributor to Claude's extensibility rather than just a user.",
+      "whyItMatters": "Creating custom MCP servers unlocks limitless extensibility, allowing you to connect Claude to any system, API, or workflow specific to your needs.",
+      "difficulty": "advanced",
+      "howTo": {
+        "summary": "Create a TypeScript MCP server using the official SDK, implement custom tools, and register it in your configuration.",
+        "steps": [
+          {
+            "instruction": "Initialize a new MCP server project",
+            "code": {
+              "language": "bash",
+              "content": "mkdir my-mcp-server && cd my-mcp-server\nnpm init -y\nnpm install @modelcontextprotocol/sdk typescript ts-node\nnpx tsc --init"
+            }
+          },
+          {
+            "instruction": "Create the server implementation with a custom tool",
+            "code": {
+              "language": "typescript",
+              "content": "// index.ts\nimport { Server } from \"@modelcontextprotocol/sdk/server/index.js\";\nimport { StdioServerTransport } from \"@modelcontextprotocol/sdk/server/stdio.js\";\n\nconst server = new Server(\n  { name: \"my-server\", version: \"1.0.0\" },\n  { capabilities: { tools: {} } }\n);\n\nserver.setRequestHandler(\"tools/list\", async () => ({\n  tools: [{\n    name: \"greet\",\n    description: \"Generate a greeting\",\n    inputSchema: {\n      type: \"object\",\n      properties: { name: { type: \"string\" } },\n      required: [\"name\"]\n    }\n  }]\n}));\n\nserver.setRequestHandler(\"tools/call\", async (req) => {\n  if (req.params.name === \"greet\") {\n    return {\n      content: [{ type: \"text\", text: `Hello, ${req.params.arguments.name}!` }]\n    };\n  }\n  throw new Error(\"Unknown tool\");\n});\n\nconst transport = new StdioServerTransport();\nawait server.connect(transport);"
+            }
+          },
+          {
+            "instruction": "Register your custom server in .mcp.json",
+            "code": {
+              "language": "json",
+              "content": "{\n  \"mcpServers\": {\n    \"my-server\": {\n      \"command\": \"npx\",\n      \"args\": [\"ts-node\", \"/absolute/path/to/my-mcp-server/index.ts\"]\n    }\n  }\n}"
+            }
+          },
+          {
+            "instruction": "Restart Claude Code and test your custom tool"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Internal API Integration Server",
+          "description": "MCP server that wraps your company's internal API",
+          "code": {
+            "language": "typescript",
+            "content": "// internal-api-server.ts\nserver.setRequestHandler(\"tools/call\", async (req) => {\n  if (req.params.name === \"query_internal_db\") {\n    const response = await fetch(\"https://internal.api/query\", {\n      method: \"POST\",\n      headers: { \"Authorization\": `Bearer ${process.env.API_TOKEN}` },\n      body: JSON.stringify(req.params.arguments)\n    });\n    return { content: [{ type: \"text\", text: await response.text() }] };\n  }\n});"
+          }
+        }
+      ],
+      "tips": [
+        "Start simple - a single tool server teaches the core concepts",
+        "Use the MCP Inspector to debug your server during development",
+        "Consider publishing useful servers to npm for the community"
+      ],
+      "relatedAchievements": ["first_server", "mcp_architect", "stdio_server"]
+    },
+    "database_connected": {
+      "longDescription": "Connect Claude to a database through an MCP server, enabling direct SQL queries, schema exploration, and data analysis within your workflow. This achievement recognizes your ability to bridge Claude with PostgreSQL, MySQL, SQLite, MongoDB, Redis, or other database systems. Database connectivity transforms Claude into a powerful data assistant that can query, analyze, and help optimize your data layer without leaving the conversation.",
+      "whyItMatters": "Database integration enables Claude to understand your data models, write optimized queries, and provide insights directly from live data rather than theoretical examples.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Configure a database MCP server with connection credentials to enable direct database access from Claude.",
+        "steps": [
+          {
+            "instruction": "Choose the appropriate database MCP server for your database type",
+            "code": {
+              "language": "bash",
+              "content": "# Available database servers\n# - @modelcontextprotocol/server-postgres\n# - @modelcontextprotocol/server-sqlite\n# - mcp-server-mysql\n# - mcp-server-mongodb"
+            }
+          },
+          {
+            "instruction": "Configure the database server with connection details",
+            "code": {
+              "language": "json",
+              "content": "{\n  \"mcpServers\": {\n    \"postgres\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"@modelcontextprotocol/server-postgres\"],\n      \"env\": {\n        \"DATABASE_URL\": \"postgresql://user:password@localhost:5432/mydb\"\n      }\n    }\n  }\n}"
+            }
+          },
+          {
+            "instruction": "Restart Claude Code and query your database",
+            "code": {
+              "language": "text",
+              "content": "Show me the schema for the users table and suggest indexes"
+            }
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "SQLite Local Database",
+          "description": "Connect to a local SQLite file for development",
+          "code": {
+            "language": "json",
+            "content": "{\n  \"mcpServers\": {\n    \"sqlite\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"@modelcontextprotocol/server-sqlite\", \"./data/app.db\"]\n    }\n  }\n}"
+          }
+        },
+        {
+          "title": "Read-Only Production Connection",
+          "description": "Safely connect to production with read-only user",
+          "code": {
+            "language": "json",
+            "content": "{\n  \"mcpServers\": {\n    \"prod-db\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"@modelcontextprotocol/server-postgres\"],\n      \"env\": {\n        \"DATABASE_URL\": \"postgresql://readonly:pass@prod.db.com/main\",\n        \"READ_ONLY\": \"true\"\n      }\n    }\n  }\n}"
+          }
+        }
+      ],
+      "tips": [
+        "Always use read-only credentials when connecting to production databases",
+        "Set query timeouts to prevent runaway queries",
+        "Claude can help analyze query execution plans for optimization"
+      ],
+      "relatedAchievements": ["first_server", "cloud_connected", "graphql_guru"]
+    },
+    "discord_linked": {
+      "longDescription": "Configure a Discord MCP server to enable Claude to interact with Discord servers, channels, and messages. This integration brings community management and communication capabilities directly into your Claude Code workflow. You can read messages, post updates, manage channels, and automate Discord bot functionality through natural conversation with Claude, making community management seamless.",
+      "whyItMatters": "Discord integration enables automated community updates, development announcements, and bot management without switching between tools or writing custom bot code.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Add a Discord MCP server with bot token credentials to enable Discord interaction from Claude.",
+        "steps": [
+          {
+            "instruction": "Create a Discord bot and obtain the bot token from Discord Developer Portal",
+            "code": {
+              "language": "text",
+              "content": "1. Go to discord.com/developers/applications\n2. Create New Application\n3. Go to Bot tab and click 'Add Bot'\n4. Copy the bot token"
+            }
+          },
+          {
+            "instruction": "Configure the Discord MCP server",
+            "code": {
+              "language": "json",
+              "content": "{\n  \"mcpServers\": {\n    \"discord\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"mcp-server-discord\"],\n      \"env\": {\n        \"DISCORD_BOT_TOKEN\": \"your-bot-token\",\n        \"DISCORD_GUILD_ID\": \"optional-guild-id\"\n      }\n    }\n  }\n}"
+            }
+          },
+          {
+            "instruction": "Invite the bot to your server and restart Claude Code"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Discord with Channel Restrictions",
+          "description": "Limit bot access to specific channels",
+          "code": {
+            "language": "json",
+            "content": "{\n  \"mcpServers\": {\n    \"discord\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"mcp-server-discord\"],\n      \"env\": {\n        \"DISCORD_BOT_TOKEN\": \"your-token\",\n        \"ALLOWED_CHANNELS\": \"announcements,dev-updates\"\n      }\n    }\n  }\n}"
+          }
+        }
+      ],
+      "tips": [
+        "Use minimal bot permissions following principle of least privilege",
+        "Consider separate bots for different purposes (announcements vs moderation)",
+        "Test in a private server before deploying to production communities"
+      ],
+      "relatedAchievements": ["slack_integrated", "first_server", "mcp_collector"]
+    },
+    "docker_deployed": {
+      "longDescription": "Configure a Docker MCP server to enable container management directly from Claude Code. This integration allows Claude to list containers, view logs, manage images, and orchestrate your Docker environment through natural language commands. Docker integration transforms Claude into a DevOps assistant that can help troubleshoot container issues, deploy updates, and manage your containerized infrastructure.",
+      "whyItMatters": "Docker MCP integration enables container management through conversation, making DevOps tasks more accessible and reducing the need to memorize complex Docker CLI commands.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Add a Docker MCP server to enable container management from Claude Code.",
+        "steps": [
+          {
+            "instruction": "Ensure Docker is installed and running",
+            "code": {
+              "language": "bash",
+              "content": "docker --version\ndocker ps  # Verify daemon is running"
+            }
+          },
+          {
+            "instruction": "Configure the Docker MCP server",
+            "code": {
+              "language": "json",
+              "content": "{\n  \"mcpServers\": {\n    \"docker\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"mcp-server-docker\"],\n      \"env\": {\n        \"DOCKER_HOST\": \"unix:///var/run/docker.sock\"\n      }\n    }\n  }\n}"
+            }
+          },
+          {
+            "instruction": "Restart Claude Code and manage containers",
+            "code": {
+              "language": "text",
+              "content": "List all running containers and show their resource usage"
+            }
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Remote Docker Host Connection",
+          "description": "Connect to Docker on a remote machine",
+          "code": {
+            "language": "json",
+            "content": "{\n  \"mcpServers\": {\n    \"docker-remote\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"mcp-server-docker\"],\n      \"env\": {\n        \"DOCKER_HOST\": \"tcp://remote-host:2376\",\n        \"DOCKER_TLS_VERIFY\": \"1\",\n        \"DOCKER_CERT_PATH\": \"~/.docker/certs\"\n      }\n    }\n  }\n}"
+          }
+        }
+      ],
+      "tips": [
+        "Be cautious with Docker socket access - it provides significant system control",
+        "Use Docker contexts to safely switch between different Docker hosts",
+        "Claude can help debug container issues by analyzing logs and configs"
+      ],
+      "relatedAchievements": ["docker_developer", "kubernetes_konfigurator", "first_server"]
+    },
+    "docker_developer": {
+      "longDescription": "Use Claude Code within a project that contains Docker configuration files like Dockerfile or docker-compose.yml. This achievement recognizes your containerization expertise and Claude's ability to assist with Docker-based development workflows. Claude becomes context-aware of your container setup, helping write Dockerfiles, optimize builds, debug compose configurations, and manage multi-container applications effectively.",
+      "whyItMatters": "Docker expertise is essential for modern development. Claude's awareness of your container setup enables intelligent assistance with builds, deployments, and debugging.",
+      "difficulty": "beginner",
+      "howTo": {
+        "summary": "Create Docker configuration files in your project to enable Claude's container development assistance.",
+        "steps": [
+          {
+            "instruction": "Create a Dockerfile in your project root",
+            "code": {
+              "language": "dockerfile",
+              "content": "FROM node:20-alpine\nWORKDIR /app\nCOPY package*.json ./\nRUN npm ci --only=production\nCOPY . .\nEXPOSE 3000\nCMD [\"node\", \"server.js\"]"
+            }
+          },
+          {
+            "instruction": "Or create a docker-compose.yml for multi-container setups",
+            "code": {
+              "language": "yaml",
+              "content": "version: '3.8'\nservices:\n  app:\n    build: .\n    ports:\n      - \"3000:3000\"\n    environment:\n      - DATABASE_URL=postgres://db:5432/app\n  db:\n    image: postgres:15\n    volumes:\n      - postgres_data:/var/lib/postgresql/data\nvolumes:\n  postgres_data:"
+            }
+          },
+          {
+            "instruction": "Open the project in Claude Code and ask for Docker help"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Multi-stage Build Dockerfile",
+          "description": "Optimized Dockerfile with build and production stages",
+          "code": {
+            "language": "dockerfile",
+            "content": "# Build stage\nFROM node:20 AS builder\nWORKDIR /app\nCOPY . .\nRUN npm ci && npm run build\n\n# Production stage\nFROM node:20-alpine\nWORKDIR /app\nCOPY --from=builder /app/dist ./dist\nCOPY package*.json ./\nRUN npm ci --only=production\nCMD [\"node\", \"dist/server.js\"]"
+          }
+        }
+      ],
+      "tips": [
+        "Claude can help optimize Dockerfile layer caching for faster builds",
+        "Ask Claude to review your docker-compose.yml for security best practices",
+        "Use .dockerignore to exclude files - Claude can help create one"
+      ],
+      "relatedAchievements": ["docker_deployed", "kubernetes_konfigurator", "aws_architect"]
+    },
+    "filesystem_explorer": {
+      "longDescription": "Configure the filesystem MCP server to give Claude controlled access to read and explore files and directories on your system. This foundational integration enables Claude to navigate project structures, read configuration files, and understand your codebase layout beyond the current working directory. Filesystem access is one of the most powerful MCP capabilities, transforming Claude's ability to assist with file-related tasks.",
+      "whyItMatters": "Filesystem access enables Claude to explore related projects, read documentation, and understand the broader context of your development environment.",
+      "difficulty": "beginner",
+      "howTo": {
+        "summary": "Add the official filesystem MCP server with specified directory paths to enable file exploration.",
+        "steps": [
+          {
+            "instruction": "Determine which directories Claude should have access to",
+            "code": {
+              "language": "bash",
+              "content": "# Common choices:\n# - Current project directory: .\n# - Home directory: ~\n# - Specific paths: /path/to/projects"
+            }
+          },
+          {
+            "instruction": "Configure the filesystem MCP server in .mcp.json",
+            "code": {
+              "language": "json",
+              "content": "{\n  \"mcpServers\": {\n    \"filesystem\": {\n      \"command\": \"npx\",\n      \"args\": [\n        \"-y\",\n        \"@modelcontextprotocol/server-filesystem\",\n        \"/Users/you/projects\",\n        \"/Users/you/Documents\"\n      ]\n    }\n  }\n}"
+            }
+          },
+          {
+            "instruction": "Restart Claude Code to activate filesystem access"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Project-Scoped Filesystem Access",
+          "description": "Limit access to current project directory only",
+          "code": {
+            "language": "json",
+            "content": "{\n  \"mcpServers\": {\n    \"filesystem\": {\n      \"command\": \"npx\",\n      \"args\": [\n        \"-y\",\n        \"@modelcontextprotocol/server-filesystem\",\n        \".\"\n      ]\n    }\n  }\n}"
+          }
+        }
+      ],
+      "tips": [
+        "Limit filesystem access to specific directories for security",
+        "Use project-level .mcp.json to scope access per-project",
+        "The filesystem server is read-only by default for safety"
+      ],
+      "relatedAchievements": ["first_server", "project_mcp", "resource_user"]
+    },
+    "first_server": {
+      "longDescription": "Configure your first MCP (Model Context Protocol) server to extend Claude's capabilities with external tools and resources. This foundational achievement marks your entry into the MCP ecosystem, where Claude can interact with databases, APIs, file systems, and countless other services through standardized protocol servers. MCP servers transform Claude from a conversational AI into a powerful automation platform that can take real actions in your environment.",
+      "whyItMatters": "MCP servers are the key to unlocking Claude's full potential. Your first server opens the door to hundreds of integrations that make Claude genuinely useful for real-world tasks.",
+      "difficulty": "beginner",
+      "howTo": {
+        "summary": "Add an mcpServers configuration to either your project .mcp.json or user settings.json file.",
+        "steps": [
+          {
+            "instruction": "Create a .mcp.json file in your project root (recommended for project-specific servers)",
+            "code": {
+              "language": "bash",
+              "content": "touch .mcp.json"
+            }
+          },
+          {
+            "instruction": "Add your first MCP server configuration",
+            "code": {
+              "language": "json",
+              "content": "{\n  \"mcpServers\": {\n    \"filesystem\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"@modelcontextprotocol/server-filesystem\", \".\"]\n    }\n  }\n}"
+            }
+          },
+          {
+            "instruction": "Restart Claude Code to connect to the server",
+            "code": {
+              "language": "bash",
+              "content": "# In Claude Code, type:\n/exit\n# Then reopen Claude Code in the same directory"
+            }
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Memory Server for Persistent Notes",
+          "description": "A simple server that persists notes across sessions",
+          "code": {
+            "language": "json",
+            "content": "{\n  \"mcpServers\": {\n    \"memory\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"@modelcontextprotocol/server-memory\"]\n    }\n  }\n}"
+          }
+        }
+      ],
+      "tips": [
+        "Start with simple servers like filesystem or memory to learn the basics",
+        "Project-level .mcp.json takes precedence over user settings",
+        "Always restart Claude Code after changing MCP configuration"
+      ],
+      "relatedAchievements": ["stdio_server", "project_mcp", "mcp_collector"]
+    },
+    "github_connected": {
+      "longDescription": "Connect Claude to GitHub for enhanced repository access through the GitHub MCP server or GitHub App installation. This integration enables Claude to interact with issues, pull requests, repository contents, and GitHub Actions directly from your workflow. With GitHub connected, Claude becomes a powerful code review assistant, issue tracker, and repository navigator that understands your project's GitHub context.",
+      "whyItMatters": "GitHub integration transforms Claude into a complete development assistant that can create issues, review PRs, and navigate repositories without leaving your conversation.",
+      "difficulty": "beginner",
+      "howTo": {
+        "summary": "Configure the GitHub MCP server with a personal access token or install the Claude GitHub App.",
+        "steps": [
+          {
+            "instruction": "Create a GitHub Personal Access Token with repo scope",
+            "code": {
+              "language": "text",
+              "content": "1. Go to github.com/settings/tokens\n2. Generate new token (classic)\n3. Select scopes: repo, read:org, read:user\n4. Copy the generated token"
+            }
+          },
+          {
+            "instruction": "Configure the GitHub MCP server",
+            "code": {
+              "language": "json",
+              "content": "{\n  \"mcpServers\": {\n    \"github\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"@modelcontextprotocol/server-github\"],\n      \"env\": {\n        \"GITHUB_PERSONAL_ACCESS_TOKEN\": \"ghp_your_token_here\"\n      }\n    }\n  }\n}"
+            }
+          },
+          {
+            "instruction": "Alternatively, use the gh CLI for authentication",
+            "code": {
+              "language": "bash",
+              "content": "# Authenticate with GitHub CLI\ngh auth login\n\n# Claude can then use your gh credentials"
+            }
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "GitHub with Fine-Grained Token",
+          "description": "Use newer fine-grained personal access tokens for better security",
+          "code": {
+            "language": "json",
+            "content": "{\n  \"mcpServers\": {\n    \"github\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"@modelcontextprotocol/server-github\"],\n      \"env\": {\n        \"GITHUB_PERSONAL_ACCESS_TOKEN\": \"github_pat_xxxxx\"\n      }\n    }\n  }\n}"
+          }
+        }
+      ],
+      "tips": [
+        "Use fine-grained tokens with minimal permissions for better security",
+        "The gh CLI integration often provides smoother authentication",
+        "Claude can help write PR descriptions and review code when GitHub is connected"
+      ],
+      "relatedAchievements": ["first_server", "linear_linked", "slack_integrated"]
+    },
+    "graphql_guru": {
+      "longDescription": "Work with GraphQL schemas in your Claude Code project, enabling intelligent assistance with API design, query writing, and schema evolution. This achievement recognizes your use of GraphQL for API development, detected through .graphql or .gql schema files in your project. Claude becomes schema-aware and can help write queries, mutations, design types, and troubleshoot GraphQL-specific issues with deep understanding of your API structure.",
+      "whyItMatters": "GraphQL's type system and schema-first approach benefit enormously from AI assistance. Claude can help maintain schema consistency and write type-safe queries.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Add GraphQL schema files to your project to enable Claude's GraphQL assistance capabilities.",
+        "steps": [
+          {
+            "instruction": "Create a GraphQL schema file in your project",
+            "code": {
+              "language": "graphql",
+              "content": "# schema.graphql\ntype User {\n  id: ID!\n  name: String!\n  email: String!\n  posts: [Post!]!\n}\n\ntype Post {\n  id: ID!\n  title: String!\n  content: String!\n  author: User!\n}\n\ntype Query {\n  users: [User!]!\n  user(id: ID!): User\n  posts: [Post!]!\n}"
+            }
+          },
+          {
+            "instruction": "Open the project in Claude Code and ask for GraphQL help",
+            "code": {
+              "language": "text",
+              "content": "Help me write a mutation to create a new post with author relationship"
+            }
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Complete GraphQL Schema Structure",
+          "description": "Project with organized GraphQL schema files",
+          "code": {
+            "language": "bash",
+            "content": "# Typical GraphQL project structure\ngraphql/\n  schema.graphql      # Root schema\n  types/\n    user.graphql      # User type definitions\n    post.graphql      # Post type definitions\n  queries.graphql     # Query definitions\n  mutations.graphql   # Mutation definitions"
+          }
+        }
+      ],
+      "tips": [
+        "Keep schema files organized by domain for easier navigation",
+        "Claude can help generate TypeScript types from GraphQL schemas",
+        "Ask Claude to review schema changes for breaking changes"
+      ],
+      "relatedAchievements": ["database_connected", "first_server", "custom_server"]
+    },
+    "http_server": {
+      "longDescription": "Configure an HTTP or Server-Sent Events (SSE) based MCP server to connect Claude with remote services over the network. Unlike stdio servers that run locally, HTTP servers enable connection to cloud-hosted MCP endpoints, shared team servers, or services that require web-based communication. This opens possibilities for centralized tooling, remote resource access, and integration with web services that cannot run locally.",
+      "whyItMatters": "HTTP/SSE servers enable connection to remote and shared MCP services, supporting team-wide integrations and cloud-hosted tools that would be impractical to run locally.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Configure an MCP server using HTTP/SSE transport by specifying a URL endpoint instead of a command.",
+        "steps": [
+          {
+            "instruction": "Identify the HTTP/SSE MCP server endpoint URL",
+            "code": {
+              "language": "text",
+              "content": "HTTP MCP servers expose endpoints like:\n- https://api.example.com/mcp\n- https://mcp.company.internal/tools"
+            }
+          },
+          {
+            "instruction": "Configure the HTTP server in .mcp.json",
+            "code": {
+              "language": "json",
+              "content": "{\n  \"mcpServers\": {\n    \"remote-api\": {\n      \"url\": \"https://api.example.com/mcp\",\n      \"transport\": \"sse\"\n    }\n  }\n}"
+            }
+          },
+          {
+            "instruction": "Add authentication headers if required",
+            "code": {
+              "language": "json",
+              "content": "{\n  \"mcpServers\": {\n    \"remote-api\": {\n      \"url\": \"https://api.example.com/mcp\",\n      \"transport\": \"sse\",\n      \"headers\": {\n        \"Authorization\": \"Bearer your-token\"\n      }\n    }\n  }\n}"
+            }
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Team-Shared MCP Server",
+          "description": "Connect to a centralized team MCP server",
+          "code": {
+            "language": "json",
+            "content": "{\n  \"mcpServers\": {\n    \"team-tools\": {\n      \"url\": \"https://mcp.team.internal/v1\",\n      \"transport\": \"sse\",\n      \"headers\": {\n        \"X-Team-Token\": \"${TEAM_MCP_TOKEN}\"\n      }\n    }\n  }\n}"
+          }
+        }
+      ],
+      "tips": [
+        "HTTP servers are ideal for shared team resources",
+        "SSE transport provides real-time bidirectional communication",
+        "Ensure HTTPS is used for production endpoints"
+      ],
+      "relatedAchievements": ["stdio_server", "first_server", "custom_server"]
+    },
+    "ide_integrated": {
+      "longDescription": "Use Claude Code from within VS Code, JetBrains IDEs, or other integrated development environments. This achievement recognizes your adoption of Claude as an embedded development assistant, seamlessly integrated into your existing IDE workflow. IDE integration provides the best of both worlds: Claude's powerful AI assistance combined with your IDE's navigation, debugging, and project management capabilities.",
+      "whyItMatters": "IDE integration eliminates context switching between Claude and your editor, enabling faster development with AI assistance right where you write code.",
+      "difficulty": "beginner",
+      "howTo": {
+        "summary": "Install the Claude Code extension for your IDE and activate it within your development environment.",
+        "steps": [
+          {
+            "instruction": "For VS Code: Install the Claude Code extension",
+            "code": {
+              "language": "bash",
+              "content": "# Open VS Code and press Cmd+Shift+X (extensions)\n# Search for 'Claude Code'\n# Click Install"
+            }
+          },
+          {
+            "instruction": "For JetBrains: Install from marketplace",
+            "code": {
+              "language": "text",
+              "content": "1. Open Settings/Preferences\n2. Go to Plugins > Marketplace\n3. Search 'Claude Code'\n4. Install and restart IDE"
+            }
+          },
+          {
+            "instruction": "Activate Claude within the IDE",
+            "code": {
+              "language": "text",
+              "content": "VS Code: Cmd+Shift+P > 'Claude: Start Session'\nJetBrains: View > Tool Windows > Claude"
+            }
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "VS Code Keyboard Shortcut Setup",
+          "description": "Configure custom keybindings for Claude in VS Code",
+          "code": {
+            "language": "json",
+            "content": "// keybindings.json\n[\n  {\n    \"key\": \"cmd+shift+c\",\n    \"command\": \"claude.startChat\"\n  },\n  {\n    \"key\": \"cmd+shift+e\",\n    \"command\": \"claude.explainSelection\"\n  }\n]"
+          }
+        }
+      ],
+      "tips": [
+        "Use selection-based commands to have Claude explain highlighted code",
+        "IDE integration shares your project context automatically",
+        "Combine IDE debugging with Claude for powerful troubleshooting"
+      ],
+      "relatedAchievements": ["first_server", "plugin_pioneer", "project_mcp"]
+    },
+    "kubernetes_konfigurator": {
+      "longDescription": "Work with Kubernetes configurations in your Claude Code project, enabling intelligent assistance with container orchestration, deployments, and cluster management. This achievement recognizes your expertise in cloud-native infrastructure through the presence of Kubernetes manifests, Helm charts, or k8s directory structures. Claude becomes your Kubernetes expert, helping write YAML manifests, troubleshoot deployments, and optimize resource configurations.",
+      "whyItMatters": "Kubernetes configuration is notoriously complex. Claude's assistance with manifests, resource limits, and deployment strategies significantly reduces configuration errors.",
+      "difficulty": "advanced",
+      "howTo": {
+        "summary": "Create Kubernetes manifest files in your project to enable Claude's container orchestration assistance.",
+        "steps": [
+          {
+            "instruction": "Create a k8s directory structure for your manifests",
+            "code": {
+              "language": "bash",
+              "content": "mkdir -p k8s/base k8s/overlays/dev k8s/overlays/prod"
+            }
+          },
+          {
+            "instruction": "Add Kubernetes deployment and service manifests",
+            "code": {
+              "language": "yaml",
+              "content": "# k8s/base/deployment.yaml\napiVersion: apps/v1\nkind: Deployment\nmetadata:\n  name: my-app\nspec:\n  replicas: 3\n  selector:\n    matchLabels:\n      app: my-app\n  template:\n    metadata:\n      labels:\n        app: my-app\n    spec:\n      containers:\n      - name: my-app\n        image: my-app:latest\n        ports:\n        - containerPort: 8080"
+            }
+          },
+          {
+            "instruction": "Open in Claude Code and ask for Kubernetes help",
+            "code": {
+              "language": "text",
+              "content": "Add resource limits and health checks to my deployment"
+            }
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Complete Service Configuration",
+          "description": "Kubernetes service with proper labels and ports",
+          "code": {
+            "language": "yaml",
+            "content": "# k8s/base/service.yaml\napiVersion: v1\nkind: Service\nmetadata:\n  name: my-app\n  labels:\n    app: my-app\nspec:\n  type: ClusterIP\n  ports:\n  - port: 80\n    targetPort: 8080\n    protocol: TCP\n  selector:\n    app: my-app"
+          }
+        }
+      ],
+      "tips": [
+        "Use kustomize overlays to manage environment-specific configurations",
+        "Claude can help calculate appropriate resource requests and limits",
+        "Ask Claude to review manifests for security best practices"
+      ],
+      "relatedAchievements": ["docker_developer", "docker_deployed", "terraform_tamer"]
+    },
+    "linear_linked": {
+      "longDescription": "Configure a Linear MCP server to integrate issue tracking and project management directly into your Claude Code workflow. Linear is a modern issue tracker popular with engineering teams, and this integration enables Claude to create issues, update status, search through backlogs, and manage sprint work without leaving your conversation. Your development workflow becomes seamlessly connected to project management.",
+      "whyItMatters": "Linear integration enables Claude to create tickets from code TODOs, link commits to issues, and keep project management synchronized with actual development work.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Add a Linear MCP server with API credentials to enable issue tracking from Claude Code.",
+        "steps": [
+          {
+            "instruction": "Generate a Linear API key from your Linear settings",
+            "code": {
+              "language": "text",
+              "content": "1. Go to linear.app/settings/api\n2. Create a new Personal API Key\n3. Copy the generated key"
+            }
+          },
+          {
+            "instruction": "Configure the Linear MCP server",
+            "code": {
+              "language": "json",
+              "content": "{\n  \"mcpServers\": {\n    \"linear\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"mcp-server-linear\"],\n      \"env\": {\n        \"LINEAR_API_KEY\": \"lin_api_xxxxx\"\n      }\n    }\n  }\n}"
+            }
+          },
+          {
+            "instruction": "Restart Claude Code and interact with Linear",
+            "code": {
+              "language": "text",
+              "content": "Create a bug ticket for the authentication issue I just found"
+            }
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Linear with Team Scope",
+          "description": "Scope Linear access to specific teams",
+          "code": {
+            "language": "json",
+            "content": "{\n  \"mcpServers\": {\n    \"linear\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"mcp-server-linear\"],\n      \"env\": {\n        \"LINEAR_API_KEY\": \"lin_api_xxxxx\",\n        \"LINEAR_TEAM_ID\": \"TEAM-123\"\n      }\n    }\n  }\n}"
+          }
+        }
+      ],
+      "tips": [
+        "Claude can automatically link issues to relevant code files",
+        "Use Linear labels consistently for better AI categorization",
+        "Combine with GitHub integration for end-to-end workflow"
+      ],
+      "relatedAchievements": ["github_connected", "notion_networked", "first_server"]
+    },
+    "mcp_architect": {
+      "longDescription": "Configure 10 or more MCP servers across your settings, demonstrating mastery of the MCP ecosystem and creating a comprehensive toolset for Claude. This achievement recognizes power users who have built an extensive integration layer, connecting Claude to databases, cloud providers, communication tools, and custom services. Your Claude installation has become a sophisticated automation platform with broad capabilities.",
+      "whyItMatters": "Having 10+ MCP servers indicates you have built Claude into a powerful automation hub. Each server multiplies Claude's capabilities for your specific workflow needs.",
+      "difficulty": "advanced",
+      "howTo": {
+        "summary": "Progressively add MCP servers until you have 10 or more configured across your user and project settings.",
+        "steps": [
+          {
+            "instruction": "Review your current MCP configuration",
+            "code": {
+              "language": "bash",
+              "content": "# Check user-level servers\ncat ~/.claude/settings.json | jq '.mcpServers | keys'\n\n# Check project-level servers\ncat .mcp.json | jq '.mcpServers | keys'"
+            }
+          },
+          {
+            "instruction": "Plan your MCP server collection across categories",
+            "code": {
+              "language": "text",
+              "content": "Suggested categories:\n- Data: postgres, sqlite, redis\n- Cloud: aws, cloudflare, github\n- Communication: slack, discord\n- Search: brave-search, exa\n- Development: docker, filesystem"
+            }
+          },
+          {
+            "instruction": "Add servers systematically, testing each one",
+            "code": {
+              "language": "json",
+              "content": "{\n  \"mcpServers\": {\n    \"postgres\": { \"command\": \"npx\", \"args\": [\"-y\", \"@mcp/server-postgres\"] },\n    \"github\": { \"command\": \"npx\", \"args\": [\"-y\", \"@mcp/server-github\"] },\n    \"slack\": { \"command\": \"npx\", \"args\": [\"-y\", \"@mcp/server-slack\"] },\n    \"filesystem\": { \"command\": \"npx\", \"args\": [\"-y\", \"@mcp/server-filesystem\", \".\"] }\n  }\n}"
+            }
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Production MCP Architecture",
+          "description": "Comprehensive server setup for full-stack development",
+          "code": {
+            "language": "json",
+            "content": "{\n  \"mcpServers\": {\n    \"postgres\": { \"command\": \"npx\", \"args\": [\"-y\", \"@mcp/server-postgres\"] },\n    \"redis\": { \"command\": \"npx\", \"args\": [\"-y\", \"mcp-server-redis\"] },\n    \"github\": { \"command\": \"npx\", \"args\": [\"-y\", \"@mcp/server-github\"] },\n    \"slack\": { \"command\": \"npx\", \"args\": [\"-y\", \"@mcp/server-slack\"] },\n    \"aws\": { \"command\": \"npx\", \"args\": [\"-y\", \"mcp-server-aws\"] },\n    \"docker\": { \"command\": \"npx\", \"args\": [\"-y\", \"mcp-server-docker\"] },\n    \"brave\": { \"command\": \"npx\", \"args\": [\"-y\", \"@mcp/server-brave\"] },\n    \"memory\": { \"command\": \"npx\", \"args\": [\"-y\", \"@mcp/server-memory\"] },\n    \"filesystem\": { \"command\": \"npx\", \"args\": [\"-y\", \"@mcp/server-filesystem\"] },\n    \"linear\": { \"command\": \"npx\", \"args\": [\"-y\", \"mcp-server-linear\"] }\n  }\n}"
+          }
+        }
+      ],
+      "tips": [
+        "Split servers between user settings (personal) and project .mcp.json (team)",
+        "Document your server collection in CLAUDE.md for context",
+        "Consider startup time - more servers mean slower Claude initialization"
+      ],
+      "relatedAchievements": ["mcp_collector", "first_server", "custom_server"]
+    },
+    "mcp_collector": {
+      "longDescription": "Configure 5 or more MCP servers to expand Claude's capabilities significantly beyond the default toolset. This achievement marks your progression from MCP beginner to intermediate user, demonstrating intentional curation of tools that enhance your workflow. With multiple servers, Claude becomes versatile enough to handle diverse tasks across different domains like databases, communication, and cloud infrastructure.",
+      "whyItMatters": "Five MCP servers represent a meaningful integration layer. You have progressed beyond experimentation into building a genuinely capable Claude installation.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Add 5 or more MCP servers to your configuration, selecting complementary tools for your workflow.",
+        "steps": [
+          {
+            "instruction": "Start with essential servers for your workflow",
+            "code": {
+              "language": "json",
+              "content": "{\n  \"mcpServers\": {\n    \"filesystem\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"@modelcontextprotocol/server-filesystem\", \".\"]\n    },\n    \"github\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"@modelcontextprotocol/server-github\"],\n      \"env\": { \"GITHUB_PERSONAL_ACCESS_TOKEN\": \"ghp_xxx\" }\n    }\n  }\n}"
+            }
+          },
+          {
+            "instruction": "Add database and search capabilities",
+            "code": {
+              "language": "json",
+              "content": "{\n  \"mcpServers\": {\n    \"sqlite\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"@modelcontextprotocol/server-sqlite\", \"./data.db\"]\n    },\n    \"brave-search\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"@modelcontextprotocol/server-brave-search\"],\n      \"env\": { \"BRAVE_API_KEY\": \"xxx\" }\n    }\n  }\n}"
+            }
+          },
+          {
+            "instruction": "Complete with memory or communication servers"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Balanced Server Collection",
+          "description": "Five servers covering common development needs",
+          "code": {
+            "language": "json",
+            "content": "{\n  \"mcpServers\": {\n    \"filesystem\": { \"command\": \"npx\", \"args\": [\"-y\", \"@mcp/server-filesystem\", \".\"] },\n    \"github\": { \"command\": \"npx\", \"args\": [\"-y\", \"@mcp/server-github\"] },\n    \"postgres\": { \"command\": \"npx\", \"args\": [\"-y\", \"@mcp/server-postgres\"] },\n    \"memory\": { \"command\": \"npx\", \"args\": [\"-y\", \"@mcp/server-memory\"] },\n    \"brave-search\": { \"command\": \"npx\", \"args\": [\"-y\", \"@mcp/server-brave\"] }\n  }\n}"
+          }
+        }
+      ],
+      "tips": [
+        "Choose servers that complement each other for your workflow",
+        "Test each server individually before adding more",
+        "Consider which servers need to be user-level vs project-level"
+      ],
+      "relatedAchievements": ["first_server", "mcp_architect", "project_mcp"]
+    },
+    "notion_networked": {
+      "longDescription": "Configure a Notion MCP server to connect Claude with your knowledge base, documentation, and collaborative workspace. Notion integration enables Claude to search pages, read content, create new entries, and interact with your team's shared knowledge directly from conversations. Your documentation becomes a live resource that Claude can reference and update during development work.",
+      "whyItMatters": "Notion integration connects Claude to your team's knowledge base, enabling AI-assisted documentation, meeting notes access, and knowledge retrieval without context switching.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Add a Notion MCP server with integration token to enable knowledge base access from Claude.",
+        "steps": [
+          {
+            "instruction": "Create a Notion integration and get the token",
+            "code": {
+              "language": "text",
+              "content": "1. Go to notion.so/my-integrations\n2. Create new integration\n3. Set capabilities (read content, etc.)\n4. Copy the Internal Integration Token"
+            }
+          },
+          {
+            "instruction": "Share pages/databases with your integration in Notion",
+            "code": {
+              "language": "text",
+              "content": "1. Open a Notion page or database\n2. Click Share > Invite\n3. Select your integration"
+            }
+          },
+          {
+            "instruction": "Configure the Notion MCP server",
+            "code": {
+              "language": "json",
+              "content": "{\n  \"mcpServers\": {\n    \"notion\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"mcp-server-notion\"],\n      \"env\": {\n        \"NOTION_API_KEY\": \"secret_xxxxx\"\n      }\n    }\n  }\n}"
+            }
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Notion with Root Page Scope",
+          "description": "Limit access to specific workspace section",
+          "code": {
+            "language": "json",
+            "content": "{\n  \"mcpServers\": {\n    \"notion\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"mcp-server-notion\"],\n      \"env\": {\n        \"NOTION_API_KEY\": \"secret_xxxxx\",\n        \"NOTION_ROOT_PAGE_ID\": \"abc123\"\n      }\n    }\n  }\n}"
+          }
+        }
+      ],
+      "tips": [
+        "Share only relevant pages with the integration for security",
+        "Claude can create structured documentation from code comments",
+        "Use Notion databases for structured data Claude can query"
+      ],
+      "relatedAchievements": ["linear_linked", "slack_integrated", "first_server"]
+    },
+    "oauth_authenticator": {
+      "longDescription": "Use OAuth authentication with an MCP server to connect Claude with services requiring secure authorization flows. OAuth integration demonstrates advanced security practices, enabling Claude to access protected resources while maintaining proper authentication boundaries. This capability unlocks enterprise services, third-party APIs, and secure integrations that require user consent and token-based access.",
+      "whyItMatters": "OAuth enables secure access to protected services without storing passwords. Proper OAuth configuration is essential for enterprise and security-conscious integrations.",
+      "difficulty": "advanced",
+      "howTo": {
+        "summary": "Configure an MCP server with OAuth credentials to enable authenticated access to protected services.",
+        "steps": [
+          {
+            "instruction": "Register an OAuth application with the service provider",
+            "code": {
+              "language": "text",
+              "content": "1. Go to the service's developer portal\n2. Create new OAuth application\n3. Set redirect URI: http://localhost:3000/callback\n4. Copy Client ID and Secret"
+            }
+          },
+          {
+            "instruction": "Configure MCP server with OAuth settings",
+            "code": {
+              "language": "json",
+              "content": "{\n  \"mcpServers\": {\n    \"oauth-service\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"mcp-server-oauth-example\"],\n      \"oauth\": {\n        \"clientId\": \"your-client-id\",\n        \"clientSecret\": \"your-client-secret\",\n        \"authUrl\": \"https://service.com/oauth/authorize\",\n        \"tokenUrl\": \"https://service.com/oauth/token\",\n        \"scopes\": [\"read\", \"write\"]\n      }\n    }\n  }\n}"
+            }
+          },
+          {
+            "instruction": "Claude will prompt for OAuth login on first use"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "OAuth with PKCE Flow",
+          "description": "Configure OAuth with Proof Key for Code Exchange for public clients",
+          "code": {
+            "language": "json",
+            "content": "{\n  \"mcpServers\": {\n    \"secure-api\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"mcp-server-secure\"],\n      \"oauth\": {\n        \"clientId\": \"your-client-id\",\n        \"authUrl\": \"https://auth.service.com/authorize\",\n        \"tokenUrl\": \"https://auth.service.com/token\",\n        \"scopes\": [\"api.read\"],\n        \"usePKCE\": true\n      }\n    }\n  }\n}"
+          }
+        }
+      ],
+      "tips": [
+        "Use PKCE for better security with public clients",
+        "Store client secrets securely, not in version control",
+        "Refresh tokens automatically for long-running sessions"
+      ],
+      "relatedAchievements": ["first_server", "github_connected", "custom_server"]
+    },
+    "plugin_pioneer": {
+      "longDescription": "Enable a Claude Code plugin to add pre-built integrations and capabilities without manual MCP server configuration. Plugins provide curated, tested functionality that extends Claude's abilities with a simple settings change. This achievement marks your first step into Claude's plugin ecosystem, where community and official plugins offer powerful features like code review, commit assistance, and workflow automation.",
+      "whyItMatters": "Plugins offer the fastest path to extending Claude's capabilities. A single setting change can add sophisticated features developed and maintained by others.",
+      "difficulty": "beginner",
+      "howTo": {
+        "summary": "Enable a plugin in your Claude settings to add new capabilities without manual configuration.",
+        "steps": [
+          {
+            "instruction": "View available plugins",
+            "code": {
+              "language": "bash",
+              "content": "# In Claude Code, type:\n/plugins"
+            }
+          },
+          {
+            "instruction": "Enable a plugin in settings",
+            "code": {
+              "language": "json",
+              "content": "{\n  \"enabledPlugins\": [\n    \"commit-commands\",\n    \"pr-review-toolkit\"\n  ]\n}"
+            }
+          },
+          {
+            "instruction": "Restart Claude Code to activate the plugin"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Multiple Plugins Configuration",
+          "description": "Enable several complementary plugins",
+          "code": {
+            "language": "json",
+            "content": "{\n  \"enabledPlugins\": [\n    \"commit-commands\",\n    \"pr-review-toolkit\",\n    \"frontend-design\",\n    \"figma\"\n  ]\n}"
+          }
+        }
+      ],
+      "tips": [
+        "Plugins are easier to set up than manual MCP servers",
+        "Check plugin documentation for available slash commands",
+        "Plugins can be enabled/disabled without affecting other settings"
+      ],
+      "relatedAchievements": ["first_server", "ide_integrated", "custom_server"]
+    },
+    "project_mcp": {
+      "longDescription": "Create a project-level .mcp.json file to configure MCP servers specific to your project. This approach enables portable, version-controlled server configurations that travel with your codebase. Team members automatically get the same MCP setup when they clone the repository, ensuring consistent Claude capabilities across your development team without manual configuration steps.",
+      "whyItMatters": "Project-level MCP configs ensure every team member has identical Claude capabilities. Your MCP setup becomes part of the codebase, versioned and portable.",
+      "difficulty": "beginner",
+      "howTo": {
+        "summary": "Create a .mcp.json file in your project root to define project-specific MCP servers.",
+        "steps": [
+          {
+            "instruction": "Create the .mcp.json file in your project root",
+            "code": {
+              "language": "bash",
+              "content": "touch .mcp.json"
+            }
+          },
+          {
+            "instruction": "Add project-specific MCP server configurations",
+            "code": {
+              "language": "json",
+              "content": "{\n  \"mcpServers\": {\n    \"sqlite\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"@modelcontextprotocol/server-sqlite\", \"./data/dev.db\"]\n    },\n    \"filesystem\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"@modelcontextprotocol/server-filesystem\", \".\"]\n    }\n  }\n}"
+            }
+          },
+          {
+            "instruction": "Add .mcp.json to version control (but be careful with secrets)",
+            "code": {
+              "language": "bash",
+              "content": "git add .mcp.json\ngit commit -m \"Add project MCP configuration\""
+            }
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Project MCP with Environment Variables",
+          "description": "Use environment variables for secrets in shared configs",
+          "code": {
+            "language": "json",
+            "content": "{\n  \"mcpServers\": {\n    \"postgres\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"@modelcontextprotocol/server-postgres\"],\n      \"env\": {\n        \"DATABASE_URL\": \"${DATABASE_URL}\"\n      }\n    }\n  }\n}"
+          }
+        }
+      ],
+      "tips": [
+        "Never commit secrets directly in .mcp.json - use environment variables",
+        "Project .mcp.json takes precedence over user-level settings",
+        "Document required environment variables in your README"
+      ],
+      "relatedAchievements": ["first_server", "mcp_collector", "filesystem_explorer"]
+    },
+    "prompt_importer": {
+      "longDescription": "Use prompts provided by an MCP server to invoke pre-built conversation templates and workflows. MCP servers can expose not just tools but also prompts - reusable conversation starters and templates for common tasks. This achievement recognizes your use of these server-provided prompts, which can standardize workflows across teams and provide expert-crafted starting points for complex tasks.",
+      "whyItMatters": "MCP prompts provide expert-crafted templates for common tasks. Using server prompts ensures consistency and saves time on repetitive conversations.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Invoke a prompt provided by an MCP server to start a pre-defined workflow or conversation template.",
+        "steps": [
+          {
+            "instruction": "Configure an MCP server that provides prompts",
+            "code": {
+              "language": "json",
+              "content": "{\n  \"mcpServers\": {\n    \"dev-prompts\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"mcp-server-prompts\"]\n    }\n  }\n}"
+            }
+          },
+          {
+            "instruction": "List available prompts from the server",
+            "code": {
+              "language": "text",
+              "content": "# In Claude Code:\nWhat prompts are available from dev-prompts server?"
+            }
+          },
+          {
+            "instruction": "Invoke a server-provided prompt",
+            "code": {
+              "language": "text",
+              "content": "Use the 'code-review' prompt from dev-prompts for this file"
+            }
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Custom Prompt Server",
+          "description": "MCP server providing team-specific prompts",
+          "code": {
+            "language": "typescript",
+            "content": "// In your custom MCP server\nserver.setRequestHandler(\"prompts/list\", async () => ({\n  prompts: [{\n    name: \"pr-description\",\n    description: \"Generate a PR description from diff\",\n    arguments: [\n      { name: \"branch\", description: \"Source branch name\" }\n    ]\n  }]\n}));"
+          }
+        }
+      ],
+      "tips": [
+        "Server prompts can include required arguments for customization",
+        "Build custom prompt servers to standardize team workflows",
+        "Prompts can chain multiple tool calls into workflows"
+      ],
+      "relatedAchievements": ["resource_user", "custom_server", "first_server"]
+    },
+    "resource_user": {
+      "longDescription": "Reference an MCP resource using the @ syntax in your conversation with Claude. MCP resources are server-provided data that can be attached to conversations, such as files, database schemas, API documentation, or any structured information. The @ reference syntax enables quick access to these resources without explicit tool calls, making your conversations more natural and efficient.",
+      "whyItMatters": "Resource references enable seamless context attachment. A simple @ mention can pull in schemas, files, or data that would otherwise require multiple commands.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Use @resource syntax to reference MCP-provided resources directly in your conversation.",
+        "steps": [
+          {
+            "instruction": "Ensure you have an MCP server that provides resources",
+            "code": {
+              "language": "json",
+              "content": "{\n  \"mcpServers\": {\n    \"filesystem\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"@modelcontextprotocol/server-filesystem\", \".\"]\n    }\n  }\n}"
+            }
+          },
+          {
+            "instruction": "Reference a resource using @ syntax",
+            "code": {
+              "language": "text",
+              "content": "Review @filesystem://src/components/Button.tsx for accessibility"
+            }
+          },
+          {
+            "instruction": "Combine multiple resource references",
+            "code": {
+              "language": "text",
+              "content": "Compare @filesystem://package.json with @filesystem://package-lock.json"
+            }
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Database Schema Resource Reference",
+          "description": "Reference database schema for query assistance",
+          "code": {
+            "language": "text",
+            "content": "Given the schema @postgres://schema/users, write a query to find inactive users"
+          }
+        }
+      ],
+      "tips": [
+        "Resource URIs follow server-specific formats",
+        "Not all servers support resources - check server documentation",
+        "Resources are read-only context attachments"
+      ],
+      "relatedAchievements": ["prompt_importer", "filesystem_explorer", "database_connected"]
+    },
+    "search_savant": {
+      "longDescription": "Configure a web search MCP server to give Claude the ability to search the internet for current information. Search integration with Brave Search, Exa, Tavily, or similar services enables Claude to access up-to-date information, research topics, find documentation, and verify facts during your conversations. This transforms Claude from a static knowledge base into a dynamic research assistant.",
+      "whyItMatters": "Web search enables Claude to access current information beyond its training data. Research, fact-checking, and finding documentation become part of your workflow.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Add a web search MCP server with API credentials to enable internet search from Claude.",
+        "steps": [
+          {
+            "instruction": "Choose a search provider and get API credentials",
+            "code": {
+              "language": "text",
+              "content": "Popular options:\n- Brave Search: api.search.brave.com\n- Exa: exa.ai\n- Tavily: tavily.com"
+            }
+          },
+          {
+            "instruction": "Configure the search MCP server",
+            "code": {
+              "language": "json",
+              "content": "{\n  \"mcpServers\": {\n    \"brave-search\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"@modelcontextprotocol/server-brave-search\"],\n      \"env\": {\n        \"BRAVE_API_KEY\": \"your-brave-api-key\"\n      }\n    }\n  }\n}"
+            }
+          },
+          {
+            "instruction": "Restart Claude Code and ask questions requiring current information",
+            "code": {
+              "language": "text",
+              "content": "Search for the latest React 19 features and changes"
+            }
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Exa Search for Code Examples",
+          "description": "Configure Exa for programming-focused search",
+          "code": {
+            "language": "json",
+            "content": "{\n  \"mcpServers\": {\n    \"exa\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"mcp-server-exa\"],\n      \"env\": {\n        \"EXA_API_KEY\": \"your-exa-key\"\n      }\n    }\n  }\n}"
+          }
+        }
+      ],
+      "tips": [
+        "Different search providers have different strengths - Exa excels at code",
+        "Search APIs have rate limits - be mindful of query volume",
+        "Combine search with other tools for research workflows"
+      ],
+      "relatedAchievements": ["first_server", "ai_provider", "mcp_collector"]
+    },
+    "slack_integrated": {
+      "longDescription": "Configure a Slack MCP server to enable Claude to interact with your team's Slack workspace. This integration allows Claude to read messages, post updates, search channels, and participate in team communication directly from your development workflow. Slack integration bridges the gap between coding and collaboration, enabling automated updates and AI-assisted team communication.",
+      "whyItMatters": "Slack integration enables Claude to post deployment updates, search team discussions, and bridge development work with team communication seamlessly.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Add a Slack MCP server with bot token and workspace credentials to enable team communication.",
+        "steps": [
+          {
+            "instruction": "Create a Slack app and install it to your workspace",
+            "code": {
+              "language": "text",
+              "content": "1. Go to api.slack.com/apps\n2. Create New App > From scratch\n3. Add Bot Token Scopes: chat:write, channels:read, channels:history\n4. Install to Workspace\n5. Copy Bot User OAuth Token"
+            }
+          },
+          {
+            "instruction": "Configure the Slack MCP server",
+            "code": {
+              "language": "json",
+              "content": "{\n  \"mcpServers\": {\n    \"slack\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"@modelcontextprotocol/server-slack\"],\n      \"env\": {\n        \"SLACK_BOT_TOKEN\": \"xoxb-your-bot-token\",\n        \"SLACK_TEAM_ID\": \"T12345ABC\"\n      }\n    }\n  }\n}"
+            }
+          },
+          {
+            "instruction": "Invite the bot to channels it should access"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Slack with Channel Restrictions",
+          "description": "Limit bot to specific channels for security",
+          "code": {
+            "language": "json",
+            "content": "{\n  \"mcpServers\": {\n    \"slack\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"@modelcontextprotocol/server-slack\"],\n      \"env\": {\n        \"SLACK_BOT_TOKEN\": \"xoxb-token\",\n        \"SLACK_TEAM_ID\": \"T12345\",\n        \"ALLOWED_CHANNELS\": \"dev-updates,deployments\"\n      }\n    }\n  }\n}"
+          }
+        }
+      ],
+      "tips": [
+        "Request minimal OAuth scopes for security",
+        "Use channel restrictions to limit bot access",
+        "Claude can help draft announcements and updates for Slack"
+      ],
+      "relatedAchievements": ["discord_linked", "github_connected", "first_server"]
+    },
+    "status_designer": {
+      "longDescription": "Configure a custom status line to personalize Claude Code's interface and display relevant information. The status line appears in Claude's UI and can show git status, token usage, cost tracking, and other contextual information. Customizing this display demonstrates attention to workflow optimization and creates a more informative Claude Code experience tailored to your needs.",
+      "whyItMatters": "A customized status line keeps important information visible at a glance. Tracking costs, tokens, or git status without asking improves workflow efficiency.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Configure the statusLine setting in your Claude settings to customize displayed information.",
+        "steps": [
+          {
+            "instruction": "Open your Claude settings file",
+            "code": {
+              "language": "bash",
+              "content": "# User settings\nvim ~/.claude/settings.json"
+            }
+          },
+          {
+            "instruction": "Add statusLine configuration",
+            "code": {
+              "language": "json",
+              "content": "{\n  \"statusLine\": {\n    \"show\": true,\n    \"components\": [\"git\", \"cost\", \"tokens\"]\n  }\n}"
+            }
+          },
+          {
+            "instruction": "Restart Claude Code to see the new status line"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Minimal Status Line",
+          "description": "Show only essential information",
+          "code": {
+            "language": "json",
+            "content": "{\n  \"statusLine\": {\n    \"show\": true,\n    \"components\": [\"cost\"]\n  }\n}"
+          }
+        },
+        {
+          "title": "Full Status Display",
+          "description": "Show all available status components",
+          "code": {
+            "language": "json",
+            "content": "{\n  \"statusLine\": {\n    \"show\": true,\n    \"components\": [\"git\", \"cost\", \"tokens\", \"session\", \"model\"]\n  }\n}"
+          }
+        }
+      ],
+      "tips": [
+        "Start minimal and add components as needed",
+        "Cost tracking is valuable for usage monitoring",
+        "Git status helps track uncommitted changes during work"
+      ],
+      "relatedAchievements": ["plugin_pioneer", "ide_integrated", "project_mcp"]
+    },
+    "stdio_server": {
+      "longDescription": "Configure a stdio-based MCP server that communicates via standard input/output streams. Stdio is the most common MCP transport, running servers as local processes that communicate through their standard streams. This achievement marks your understanding of MCP's foundational communication model, where servers are child processes managed by Claude Code with JSON-RPC messages flowing through stdin and stdout.",
+      "whyItMatters": "Stdio servers are the backbone of MCP. Understanding this communication model is essential for configuring servers and building custom integrations.",
+      "difficulty": "beginner",
+      "howTo": {
+        "summary": "Configure an MCP server using command and args parameters for stdio-based communication.",
+        "steps": [
+          {
+            "instruction": "Understand the stdio server structure",
+            "code": {
+              "language": "json",
+              "content": "{\n  \"mcpServers\": {\n    \"server-name\": {\n      \"command\": \"executable-or-npx\",\n      \"args\": [\"arg1\", \"arg2\"],\n      \"env\": {\n        \"OPTIONAL\": \"environment-variables\"\n      }\n    }\n  }\n}"
+            }
+          },
+          {
+            "instruction": "Configure a simple stdio server",
+            "code": {
+              "language": "json",
+              "content": "{\n  \"mcpServers\": {\n    \"memory\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"@modelcontextprotocol/server-memory\"]\n    }\n  }\n}"
+            }
+          },
+          {
+            "instruction": "Test that the server starts correctly",
+            "code": {
+              "language": "bash",
+              "content": "# Test the server executable directly\nnpx -y @modelcontextprotocol/server-memory --help"
+            }
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Python Stdio Server",
+          "description": "Configure a Python-based MCP server",
+          "code": {
+            "language": "json",
+            "content": "{\n  \"mcpServers\": {\n    \"python-tools\": {\n      \"command\": \"python3\",\n      \"args\": [\"-m\", \"my_mcp_server\"],\n      \"env\": {\n        \"PYTHONPATH\": \"/path/to/server\"\n      }\n    }\n  }\n}"
+          }
+        }
+      ],
+      "tips": [
+        "The command must be in PATH or use absolute path",
+        "Use npx -y for Node.js packages to auto-install",
+        "Environment variables in env block are passed to the server process"
+      ],
+      "relatedAchievements": ["first_server", "http_server", "custom_server"]
+    },
+    "terraform_tamer": {
+      "longDescription": "Use Claude Code with Terraform or other Infrastructure as Code configurations in your project. This achievement recognizes your infrastructure automation expertise through the presence of .tf files, terraform directories, or Terraform state configurations. Claude becomes your IaC expert, helping write resource definitions, troubleshoot state issues, plan deployments, and ensure your infrastructure code follows best practices.",
+      "whyItMatters": "Infrastructure as Code requires precise syntax and deep cloud knowledge. Claude's assistance with Terraform reduces configuration errors and accelerates infrastructure development.",
+      "difficulty": "advanced",
+      "howTo": {
+        "summary": "Create Terraform configuration files in your project to enable Claude's infrastructure assistance.",
+        "steps": [
+          {
+            "instruction": "Initialize a Terraform project structure",
+            "code": {
+              "language": "bash",
+              "content": "mkdir terraform && cd terraform\ntouch main.tf variables.tf outputs.tf"
+            }
+          },
+          {
+            "instruction": "Create basic Terraform configuration",
+            "code": {
+              "language": "hcl",
+              "content": "# main.tf\nterraform {\n  required_providers {\n    aws = {\n      source  = \"hashicorp/aws\"\n      version = \"~> 5.0\"\n    }\n  }\n}\n\nprovider \"aws\" {\n  region = var.aws_region\n}\n\nresource \"aws_s3_bucket\" \"example\" {\n  bucket = var.bucket_name\n  \n  tags = {\n    Environment = var.environment\n  }\n}"
+            }
+          },
+          {
+            "instruction": "Open in Claude Code and ask for Terraform help",
+            "code": {
+              "language": "text",
+              "content": "Add versioning and encryption to my S3 bucket configuration"
+            }
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Terraform Module Structure",
+          "description": "Organized Terraform with modules",
+          "code": {
+            "language": "bash",
+            "content": "terraform/\n  main.tf\n  variables.tf\n  outputs.tf\n  modules/\n    vpc/\n      main.tf\n      variables.tf\n    rds/\n      main.tf\n      variables.tf"
+          }
+        }
+      ],
+      "tips": [
+        "Claude can help convert manual cloud setups to Terraform",
+        "Ask Claude to review Terraform plans before applying",
+        "Use modules for reusable infrastructure components"
+      ],
+      "relatedAchievements": ["aws_architect", "cloud_connected", "kubernetes_konfigurator"]
+    }
+  }
+}

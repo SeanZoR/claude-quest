@@ -1,0 +1,1206 @@
+{
+  "category": "skills",
+  "content": {
+    "skill_unlocked": {
+      "longDescription": "Creating your first skill marks your entry into Claude Code's powerful extensibility system. Skills are reusable packages of expertise that Claude can invoke on demand, encapsulating specialized knowledge, workflows, and tools. Unlike simple instructions in CLAUDE.md, skills are modular units that can be triggered by specific contexts or commands, making them ideal for complex, repeatable tasks.",
+      "whyItMatters": "Skills transform Claude from a general assistant into a specialized expert for your specific domains. They're the foundation for building a personalized AI toolkit.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Create a SKILL.md file in the skills directory with frontmatter defining the skill's name, description, and optional triggers.",
+        "steps": [
+          {
+            "instruction": "Create the skills directory structure",
+            "code": {
+              "language": "bash",
+              "content": "mkdir -p ~/.claude/skills/my-first-skill"
+            }
+          },
+          {
+            "instruction": "Create the SKILL.md file with required frontmatter",
+            "code": {
+              "language": "markdown",
+              "content": "---\nname: My First Skill\ndescription: A helpful skill that does something specific\n---\n\n# My First Skill\n\nThis skill helps with [specific task].\n\n## When to Use\n\nUse this skill when you need to:\n- Handle a specific type of task\n- Follow a particular workflow\n- Apply specialized knowledge\n\n## Instructions\n\n1. First, do this\n2. Then, do that\n3. Finally, complete with this",
+              "filename": "~/.claude/skills/my-first-skill/SKILL.md"
+            }
+          },
+          {
+            "instruction": "Test your skill by invoking it in Claude Code",
+            "note": "Restart Claude Code after creating new skills for them to be detected"
+          }
+        ],
+        "estimatedTime": "5-10 minutes"
+      },
+      "examples": [
+        {
+          "title": "Code Review Skill",
+          "description": "A skill that guides thorough code reviews",
+          "code": {
+            "language": "markdown",
+            "content": "---\nname: Code Review Expert\ndescription: Systematic code review following best practices\n---\n\n# Code Review Expert\n\nPerform thorough code reviews with consistent criteria.\n\n## Review Checklist\n\n- [ ] Code correctness and logic\n- [ ] Error handling completeness\n- [ ] Security considerations\n- [ ] Performance implications\n- [ ] Test coverage\n- [ ] Documentation quality\n\n## Output Format\n\nProvide findings as:\n1. **Critical** - Must fix before merge\n2. **Suggestions** - Improvements to consider\n3. **Praise** - What's done well",
+            "filename": "~/.claude/skills/code-review/SKILL.md"
+          },
+          "explanation": "This skill encapsulates code review expertise with a structured checklist and output format"
+        }
+      ],
+      "tips": [
+        "Start with skills for tasks you perform repeatedly",
+        "Keep SKILL.md focused - one skill, one purpose",
+        "Use clear, action-oriented names like 'code-review' not 'my-skill-1'",
+        "Test skills in real scenarios before relying on them"
+      ],
+      "relatedAchievements": ["triggered_skill", "team_skill", "skill_documenter", "progressive_loader"]
+    },
+    "triggered_skill": {
+      "longDescription": "Triggered skills automatically activate when specific conditions are met, such as when certain file types are opened or specific commands are run. By defining trigger conditions in your skill's frontmatter, you create context-aware assistance that appears exactly when needed without requiring manual invocation. This transforms skills from passive knowledge into active, intelligent helpers.",
+      "whyItMatters": "Triggers make skills proactive rather than reactive. Claude automatically knows when your specialized expertise applies, reducing cognitive load and ensuring consistent application of best practices.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Add a trigger field to your skill's frontmatter that describes when the skill should automatically activate.",
+        "steps": [
+          {
+            "instruction": "Open your existing skill or create a new one",
+            "code": {
+              "language": "bash",
+              "content": "mkdir -p ~/.claude/skills/triggered-skill"
+            }
+          },
+          {
+            "instruction": "Add the trigger field to the frontmatter",
+            "code": {
+              "language": "markdown",
+              "content": "---\nname: React Component Helper\ndescription: Best practices for React component development\ntrigger: When working with .tsx or .jsx files containing React components\n---\n\n# React Component Helper\n\nThis skill automatically activates when you're working with React components.\n\n## Guidelines\n\n- Use functional components with hooks\n- Keep components small and focused\n- Extract reusable logic into custom hooks\n- Use TypeScript for prop types",
+              "filename": "~/.claude/skills/react-helper/SKILL.md"
+            }
+          },
+          {
+            "instruction": "The trigger can be based on file types, content patterns, or user actions",
+            "note": "Triggers are descriptive - Claude interprets them contextually"
+          }
+        ],
+        "estimatedTime": "5 minutes"
+      },
+      "examples": [
+        {
+          "title": "File Type Trigger",
+          "description": "Activates for specific file extensions",
+          "code": {
+            "language": "markdown",
+            "content": "---\nname: Python Best Practices\ndescription: Python coding standards and patterns\ntrigger: When editing .py files\n---\n\n# Python Best Practices\n\n- Use type hints for function signatures\n- Follow PEP 8 style guidelines\n- Prefer list comprehensions over map/filter\n- Use context managers for resources",
+            "filename": "~/.claude/skills/python-standards/SKILL.md"
+          },
+          "explanation": "This skill triggers whenever Python files are being edited"
+        },
+        {
+          "title": "Task-Based Trigger",
+          "description": "Activates for specific task types",
+          "code": {
+            "language": "markdown",
+            "content": "---\nname: Database Migration Guide\ndescription: Safe database migration practices\ntrigger: When user mentions database migrations, schema changes, or Alembic/Prisma/migrations\n---\n\n# Database Migration Guide\n\n## Safety Checklist\n\n1. Always backup before migration\n2. Test on staging first\n3. Plan rollback strategy\n4. Consider downtime implications",
+            "filename": "~/.claude/skills/db-migration/SKILL.md"
+          },
+          "explanation": "This skill triggers based on conversation context about database work"
+        }
+      ],
+      "tips": [
+        "Make triggers specific enough to avoid false activations",
+        "Combine file type and content conditions for precision",
+        "Test triggers by working with relevant files",
+        "Multiple skills can have overlapping triggers - they'll all apply"
+      ],
+      "relatedAchievements": ["skill_unlocked", "restricted_skill", "error_recovery_skill"]
+    },
+    "team_skill": {
+      "longDescription": "Project-level skills live in your repository's .claude/skills directory and are shared with everyone who works on the project. Unlike user-level skills in ~/.claude, team skills travel with the codebase via version control, ensuring consistent AI assistance across your entire team. This is essential for encoding project-specific knowledge, coding standards, and workflows that everyone should follow.",
+      "whyItMatters": "Team skills create a shared foundation of AI-assisted expertise. New team members immediately benefit from encoded project knowledge, and standards are applied consistently regardless of who's working.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Create skills in ./.claude/skills instead of ~/.claude/skills so they're tracked by git and shared with the team.",
+        "steps": [
+          {
+            "instruction": "Create the project-level skills directory",
+            "code": {
+              "language": "bash",
+              "content": "mkdir -p .claude/skills/team-standards"
+            }
+          },
+          {
+            "instruction": "Create a skill encoding project-specific knowledge",
+            "code": {
+              "language": "markdown",
+              "content": "---\nname: Project Standards\ndescription: Coding standards and patterns for this project\n---\n\n# Project Standards\n\n## Architecture\n\n- Use the repository pattern for data access\n- Services go in /src/services\n- Shared utilities in /src/lib\n\n## Naming Conventions\n\n- Components: PascalCase (UserProfile.tsx)\n- Utilities: camelCase (formatDate.ts)\n- Constants: SCREAMING_SNAKE_CASE\n\n## Required Patterns\n\n- All API calls go through the api client\n- Use Zod for runtime validation\n- Error boundaries on page components",
+              "filename": ".claude/skills/project-standards/SKILL.md"
+            }
+          },
+          {
+            "instruction": "Commit the skill to version control",
+            "code": {
+              "language": "bash",
+              "content": "git add .claude/skills/\ngit commit -m \"Add project standards skill for AI assistance\""
+            }
+          }
+        ],
+        "estimatedTime": "10-15 minutes"
+      },
+      "examples": [
+        {
+          "title": "API Development Skill",
+          "description": "Team standards for API endpoint development",
+          "code": {
+            "language": "markdown",
+            "content": "---\nname: API Development Guide\ndescription: Standards for building APIs in this project\ntrigger: When working in /src/api or creating new endpoints\n---\n\n# API Development Guide\n\n## Endpoint Structure\n\n```typescript\n// All endpoints follow this pattern\nexport async function handler(req: Request) {\n  // 1. Validate input with Zod schema\n  // 2. Check authentication/authorization\n  // 3. Perform business logic\n  // 4. Return standardized response\n}\n```\n\n## Response Format\n\n```json\n{\n  \"success\": true,\n  \"data\": { },\n  \"meta\": { \"requestId\": \"...\" }\n}\n```\n\n## Error Handling\n\nUse AppError class from /src/lib/errors",
+            "filename": ".claude/skills/api-guide/SKILL.md"
+          },
+          "explanation": "This ensures all team members follow the same API patterns"
+        }
+      ],
+      "tips": [
+        "Document project-specific patterns that aren't obvious from code",
+        "Include architecture decisions and their rationale",
+        "Keep skills updated as project conventions evolve",
+        "Reference related documentation with links"
+      ],
+      "relatedAchievements": ["skill_unlocked", "skill_documenter", "published_skill"]
+    },
+    "example_provider": {
+      "longDescription": "An examples.md file within your skill directory provides concrete, working examples that demonstrate your skill in action. While SKILL.md defines what the skill does, examples.md shows how it works through real scenarios. This separation keeps your main skill file focused while providing comprehensive reference material Claude can use to generate accurate, consistent outputs.",
+      "whyItMatters": "Examples are the most effective way to teach patterns. Claude learns from concrete demonstrations, making your skill's outputs more predictable and aligned with your expectations.",
+      "difficulty": "beginner",
+      "howTo": {
+        "summary": "Create an examples.md file in your skill directory with detailed, annotated examples of inputs and expected outputs.",
+        "steps": [
+          {
+            "instruction": "Navigate to your skill directory",
+            "code": {
+              "language": "bash",
+              "content": "cd ~/.claude/skills/your-skill"
+            }
+          },
+          {
+            "instruction": "Create the examples.md file",
+            "code": {
+              "language": "markdown",
+              "content": "# Examples\n\n## Example 1: Basic Usage\n\n**Input:**\n```\nCreate a user registration endpoint\n```\n\n**Output:**\n```typescript\nexport async function registerUser(req: Request) {\n  const body = await req.json();\n  const validated = UserSchema.parse(body);\n  \n  const user = await db.users.create({\n    email: validated.email,\n    passwordHash: await hash(validated.password)\n  });\n  \n  return Response.json({ success: true, userId: user.id });\n}\n```\n\n## Example 2: With Validation Error\n\n**Input:**\n```\nHandle invalid email in registration\n```\n\n**Output:**\n```typescript\n// Zod will throw, caught by error boundary\nif (!validated.email.includes('@')) {\n  throw new ValidationError('Invalid email format');\n}\n```",
+              "filename": "~/.claude/skills/api-builder/examples.md"
+            }
+          },
+          {
+            "instruction": "Reference examples.md from your SKILL.md if needed",
+            "note": "Claude automatically reads supporting files in skill directories"
+          }
+        ],
+        "estimatedTime": "10-20 minutes"
+      },
+      "examples": [
+        {
+          "title": "Component Generation Examples",
+          "description": "Examples for a React component generator skill",
+          "code": {
+            "language": "markdown",
+            "content": "# Component Examples\n\n## Basic Button Component\n\n**Request:** Create a primary button\n\n**Generated:**\n```tsx\ninterface ButtonProps {\n  children: React.ReactNode;\n  onClick?: () => void;\n  disabled?: boolean;\n}\n\nexport function Button({ children, onClick, disabled }: ButtonProps) {\n  return (\n    <button\n      className=\"px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-50\"\n      onClick={onClick}\n      disabled={disabled}\n    >\n      {children}\n    </button>\n  );\n}\n```\n\n## Form Input with Label\n\n**Request:** Create an email input field\n\n**Generated:**\n```tsx\nexport function EmailInput({ value, onChange, error }: EmailInputProps) {\n  return (\n    <div className=\"space-y-1\">\n      <label className=\"text-sm font-medium\">Email</label>\n      <input\n        type=\"email\"\n        value={value}\n        onChange={(e) => onChange(e.target.value)}\n        className={`w-full p-2 border rounded ${error ? 'border-red-500' : ''}`}\n      />\n      {error && <p className=\"text-red-500 text-sm\">{error}</p>}\n    </div>\n  );\n}\n```",
+            "filename": "~/.claude/skills/react-components/examples.md"
+          },
+          "explanation": "Detailed examples help Claude generate consistent component patterns"
+        }
+      ],
+      "tips": [
+        "Include both simple and complex examples",
+        "Show edge cases and error handling",
+        "Annotate why certain patterns are used",
+        "Keep examples up-to-date with your actual practices"
+      ],
+      "relatedAchievements": ["reference_writer", "skill_documenter", "full_stack_skill"]
+    },
+    "reference_writer": {
+      "longDescription": "A reference.md file serves as the comprehensive documentation for your skill, containing detailed specifications, API references, configuration options, and technical details. While examples.md shows how to use the skill, reference.md explains all available options, parameters, and behaviors. This is particularly valuable for complex skills with many configuration possibilities.",
+      "whyItMatters": "Complete reference documentation ensures Claude has access to every detail needed for accurate, comprehensive assistance. It prevents gaps in knowledge that could lead to incorrect or incomplete outputs.",
+      "difficulty": "beginner",
+      "howTo": {
+        "summary": "Create a reference.md file that documents all options, configurations, and technical details of your skill.",
+        "steps": [
+          {
+            "instruction": "Create the reference.md file in your skill directory",
+            "code": {
+              "language": "markdown",
+              "content": "# Reference\n\n## Configuration Options\n\n| Option | Type | Default | Description |\n|--------|------|---------|-------------|\n| format | string | 'standard' | Output format style |\n| strict | boolean | false | Enable strict mode validation |\n| indent | number | 2 | Spaces for indentation |\n\n## Supported Patterns\n\n### Pattern A: Service Layer\n- Use when: Business logic needs isolation\n- Structure: `/services/{name}Service.ts`\n- Required exports: `create`, `update`, `delete`, `getById`\n\n### Pattern B: Repository Layer\n- Use when: Database abstraction needed\n- Structure: `/repositories/{name}Repository.ts`\n- Required methods: CRUD + custom queries\n\n## Error Codes\n\n| Code | Meaning | Resolution |\n|------|---------|------------|\n| E001 | Invalid input | Check schema requirements |\n| E002 | Not found | Verify resource exists |\n| E003 | Unauthorized | Check permissions |",
+              "filename": "~/.claude/skills/backend-patterns/reference.md"
+            }
+          },
+          {
+            "instruction": "Organize reference by topic for easy navigation",
+            "note": "Use tables, code blocks, and clear headings for scannability"
+          }
+        ],
+        "estimatedTime": "15-30 minutes"
+      },
+      "examples": [
+        {
+          "title": "CLI Tool Reference",
+          "description": "Documenting a CLI generation skill",
+          "code": {
+            "language": "markdown",
+            "content": "# CLI Generator Reference\n\n## Command Structure\n\n```\ncommand <action> [target] [--options]\n```\n\n## Actions\n\n### `create`\nCreates a new resource.\n\n**Arguments:**\n- `target` (required): Resource type to create\n\n**Options:**\n- `--template, -t`: Template to use (default: 'basic')\n- `--force, -f`: Overwrite existing files\n- `--dry-run`: Preview without writing\n\n### `list`\nLists existing resources.\n\n**Options:**\n- `--format`: Output format (json|table|plain)\n- `--filter`: Filter expression\n\n## Environment Variables\n\n| Variable | Purpose | Default |\n|----------|---------|--------|\n| CLI_HOME | Config directory | ~/.cli |\n| CLI_DEBUG | Enable debug output | false |",
+            "filename": "~/.claude/skills/cli-generator/reference.md"
+          },
+          "explanation": "Comprehensive reference enables accurate CLI command generation"
+        }
+      ],
+      "tips": [
+        "Use tables for options and configurations",
+        "Include all edge cases and limitations",
+        "Document error codes and their resolutions",
+        "Keep reference synchronized with actual behavior"
+      ],
+      "relatedAchievements": ["example_provider", "full_stack_skill", "skill_documenter"]
+    },
+    "skill_documenter": {
+      "longDescription": "A comprehensive README.md in your skill directory provides human-friendly documentation that explains the skill's purpose, installation, usage, and customization options. While SKILL.md is optimized for Claude, README.md is written for humans who want to understand, use, or contribute to the skill. This is essential for skills you plan to share with others or maintain over time.",
+      "whyItMatters": "Good documentation multiplies the value of your skill. It enables others to adopt it, helps you remember design decisions months later, and demonstrates the quality that encourages trust and contributions.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Create a README.md with standard documentation sections including purpose, installation, usage examples, and configuration.",
+        "steps": [
+          {
+            "instruction": "Create README.md with standard documentation sections",
+            "code": {
+              "language": "markdown",
+              "content": "# My Skill Name\n\nBrief description of what this skill does and why it's useful.\n\n## Features\n\n- Feature one description\n- Feature two description\n- Feature three description\n\n## Installation\n\n```bash\n# Clone to your skills directory\ncd ~/.claude/skills\ngit clone https://github.com/user/skill-name.git\n```\n\n## Usage\n\nDescribe how to use the skill:\n\n1. Invoke with `/skill-name` or let it trigger automatically\n2. Provide required inputs\n3. Review and use the output\n\n## Configuration\n\nExplain any customization options.\n\n## Examples\n\nShow real usage scenarios.\n\n## Contributing\n\nHow others can contribute improvements.\n\n## License\n\nMIT License",
+              "filename": "~/.claude/skills/my-skill/README.md"
+            }
+          },
+          {
+            "instruction": "Include badges and visual aids if sharing publicly",
+            "note": "Consider adding screenshots or diagrams for complex skills"
+          }
+        ],
+        "estimatedTime": "15-30 minutes"
+      },
+      "examples": [
+        {
+          "title": "Published Skill README",
+          "description": "Documentation for a shareable skill",
+          "code": {
+            "language": "markdown",
+            "content": "# Claude Git Workflow Skill\n\n> Streamlined git operations with smart commit messages and branch management\n\n## Features\n\n- Automatic conventional commit message generation\n- Smart branch naming from issue titles\n- Pre-commit checklist verification\n- Conflict resolution guidance\n\n## Quick Start\n\n```bash\ncd ~/.claude/skills\ngit clone https://github.com/example/git-workflow-skill.git\n```\n\nRestart Claude Code to activate.\n\n## Triggers\n\nThis skill activates when:\n- You mention git operations\n- Files have uncommitted changes\n- You're resolving merge conflicts\n\n## Customization\n\nEdit `config.json` to customize:\n- Commit message format\n- Branch naming pattern\n- Protected branch rules\n\n## License\n\nMIT - Use freely, contributions welcome!",
+            "filename": "~/.claude/skills/git-workflow/README.md"
+          },
+          "explanation": "A polished README makes the skill accessible to others"
+        }
+      ],
+      "tips": [
+        "Start with the problem your skill solves",
+        "Include copy-paste installation commands",
+        "Show before/after scenarios",
+        "Keep documentation updated as skill evolves"
+      ],
+      "relatedAchievements": ["published_skill", "example_provider", "reference_writer"]
+    },
+    "data_skill": {
+      "longDescription": "A data/ directory within your skill provides static resources that Claude can reference during skill execution. This includes configuration files, lookup tables, templates, schema definitions, or any other data that the skill needs to function correctly. By organizing resources in data/, you keep your skill modular and make it easy to update reference material without modifying the skill logic.",
+      "whyItMatters": "Separating data from logic makes skills maintainable and flexible. You can update templates, add new configurations, or expand reference tables without touching the core skill definition.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Create a data/ directory in your skill and populate it with JSON, YAML, or other resource files that your skill references.",
+        "steps": [
+          {
+            "instruction": "Create the data directory structure",
+            "code": {
+              "language": "bash",
+              "content": "mkdir -p ~/.claude/skills/my-skill/data"
+            }
+          },
+          {
+            "instruction": "Add resource files to the data directory",
+            "code": {
+              "language": "json",
+              "content": "{\n  \"patterns\": {\n    \"service\": {\n      \"template\": \"services/{name}Service.ts\",\n      \"exports\": [\"create\", \"update\", \"delete\", \"getById\"]\n    },\n    \"repository\": {\n      \"template\": \"repositories/{name}Repository.ts\",\n      \"exports\": [\"findAll\", \"findById\", \"save\", \"remove\"]\n    }\n  },\n  \"naming\": {\n    \"files\": \"kebab-case\",\n    \"classes\": \"PascalCase\",\n    \"functions\": \"camelCase\"\n  }\n}",
+              "filename": "~/.claude/skills/my-skill/data/patterns.json"
+            }
+          },
+          {
+            "instruction": "Reference the data files in your SKILL.md",
+            "code": {
+              "language": "markdown",
+              "content": "---\nname: Pattern Generator\ndescription: Generate code following project patterns\n---\n\n# Pattern Generator\n\nThis skill uses patterns defined in `data/patterns.json`.\n\nWhen generating code:\n1. Look up the pattern type in data/patterns.json\n2. Apply the template structure\n3. Include all required exports\n4. Follow naming conventions from the config",
+              "filename": "~/.claude/skills/my-skill/SKILL.md"
+            }
+          }
+        ],
+        "estimatedTime": "10-15 minutes"
+      },
+      "examples": [
+        {
+          "title": "Error Code Database",
+          "description": "Lookup table for error handling",
+          "code": {
+            "language": "json",
+            "content": "{\n  \"errors\": {\n    \"AUTH001\": {\n      \"message\": \"Invalid credentials\",\n      \"httpStatus\": 401,\n      \"userMessage\": \"The email or password you entered is incorrect.\",\n      \"resolution\": \"Check credentials and try again\"\n    },\n    \"AUTH002\": {\n      \"message\": \"Session expired\",\n      \"httpStatus\": 401,\n      \"userMessage\": \"Your session has expired. Please log in again.\",\n      \"resolution\": \"Redirect to login page\"\n    },\n    \"PERM001\": {\n      \"message\": \"Insufficient permissions\",\n      \"httpStatus\": 403,\n      \"userMessage\": \"You don't have permission to perform this action.\",\n      \"resolution\": \"Request elevated permissions or contact admin\"\n    }\n  }\n}",
+            "filename": "~/.claude/skills/error-handler/data/error-codes.json"
+          },
+          "explanation": "Claude references this data to generate consistent error handling"
+        }
+      ],
+      "tips": [
+        "Use JSON for structured data, YAML for configuration",
+        "Keep data files focused - one concern per file",
+        "Document the schema of your data files",
+        "Version your data alongside your skill"
+      ],
+      "relatedAchievements": ["scripted_skill", "templated_skill", "full_stack_skill"]
+    },
+    "scripted_skill": {
+      "longDescription": "A scripts/ directory enables your skill to include executable code that Claude can run during skill execution. These scripts can perform validations, transformations, API calls, or any computation that enhances the skill's capabilities. Scripts turn skills from static knowledge into dynamic, actionable tools that can interact with your system and external services.",
+      "whyItMatters": "Scripts extend skills beyond documentation into executable automation. They enable validation, code generation, API integration, and complex computations that static content cannot provide.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Create a scripts/ directory with executable files that your skill can invoke for dynamic functionality.",
+        "steps": [
+          {
+            "instruction": "Create the scripts directory",
+            "code": {
+              "language": "bash",
+              "content": "mkdir -p ~/.claude/skills/my-skill/scripts"
+            }
+          },
+          {
+            "instruction": "Add an executable script",
+            "code": {
+              "language": "python",
+              "content": "#!/usr/bin/env python3\n\"\"\"Validate project structure against expected patterns.\"\"\"\nimport os\nimport sys\nimport json\n\ndef validate_structure(project_root):\n    required_dirs = ['src', 'tests', 'docs']\n    required_files = ['package.json', 'README.md', 'tsconfig.json']\n    \n    issues = []\n    \n    for dir_name in required_dirs:\n        if not os.path.isdir(os.path.join(project_root, dir_name)):\n            issues.append(f\"Missing directory: {dir_name}\")\n    \n    for file_name in required_files:\n        if not os.path.isfile(os.path.join(project_root, file_name)):\n            issues.append(f\"Missing file: {file_name}\")\n    \n    return {\n        'valid': len(issues) == 0,\n        'issues': issues\n    }\n\nif __name__ == '__main__':\n    result = validate_structure(sys.argv[1] if len(sys.argv) > 1 else '.')\n    print(json.dumps(result, indent=2))",
+              "filename": "~/.claude/skills/project-validator/scripts/validate.py"
+            }
+          },
+          {
+            "instruction": "Make the script executable and reference it in SKILL.md",
+            "code": {
+              "language": "bash",
+              "content": "chmod +x ~/.claude/skills/project-validator/scripts/validate.py"
+            }
+          }
+        ],
+        "estimatedTime": "15-30 minutes"
+      },
+      "examples": [
+        {
+          "title": "Code Quality Check Script",
+          "description": "Script that runs linting and formatting checks",
+          "code": {
+            "language": "bash",
+            "content": "#!/bin/bash\n# Run code quality checks and report results\n\nset -e\n\necho \"Running code quality checks...\"\n\n# TypeScript check\nif [ -f \"tsconfig.json\" ]; then\n  echo \"Checking TypeScript...\"\n  npx tsc --noEmit 2>&1 || echo \"TypeScript errors found\"\nfi\n\n# Linting\nif [ -f \".eslintrc.json\" ] || [ -f \".eslintrc.js\" ]; then\n  echo \"Running ESLint...\"\n  npx eslint . --ext .ts,.tsx --format json 2>&1\nfi\n\n# Formatting check\nif [ -f \".prettierrc\" ]; then\n  echo \"Checking formatting...\"\n  npx prettier --check . 2>&1 || echo \"Formatting issues found\"\nfi\n\necho \"Quality check complete\"",
+            "filename": "~/.claude/skills/quality-check/scripts/check.sh"
+          },
+          "explanation": "This script provides actionable quality feedback that Claude can interpret"
+        }
+      ],
+      "tips": [
+        "Include a shebang line for portability",
+        "Output structured data (JSON) for easy parsing",
+        "Handle errors gracefully with meaningful messages",
+        "Document script dependencies in README"
+      ],
+      "relatedAchievements": ["data_skill", "templated_skill", "full_stack_skill"]
+    },
+    "templated_skill": {
+      "longDescription": "A templates/ directory contains reusable code templates that your skill can use to generate consistent outputs. Templates can be complete files, code snippets, or configurable patterns with placeholders. By separating templates from skill logic, you create maintainable, customizable generation capabilities that produce standardized, high-quality code.",
+      "whyItMatters": "Templates ensure consistency across generated code. Instead of Claude improvising each time, templates guarantee outputs match your exact standards, reducing review time and maintaining codebase coherence.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Create a templates/ directory with template files that include placeholders for customization.",
+        "steps": [
+          {
+            "instruction": "Create the templates directory",
+            "code": {
+              "language": "bash",
+              "content": "mkdir -p ~/.claude/skills/my-skill/templates"
+            }
+          },
+          {
+            "instruction": "Create a template file with placeholders",
+            "code": {
+              "language": "typescript",
+              "content": "import { z } from 'zod';\nimport { db } from '@/lib/db';\nimport { {{ENTITY_NAME}}Schema } from '@/schemas/{{entity_name}}';\n\nexport class {{ENTITY_NAME}}Service {\n  async create(data: z.infer<typeof {{ENTITY_NAME}}Schema>) {\n    const validated = {{ENTITY_NAME}}Schema.parse(data);\n    return db.{{table_name}}.create({ data: validated });\n  }\n\n  async getById(id: string) {\n    return db.{{table_name}}.findUnique({ where: { id } });\n  }\n\n  async update(id: string, data: Partial<z.infer<typeof {{ENTITY_NAME}}Schema>>) {\n    return db.{{table_name}}.update({\n      where: { id },\n      data\n    });\n  }\n\n  async delete(id: string) {\n    return db.{{table_name}}.delete({ where: { id } });\n  }\n\n  async list(options?: { skip?: number; take?: number }) {\n    return db.{{table_name}}.findMany(options);\n  }\n}",
+              "filename": "~/.claude/skills/service-generator/templates/service.ts.template"
+            }
+          },
+          {
+            "instruction": "Document placeholder conventions in your SKILL.md",
+            "code": {
+              "language": "markdown",
+              "content": "## Template Placeholders\n\n- `{{ENTITY_NAME}}`: PascalCase entity name (e.g., User, BlogPost)\n- `{{entity_name}}`: kebab-case entity name (e.g., user, blog-post)\n- `{{table_name}}`: Database table name (e.g., users, blog_posts)",
+              "filename": "~/.claude/skills/service-generator/SKILL.md"
+            }
+          }
+        ],
+        "estimatedTime": "15-20 minutes"
+      },
+      "examples": [
+        {
+          "title": "React Component Template",
+          "description": "Standardized component structure",
+          "code": {
+            "language": "typescript",
+            "content": "import { FC } from 'react';\nimport { cn } from '@/lib/utils';\n\nexport interface {{COMPONENT_NAME}}Props {\n  className?: string;\n  {{PROPS}}\n}\n\nexport const {{COMPONENT_NAME}}: FC<{{COMPONENT_NAME}}Props> = ({\n  className,\n  {{DESTRUCTURED_PROPS}}\n}) => {\n  return (\n    <div className={cn('{{BASE_CLASSES}}', className)}>\n      {{CONTENT}}\n    </div>\n  );\n};\n\n{{COMPONENT_NAME}}.displayName = '{{COMPONENT_NAME}}';",
+            "filename": "~/.claude/skills/component-gen/templates/component.tsx.template"
+          },
+          "explanation": "Templates with clear placeholders produce consistent, project-aligned components"
+        }
+      ],
+      "tips": [
+        "Use consistent placeholder syntax like {{NAME}}",
+        "Include both simple and complex template variants",
+        "Document all placeholders and their expected values",
+        "Consider template inheritance for variations"
+      ],
+      "relatedAchievements": ["data_skill", "scripted_skill", "full_stack_skill"]
+    },
+    "progressive_loader": {
+      "longDescription": "A skill with multiple supporting files demonstrates mature skill architecture. Beyond just SKILL.md, progressive skills include combination of examples.md, reference.md, data/, scripts/, and templates/ directories. This structure enables Claude to progressively load relevant information as needed, keeping initial context lean while providing deep resources when required.",
+      "whyItMatters": "Well-structured skills scale better. By organizing content into logical files, you enable efficient context usage - Claude loads only what's needed for each task rather than processing everything at once.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Expand your skill directory with multiple supporting files that organize different types of content.",
+        "steps": [
+          {
+            "instruction": "Create a comprehensive skill directory structure",
+            "code": {
+              "language": "bash",
+              "content": "mkdir -p ~/.claude/skills/comprehensive-skill/{data,scripts,templates}"
+            }
+          },
+          {
+            "instruction": "Add at least 3 supporting files beyond SKILL.md",
+            "code": {
+              "language": "bash",
+              "content": "# Create the supporting files\ntouch ~/.claude/skills/comprehensive-skill/SKILL.md\ntouch ~/.claude/skills/comprehensive-skill/examples.md\ntouch ~/.claude/skills/comprehensive-skill/reference.md\ntouch ~/.claude/skills/comprehensive-skill/data/config.json"
+            }
+          },
+          {
+            "instruction": "Organize content by purpose",
+            "code": {
+              "language": "markdown",
+              "content": "---\nname: Comprehensive Skill\ndescription: Full-featured skill with complete documentation\n---\n\n# Comprehensive Skill\n\nCore instructions and behavior definition.\n\n## Key Concepts\n\nBrief overview - details in reference.md\n\n## Quick Examples\n\nBasic examples here - more in examples.md\n\n## Resources\n\n- examples.md: Detailed usage examples\n- reference.md: Complete API reference\n- data/: Configuration and lookup data\n- scripts/: Executable utilities",
+              "filename": "~/.claude/skills/comprehensive-skill/SKILL.md"
+            }
+          }
+        ],
+        "estimatedTime": "20-30 minutes"
+      },
+      "examples": [
+        {
+          "title": "Complete Skill Structure",
+          "description": "A fully-featured skill directory",
+          "code": {
+            "language": "text",
+            "content": "~/.claude/skills/api-generator/\n  SKILL.md           # Core skill definition\n  examples.md        # Usage examples with expected outputs\n  reference.md       # Complete configuration reference\n  README.md          # Human documentation\n  data/\n    endpoints.json   # API endpoint definitions\n    schemas.json     # Request/response schemas\n  scripts/\n    validate.py      # Schema validation script\n    generate.sh      # Code generation helper\n  templates/\n    controller.ts.template\n    service.ts.template\n    route.ts.template"
+          },
+          "explanation": "This structure separates concerns and enables progressive information loading"
+        }
+      ],
+      "tips": [
+        "Start simple and add files as needed",
+        "Each file should have one clear purpose",
+        "Cross-reference between files for navigation",
+        "Don't duplicate information across files"
+      ],
+      "relatedAchievements": ["full_stack_skill", "example_provider", "reference_writer", "data_skill"]
+    },
+    "full_stack_skill": {
+      "longDescription": "A full stack skill combines reference documentation, executable scripts, and usage examples into a comprehensive package. This represents skill development mastery - you've created a self-contained unit of expertise with documentation for understanding (reference.md), practical demonstrations (examples.md), and automation capabilities (scripts/). Such skills can handle complex, multi-step workflows independently.",
+      "whyItMatters": "Full stack skills are production-ready. They contain everything needed to handle sophisticated tasks: reference for accuracy, examples for consistency, and scripts for automation. This is the gold standard for shareable, maintainable skills.",
+      "difficulty": "advanced",
+      "howTo": {
+        "summary": "Create a skill that includes reference.md, examples.md, and at least one script in the scripts/ directory.",
+        "steps": [
+          {
+            "instruction": "Set up the complete directory structure",
+            "code": {
+              "language": "bash",
+              "content": "mkdir -p ~/.claude/skills/full-stack-skill/scripts"
+            }
+          },
+          {
+            "instruction": "Create the core SKILL.md",
+            "code": {
+              "language": "markdown",
+              "content": "---\nname: Full Stack API Builder\ndescription: Complete API development workflow with validation and generation\n---\n\n# Full Stack API Builder\n\nThis skill provides end-to-end API development support.\n\n## Capabilities\n\n1. **Design** - API specification and schema design\n2. **Generate** - Code generation from specs (see scripts/)\n3. **Validate** - Schema and implementation validation\n4. **Document** - OpenAPI documentation generation\n\n## Workflow\n\n1. Define API spec\n2. Run validation script\n3. Generate code from templates\n4. Verify against examples",
+              "filename": "~/.claude/skills/full-stack-skill/SKILL.md"
+            }
+          },
+          {
+            "instruction": "Add reference.md with complete documentation",
+            "code": {
+              "language": "markdown",
+              "content": "# API Builder Reference\n\n## Configuration Options\n\n| Option | Type | Description |\n|--------|------|-------------|\n| outputDir | string | Generated code destination |\n| framework | string | Target framework (express/fastify/hono) |\n| validation | string | Validation library (zod/yup/joi) |\n\n## Schema Format\n\n```yaml\nendpoints:\n  - path: /users\n    method: GET\n    response: User[]\n  - path: /users/:id\n    method: GET\n    params:\n      id: string\n    response: User\n```",
+              "filename": "~/.claude/skills/full-stack-skill/reference.md"
+            }
+          },
+          {
+            "instruction": "Add examples.md with practical demonstrations",
+            "code": {
+              "language": "markdown",
+              "content": "# API Builder Examples\n\n## Example: User CRUD API\n\n**Input Spec:**\n```yaml\nentity: User\nfields:\n  - name: email\n    type: string\n    required: true\n  - name: name\n    type: string\n```\n\n**Generated Output:**\n```typescript\nexport const userRouter = new Hono()\n  .get('/', listUsers)\n  .get('/:id', getUserById)\n  .post('/', createUser)\n  .put('/:id', updateUser)\n  .delete('/:id', deleteUser);\n```",
+              "filename": "~/.claude/skills/full-stack-skill/examples.md"
+            }
+          },
+          {
+            "instruction": "Add a utility script",
+            "code": {
+              "language": "python",
+              "content": "#!/usr/bin/env python3\n\"\"\"Validate API specification against schema.\"\"\"\nimport yaml\nimport json\nimport sys\n\ndef validate_spec(spec_file):\n    with open(spec_file) as f:\n        spec = yaml.safe_load(f)\n    \n    errors = []\n    \n    if 'endpoints' not in spec:\n        errors.append('Missing required field: endpoints')\n    \n    for i, endpoint in enumerate(spec.get('endpoints', [])):\n        if 'path' not in endpoint:\n            errors.append(f'Endpoint {i}: missing path')\n        if 'method' not in endpoint:\n            errors.append(f'Endpoint {i}: missing method')\n    \n    return {'valid': len(errors) == 0, 'errors': errors}\n\nif __name__ == '__main__':\n    result = validate_spec(sys.argv[1])\n    print(json.dumps(result, indent=2))",
+              "filename": "~/.claude/skills/full-stack-skill/scripts/validate_spec.py"
+            }
+          }
+        ],
+        "estimatedTime": "30-45 minutes"
+      },
+      "examples": [
+        {
+          "title": "Directory Structure",
+          "description": "Complete full stack skill layout",
+          "code": {
+            "language": "text",
+            "content": "~/.claude/skills/api-builder/\n  SKILL.md              # Core instructions\n  reference.md          # Complete documentation\n  examples.md           # Usage examples\n  scripts/\n    validate_spec.py    # Spec validation\n    generate.js         # Code generation"
+          },
+          "explanation": "All three required components are present: reference, examples, and scripts"
+        }
+      ],
+      "tips": [
+        "Build incrementally - start with SKILL.md, then add components",
+        "Test each component independently",
+        "Ensure reference and examples are consistent",
+        "Consider making scripts idempotent for safe re-runs"
+      ],
+      "relatedAchievements": ["reference_writer", "example_provider", "scripted_skill", "skill_portfolio"]
+    },
+    "restricted_skill": {
+      "longDescription": "The allowed-tools directive in your skill's frontmatter restricts which Claude Code tools the skill can use. This is a powerful safety mechanism that limits a skill's capabilities to only what's necessary, preventing unintended file modifications, command execution, or other actions outside the skill's intended scope. It's particularly important for skills that handle sensitive operations or are shared with others.",
+      "whyItMatters": "Restricted skills follow the principle of least privilege. By explicitly declaring tool access, you create predictable, safer skills that can be trusted for specific tasks without worrying about unintended side effects.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Add an allowed-tools field to your skill's frontmatter listing only the tools the skill needs to function.",
+        "steps": [
+          {
+            "instruction": "Identify the tools your skill actually needs",
+            "note": "Common tools: Read, Write, Edit, Bash, Glob, Grep, WebFetch"
+          },
+          {
+            "instruction": "Add allowed-tools to the frontmatter",
+            "code": {
+              "language": "markdown",
+              "content": "---\nname: Code Analyzer\ndescription: Analyzes code quality without making changes\nallowed-tools:\n  - Read\n  - Glob\n  - Grep\n---\n\n# Code Analyzer\n\nThis skill analyzes code for patterns, complexity, and potential issues.\n\n## Capabilities\n\n- Find all usages of a function\n- Analyze import graphs\n- Detect code smells\n- Calculate complexity metrics\n\n## Limitations\n\nThis skill is read-only and cannot modify any files.",
+              "filename": "~/.claude/skills/code-analyzer/SKILL.md"
+            }
+          },
+          {
+            "instruction": "Test that the skill works with limited tools",
+            "note": "The skill will fail gracefully if it tries to use unauthorized tools"
+          }
+        ],
+        "estimatedTime": "5-10 minutes"
+      },
+      "examples": [
+        {
+          "title": "Documentation Skill (Read-Only)",
+          "description": "A skill that can only read and search files",
+          "code": {
+            "language": "markdown",
+            "content": "---\nname: Documentation Helper\ndescription: Helps navigate and understand documentation\nallowed-tools:\n  - Read\n  - Glob\n  - Grep\n  - WebFetch\n---\n\n# Documentation Helper\n\nThis skill helps you find and understand documentation.\n\n## What It Can Do\n\n- Search through documentation files\n- Read and explain documentation\n- Find related documentation\n- Fetch external documentation\n\n## What It Cannot Do\n\n- Create or modify documentation\n- Execute commands\n- Change any files",
+            "filename": "~/.claude/skills/docs-helper/SKILL.md"
+          },
+          "explanation": "This skill is explicitly read-only, making it safe for code exploration"
+        },
+        {
+          "title": "Linting Skill (Execute Only)",
+          "description": "A skill that can run linters but not edit files",
+          "code": {
+            "language": "markdown",
+            "content": "---\nname: Lint Runner\ndescription: Runs linting tools and reports issues\nallowed-tools:\n  - Bash\n  - Read\n  - Glob\n---\n\n# Lint Runner\n\nRuns configured linters and reports findings.\n\n## Commands Run\n\n- `eslint` for JavaScript/TypeScript\n- `ruff` for Python\n- `golangci-lint` for Go\n\n## Note\n\nThis skill reports issues but does not auto-fix them.",
+            "filename": "~/.claude/skills/lint-runner/SKILL.md"
+          },
+          "explanation": "Can run commands and read files but cannot write or edit"
+        }
+      ],
+      "tips": [
+        "Start restrictive and add tools only as needed",
+        "Document why certain tools are allowed",
+        "Use read-only tools for analysis skills",
+        "Test skills to ensure they work within restrictions"
+      ],
+      "relatedAchievements": ["triggered_skill", "error_recovery_skill", "skill_unlocked"]
+    },
+    "error_recovery_skill": {
+      "longDescription": "Skills that define error handling behavior provide graceful degradation when things go wrong. By documenting common errors, fallback strategies, and recovery procedures, you create resilient skills that can handle unexpected situations without failing completely. This includes retry logic, alternative approaches, and clear error messaging that helps users understand and resolve issues.",
+      "whyItMatters": "Real-world usage encounters errors. Skills with built-in recovery are more reliable and trustworthy. Users can confidently invoke them knowing issues will be handled gracefully rather than causing cascading failures.",
+      "difficulty": "advanced",
+      "howTo": {
+        "summary": "Add error handling documentation to your skill that covers common failures, recovery strategies, and fallback behaviors.",
+        "steps": [
+          {
+            "instruction": "Identify potential failure points in your skill",
+            "note": "Consider: missing files, network issues, invalid input, permission errors"
+          },
+          {
+            "instruction": "Document error handling in your SKILL.md",
+            "code": {
+              "language": "markdown",
+              "content": "---\nname: API Integration Helper\ndescription: Helps integrate with external APIs\n---\n\n# API Integration Helper\n\n## Error Handling\n\n### Network Failures\n\n**If API is unreachable:**\n1. Retry with exponential backoff (1s, 2s, 4s)\n2. After 3 failures, suggest checking network\n3. Offer to use cached data if available\n\n### Authentication Errors\n\n**If credentials are invalid:**\n1. Prompt user to verify API key\n2. Check if key is in environment variables\n3. Guide through credential setup\n\n### Rate Limiting\n\n**If rate limited:**\n1. Respect Retry-After header\n2. Queue remaining requests\n3. Notify user of delay\n\n### Fallback Behavior\n\nWhen errors persist:\n- Use mock data for development\n- Provide manual instructions as alternative\n- Log error details for debugging",
+              "filename": "~/.claude/skills/api-helper/SKILL.md"
+            }
+          },
+          {
+            "instruction": "Include error recovery in your examples",
+            "code": {
+              "language": "markdown",
+              "content": "## Error Recovery Example\n\n**Scenario:** API returns 503\n\n**Response:**\n```\nThe API is temporarily unavailable. Attempting recovery:\n\n1. Waiting 2 seconds before retry... [retry 1/3]\n2. Still unavailable. Waiting 4 seconds... [retry 2/3]\n3. Service restored. Proceeding with request.\n\nAlternatively, you can:\n- Use offline mode with cached data\n- Check API status at status.api.com\n- Proceed with mock data for development\n```",
+              "filename": "~/.claude/skills/api-helper/examples.md"
+            }
+          }
+        ],
+        "estimatedTime": "15-25 minutes"
+      },
+      "examples": [
+        {
+          "title": "File Processing Error Recovery",
+          "description": "Handling file operation failures",
+          "code": {
+            "language": "markdown",
+            "content": "---\nname: File Processor\ndescription: Processes and transforms files with error recovery\n---\n\n# File Processor\n\n## Error Recovery\n\n### File Not Found\n\n**Recovery steps:**\n1. Check for typos in filename\n2. Search for similar files with Glob\n3. Suggest creating the file if appropriate\n\n### Permission Denied\n\n**Recovery steps:**\n1. Explain the permission issue\n2. Suggest running with elevated permissions\n3. Offer to write to alternative location\n\n### Invalid Format\n\n**Recovery steps:**\n1. Attempt format detection\n2. Try common format parsers\n3. Ask user to specify format\n4. Provide manual parsing guidance\n\n### Partial Failure\n\n**Recovery steps:**\n1. Save progress to temp file\n2. Report which items succeeded/failed\n3. Offer to retry failed items only",
+            "filename": "~/.claude/skills/file-processor/SKILL.md"
+          },
+          "explanation": "Comprehensive error handling for various failure scenarios"
+        }
+      ],
+      "tips": [
+        "Anticipate errors before they happen",
+        "Provide actionable recovery suggestions",
+        "Never leave users stuck without options",
+        "Log detailed error information for debugging"
+      ],
+      "relatedAchievements": ["restricted_skill", "triggered_skill", "full_stack_skill"]
+    },
+    "multi_command_skill": {
+      "longDescription": "A skill with multiple slash commands in its commands/ directory exposes several related operations under one skill umbrella. Each command gets its own .md file defining its specific behavior, while sharing the parent skill's context and resources. This creates a cohesive toolkit where related commands work together seamlessly, like a suite of tools that share common understanding.",
+      "whyItMatters": "Multi-command skills organize related functionality logically. Users get a consistent interface for related operations, and the commands can share context, utilities, and conventions defined in the parent skill.",
+      "difficulty": "advanced",
+      "howTo": {
+        "summary": "Create a commands/ directory within your skill containing multiple .md files, each defining a separate slash command.",
+        "steps": [
+          {
+            "instruction": "Create the skill and commands directory",
+            "code": {
+              "language": "bash",
+              "content": "mkdir -p ~/.claude/skills/my-toolkit/commands"
+            }
+          },
+          {
+            "instruction": "Create the parent SKILL.md with shared context",
+            "code": {
+              "language": "markdown",
+              "content": "---\nname: Database Toolkit\ndescription: Database management commands and utilities\n---\n\n# Database Toolkit\n\nThis skill provides database management commands.\n\n## Shared Context\n\n- Default connection: Use DATABASE_URL environment variable\n- Prefer safe operations (dry-run by default)\n- Always create backups before destructive operations\n\n## Available Commands\n\n- `/db:migrate` - Run database migrations\n- `/db:seed` - Seed database with test data\n- `/db:backup` - Create database backup\n- `/db:restore` - Restore from backup",
+              "filename": "~/.claude/skills/my-toolkit/SKILL.md"
+            }
+          },
+          {
+            "instruction": "Create individual command files",
+            "code": {
+              "language": "markdown",
+              "content": "---\nname: db:migrate\ndescription: Run database migrations safely\n---\n\n# Database Migration\n\nRuns pending database migrations.\n\n## Usage\n\n```\n/db:migrate [options]\n```\n\n## Options\n\n- `--dry-run`: Preview changes without applying\n- `--target`: Migrate to specific version\n- `--rollback`: Undo last migration\n\n## Safety\n\n1. Always runs in dry-run mode first\n2. Shows affected tables and rows\n3. Requires confirmation for production",
+              "filename": "~/.claude/skills/my-toolkit/commands/migrate.md"
+            }
+          },
+          {
+            "instruction": "Add additional command files (minimum 2)",
+            "code": {
+              "language": "markdown",
+              "content": "---\nname: db:backup\ndescription: Create database backup\n---\n\n# Database Backup\n\nCreates a timestamped backup of the database.\n\n## Usage\n\n```\n/db:backup [--output path]\n```\n\n## Default Location\n\n`./backups/db-{timestamp}.sql`\n\n## Features\n\n- Compressed by default\n- Includes schema and data\n- Verifies backup integrity",
+              "filename": "~/.claude/skills/my-toolkit/commands/backup.md"
+            }
+          }
+        ],
+        "estimatedTime": "20-30 minutes"
+      },
+      "examples": [
+        {
+          "title": "Git Workflow Toolkit",
+          "description": "Multiple related git commands",
+          "code": {
+            "language": "text",
+            "content": "~/.claude/skills/git-workflow/\n  SKILL.md              # Shared git conventions\n  commands/\n    branch.md           # /git:branch - Branch management\n    commit.md           # /git:commit - Smart commits\n    pr.md               # /git:pr - PR creation\n    sync.md             # /git:sync - Sync with upstream"
+          },
+          "explanation": "Related git commands share context about repository conventions"
+        }
+      ],
+      "tips": [
+        "Group related operations under one skill",
+        "Use consistent naming: skill:command format",
+        "Share common utilities in the parent SKILL.md",
+        "Document command relationships in the skill overview"
+      ],
+      "relatedAchievements": ["skill_unlocked", "full_stack_skill", "skill_portfolio"]
+    },
+    "skill_chain": {
+      "longDescription": "A skill that references or invokes another skill creates a chain of specialized capabilities. By calling /other-skill: within your skill's instructions, you can compose complex workflows from simpler building blocks. This enables sophisticated multi-step processes where each skill handles its area of expertise, passing results along the chain.",
+      "whyItMatters": "Skill chaining enables composition without duplication. Instead of rebuilding capabilities, you combine existing skills into powerful workflows. This creates a modular ecosystem where skills can be improved independently.",
+      "difficulty": "advanced",
+      "howTo": {
+        "summary": "Reference another skill using its slash command syntax within your skill's instructions.",
+        "steps": [
+          {
+            "instruction": "Identify skills that complement each other",
+            "note": "Example: code-review skill + security-check skill = comprehensive review"
+          },
+          {
+            "instruction": "Create a skill that chains to others",
+            "code": {
+              "language": "markdown",
+              "content": "---\nname: Full Review Pipeline\ndescription: Comprehensive code review combining multiple checks\n---\n\n# Full Review Pipeline\n\nThis skill orchestrates a complete code review by chaining specialized skills.\n\n## Review Steps\n\n1. **Code Quality** - Invoke /code-review: for structural analysis\n2. **Security Scan** - Chain to /security-check: for vulnerability detection\n3. **Performance** - Use /perf-analysis: for performance review\n4. **Documentation** - Apply /docs-check: for documentation coverage\n\n## Workflow\n\nWhen invoked:\n\n1. Run `/code-review:` on the target code\n2. Pass findings to `/security-check:` for security context\n3. Run `/perf-analysis:` with the code patterns identified\n4. Finally, run `/docs-check:` to verify documentation\n\n## Combined Report\n\nAggregate findings into a single comprehensive report with:\n- Critical issues (must fix)\n- Security concerns\n- Performance suggestions\n- Documentation gaps",
+              "filename": "~/.claude/skills/review-pipeline/SKILL.md"
+            }
+          },
+          {
+            "instruction": "Document dependencies clearly",
+            "code": {
+              "language": "markdown",
+              "content": "## Dependencies\n\nThis skill requires the following skills to be installed:\n\n- `code-review` - Core code analysis\n- `security-check` - Security scanning\n- `perf-analysis` - Performance profiling\n- `docs-check` - Documentation verification\n\n## Installation\n\nEnsure all dependent skills are in ~/.claude/skills/",
+              "filename": "~/.claude/skills/review-pipeline/SKILL.md"
+            }
+          }
+        ],
+        "estimatedTime": "15-25 minutes"
+      },
+      "examples": [
+        {
+          "title": "Deployment Pipeline Skill",
+          "description": "Chains multiple deployment steps",
+          "code": {
+            "language": "markdown",
+            "content": "---\nname: Deploy Pipeline\ndescription: Full deployment workflow using chained skills\n---\n\n# Deployment Pipeline\n\nOrchestrates deployment by chaining specialized skills.\n\n## Pipeline Stages\n\n### 1. Pre-flight Checks\n```\nInvoke /code-quality: to verify:\n- All tests pass\n- No linting errors\n- Dependencies are clean\n```\n\n### 2. Security Gate\n```\nChain to /security-scan: for:\n- Dependency vulnerabilities\n- Secret detection\n- SAST analysis\n```\n\n### 3. Build\n```\nUse /build-helper: to:\n- Compile assets\n- Generate artifacts\n- Tag release\n```\n\n### 4. Deploy\n```\nFinally /deploy-tool: for:\n- Environment deployment\n- Health checks\n- Rollback preparation\n```",
+            "filename": "~/.claude/skills/deploy-pipeline/SKILL.md"
+          },
+          "explanation": "Each stage invokes a specialized skill, creating a robust pipeline"
+        }
+      ],
+      "tips": [
+        "Keep individual skills focused - chain for complexity",
+        "Document skill dependencies clearly",
+        "Handle failures at each chain point",
+        "Test chains with mock data first"
+      ],
+      "relatedAchievements": ["multi_command_skill", "full_stack_skill", "skill_portfolio"]
+    },
+    "versioned_skill": {
+      "longDescription": "Including a version number in your skill's frontmatter enables tracking changes, managing updates, and ensuring compatibility. Following semantic versioning (major.minor.patch), you communicate the impact of changes: major for breaking changes, minor for new features, patch for bug fixes. This is essential for skills shared across teams or published publicly.",
+      "whyItMatters": "Versioning creates clarity about skill evolution. Teams can pin to specific versions, users know when updates might affect their workflows, and you can maintain multiple versions for different compatibility needs.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Add a version field to your skill's frontmatter following semantic versioning conventions.",
+        "steps": [
+          {
+            "instruction": "Add version to your skill's frontmatter",
+            "code": {
+              "language": "markdown",
+              "content": "---\nname: API Generator\ndescription: Generate API endpoints from specifications\nversion: 1.2.0\n---\n\n# API Generator\n\nGenerates API code from OpenAPI specifications.\n\n## Changelog\n\n### 1.2.0 (2025-01-15)\n- Added support for GraphQL schemas\n- New template options\n\n### 1.1.0 (2025-01-01)\n- Added TypeScript output support\n- Improved error messages\n\n### 1.0.0 (2024-12-15)\n- Initial release\n- Basic REST API generation",
+              "filename": "~/.claude/skills/api-generator/SKILL.md"
+            }
+          },
+          {
+            "instruction": "Consider adding a CHANGELOG.md for detailed history",
+            "code": {
+              "language": "markdown",
+              "content": "# Changelog\n\nAll notable changes to this skill will be documented in this file.\n\n## [1.2.0] - 2025-01-15\n\n### Added\n- GraphQL schema support\n- New `--graphql` flag for generation\n- Apollo Server template option\n\n### Changed\n- Improved TypeScript type generation\n- Better handling of nullable fields\n\n### Fixed\n- Correct enum generation for string types\n\n## [1.1.0] - 2025-01-01\n\n### Added\n- TypeScript output format\n- `--typescript` flag\n\n### Changed\n- Default output is now TypeScript (breaking change)",
+              "filename": "~/.claude/skills/api-generator/CHANGELOG.md"
+            }
+          },
+          {
+            "instruction": "Increment version appropriately when making changes",
+            "note": "MAJOR: breaking changes, MINOR: new features, PATCH: bug fixes"
+          }
+        ],
+        "estimatedTime": "5-10 minutes"
+      },
+      "examples": [
+        {
+          "title": "Versioned Skill with Deprecation",
+          "description": "Managing breaking changes with versioning",
+          "code": {
+            "language": "markdown",
+            "content": "---\nname: Code Formatter\ndescription: Format code following project standards\nversion: 2.0.0\n---\n\n# Code Formatter v2.0.0\n\n## Breaking Changes in v2.0.0\n\n- Removed `--legacy` flag (use v1.x for old format)\n- Changed default indent from 4 to 2 spaces\n- Configuration file renamed from `.format` to `.formatter.json`\n\n## Migration from v1.x\n\n1. Update config filename\n2. Review indent settings\n3. Remove deprecated flags from scripts\n\n## Compatibility\n\n- v2.x: Current (recommended)\n- v1.x: Legacy support (security fixes only)",
+            "filename": "~/.claude/skills/code-formatter/SKILL.md"
+          },
+          "explanation": "Clear versioning communicates breaking changes and migration paths"
+        }
+      ],
+      "tips": [
+        "Start at 1.0.0 for production-ready skills",
+        "Use 0.x.x for experimental/development skills",
+        "Document breaking changes prominently",
+        "Consider maintaining LTS versions for major releases"
+      ],
+      "relatedAchievements": ["published_skill", "skill_documenter", "skill_publisher"]
+    },
+    "published_skill": {
+      "longDescription": "A skill with a LICENSE file is ready for sharing with the community. The license defines how others can use, modify, and distribute your skill. Adding a license is a crucial step toward publishing, as it provides legal clarity and encourages adoption. Common choices include MIT for maximum permissiveness or Apache 2.0 for patent protection.",
+      "whyItMatters": "Without a license, others cannot legally use your skill. A license enables community adoption, contributions, and ecosystem growth while protecting both you and users.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Add a LICENSE file to your skill directory specifying the terms under which others can use the skill.",
+        "steps": [
+          {
+            "instruction": "Choose an appropriate license",
+            "note": "MIT is most common for open source. Apache 2.0 for patent protection. GPL for copyleft."
+          },
+          {
+            "instruction": "Create the LICENSE file",
+            "code": {
+              "language": "text",
+              "content": "MIT License\n\nCopyright (c) 2025 Your Name\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.",
+              "filename": "~/.claude/skills/my-skill/LICENSE"
+            }
+          },
+          {
+            "instruction": "Reference the license in your README",
+            "code": {
+              "language": "markdown",
+              "content": "## License\n\nThis skill is released under the [MIT License](LICENSE).\n\nFeel free to use, modify, and distribute. Contributions welcome!",
+              "filename": "~/.claude/skills/my-skill/README.md"
+            }
+          }
+        ],
+        "estimatedTime": "5 minutes"
+      },
+      "examples": [
+        {
+          "title": "Apache 2.0 License",
+          "description": "For skills needing patent protection",
+          "code": {
+            "language": "text",
+            "content": "                                 Apache License\n                           Version 2.0, January 2004\n                        http://www.apache.org/licenses/\n\n   TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION\n   ...\n\n   Copyright 2025 Your Name\n\n   Licensed under the Apache License, Version 2.0 (the \"License\");\n   you may not use this file except in compliance with the License.\n   You may obtain a copy of the License at\n\n       http://www.apache.org/licenses/LICENSE-2.0",
+            "filename": "~/.claude/skills/my-skill/LICENSE"
+          },
+          "explanation": "Apache 2.0 provides patent rights grant and is business-friendly"
+        }
+      ],
+      "tips": [
+        "MIT is the simplest and most permissive choice",
+        "Apache 2.0 is preferred for enterprise adoption",
+        "Include copyright year and your name/organization",
+        "Consider adding SPDX identifier to SKILL.md frontmatter"
+      ],
+      "relatedAchievements": ["skill_publisher", "skill_documenter", "versioned_skill"]
+    },
+    "skill_installer": {
+      "longDescription": "Installing a community skill means bringing external expertise into your Claude Code environment. Community skills are shared by other users and can be installed by cloning their repository into your skills directory. This enables you to leverage others' work, learn from well-crafted skills, and quickly add capabilities without building from scratch.",
+      "whyItMatters": "The skill ecosystem multiplies everyone's capabilities. By installing community skills, you benefit from collective expertise while learning patterns and techniques you can apply to your own skills.",
+      "difficulty": "beginner",
+      "howTo": {
+        "summary": "Clone or copy a community skill into your ~/.claude/skills directory.",
+        "steps": [
+          {
+            "instruction": "Find a skill to install (GitHub, skill registries, etc.)",
+            "note": "Review the skill's SKILL.md and README before installing"
+          },
+          {
+            "instruction": "Clone the skill repository",
+            "code": {
+              "language": "bash",
+              "content": "cd ~/.claude/skills\ngit clone https://github.com/username/skill-name.git"
+            }
+          },
+          {
+            "instruction": "Verify the skill structure",
+            "code": {
+              "language": "bash",
+              "content": "ls ~/.claude/skills/skill-name/\n# Should contain at least SKILL.md"
+            }
+          },
+          {
+            "instruction": "Restart Claude Code to load the new skill",
+            "note": "New skills are detected on startup"
+          },
+          {
+            "instruction": "Test the skill",
+            "code": {
+              "language": "text",
+              "content": "# In Claude Code, invoke the skill:\n/skill-name\n\n# Or let it trigger automatically based on its conditions"
+            }
+          }
+        ],
+        "estimatedTime": "5 minutes"
+      },
+      "examples": [
+        {
+          "title": "Installing from GitHub",
+          "description": "Standard installation process",
+          "code": {
+            "language": "bash",
+            "content": "# Navigate to skills directory\ncd ~/.claude/skills\n\n# Clone the skill\ngit clone https://github.com/claude-skills/api-designer.git\n\n# Check what was installed\ncat api-designer/SKILL.md\n\n# Restart Claude Code"
+          },
+          "explanation": "Git clone is the standard way to install shareable skills"
+        },
+        {
+          "title": "Installing from Archive",
+          "description": "For skills distributed as archives",
+          "code": {
+            "language": "bash",
+            "content": "# Download and extract\ncd ~/.claude/skills\ncurl -L https://example.com/skill.tar.gz | tar xz\n\n# Or unzip\nunzip skill.zip -d my-skill/\n\n# Verify structure\nls my-skill/SKILL.md"
+          },
+          "explanation": "Skills can also be distributed as downloadable archives"
+        }
+      ],
+      "tips": [
+        "Read the README before installing",
+        "Check the skill's license for usage terms",
+        "Review SKILL.md for any dependencies",
+        "Consider forking to customize for your needs"
+      ],
+      "relatedAchievements": ["skill_forker", "skill_updater", "skill_unlocked"]
+    },
+    "skill_updater": {
+      "longDescription": "Updating an installed skill pulls the latest changes from its source, bringing new features, bug fixes, and improvements. For skills installed via git, this is as simple as git pull. Keeping skills updated ensures you have the latest capabilities and security patches while maintaining compatibility with evolving Claude Code features.",
+      "whyItMatters": "Outdated skills may have bugs, security issues, or miss new features. Regular updates keep your AI toolkit current and reliable, just like updating any other software dependency.",
+      "difficulty": "beginner",
+      "howTo": {
+        "summary": "Update a git-installed skill by pulling the latest changes from its repository.",
+        "steps": [
+          {
+            "instruction": "Navigate to the skill directory",
+            "code": {
+              "language": "bash",
+              "content": "cd ~/.claude/skills/skill-name"
+            }
+          },
+          {
+            "instruction": "Check for available updates",
+            "code": {
+              "language": "bash",
+              "content": "git fetch origin\ngit log HEAD..origin/main --oneline"
+            }
+          },
+          {
+            "instruction": "Pull the updates",
+            "code": {
+              "language": "bash",
+              "content": "git pull origin main"
+            }
+          },
+          {
+            "instruction": "Review the changelog if available",
+            "code": {
+              "language": "bash",
+              "content": "cat CHANGELOG.md | head -50"
+            }
+          },
+          {
+            "instruction": "Restart Claude Code to load updates",
+            "note": "Changes take effect after restart"
+          }
+        ],
+        "estimatedTime": "2-5 minutes"
+      },
+      "examples": [
+        {
+          "title": "Update All Skills",
+          "description": "Batch update script for all installed skills",
+          "code": {
+            "language": "bash",
+            "content": "#!/bin/bash\n# Update all git-based skills\n\nfor skill in ~/.claude/skills/*/; do\n  if [ -d \"$skill/.git\" ]; then\n    echo \"Updating $(basename $skill)...\"\n    cd \"$skill\"\n    git pull --quiet origin main 2>/dev/null || echo \"  (no updates)\"\n    cd - > /dev/null\n  fi\ndone\n\necho \"All skills updated. Restart Claude Code to apply changes.\""
+          },
+          "explanation": "Automate updates for all git-managed skills"
+        },
+        {
+          "title": "Safe Update with Backup",
+          "description": "Update while preserving local customizations",
+          "code": {
+            "language": "bash",
+            "content": "cd ~/.claude/skills/my-skill\n\n# Stash local changes\ngit stash\n\n# Pull updates\ngit pull origin main\n\n# Reapply local changes\ngit stash pop\n\n# Resolve any conflicts if needed"
+          },
+          "explanation": "Preserve local modifications when updating"
+        }
+      ],
+      "tips": [
+        "Check changelogs for breaking changes before updating",
+        "Back up customized skills before updating",
+        "Test skills after updating to verify functionality",
+        "Consider pinning to specific versions for stability"
+      ],
+      "relatedAchievements": ["skill_installer", "skill_forker", "versioned_skill"]
+    },
+    "skill_forker": {
+      "longDescription": "Forking a skill creates your own copy that you can customize freely. Starting from an existing skill's foundation, you modify, extend, or completely reimagine it for your needs. This is the fastest path to a working skill when something similar exists, and it's how the skill ecosystem evolves - through adaptation and improvement.",
+      "whyItMatters": "Building from scratch is rarely necessary. Forking lets you leverage existing work, learn from others' implementations, and create customized versions that fit your exact needs while respecting the original work.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Create a copy of an existing skill and customize it for your specific needs.",
+        "steps": [
+          {
+            "instruction": "Identify a skill to fork (installed or from a repository)",
+            "note": "Ensure the license allows modification"
+          },
+          {
+            "instruction": "Create your fork",
+            "code": {
+              "language": "bash",
+              "content": "# Copy an installed skill\ncp -r ~/.claude/skills/original-skill ~/.claude/skills/my-customized-skill\n\n# Or fork on GitHub first, then clone\ncd ~/.claude/skills\ngit clone https://github.com/YOUR-USERNAME/skill-name.git my-skill"
+            }
+          },
+          {
+            "instruction": "Customize the skill",
+            "code": {
+              "language": "markdown",
+              "content": "---\nname: My Customized API Generator\ndescription: API generator with my team's conventions\n---\n\n# My Customized API Generator\n\nBased on [original-skill](link), customized for our project.\n\n## Changes from Original\n\n- Added company-specific templates\n- Modified output format for our framework\n- Integrated with our auth system\n\n## Attribution\n\nForked from [Original Author's Skill](link) under MIT License.",
+              "filename": "~/.claude/skills/my-customized-skill/SKILL.md"
+            }
+          },
+          {
+            "instruction": "Test your customizations",
+            "note": "Verify the fork works correctly with your changes"
+          }
+        ],
+        "estimatedTime": "15-30 minutes"
+      },
+      "examples": [
+        {
+          "title": "Customizing a Template Skill",
+          "description": "Fork and modify templates for your stack",
+          "code": {
+            "language": "markdown",
+            "content": "---\nname: React Component Generator (Customized)\ndescription: Component generator for our design system\n---\n\n# React Component Generator\n\nForked from community-components skill, customized for our design system.\n\n## Customizations\n\n1. Uses our internal `@acme/ui` components\n2. Follows our naming convention (prefix with Acme)\n3. Includes Storybook story by default\n4. Adds our standard test setup\n\n## Original Credit\n\nBased on react-components by @original-author",
+            "filename": "~/.claude/skills/acme-components/SKILL.md"
+          },
+          "explanation": "Customize community skills for your specific tech stack"
+        }
+      ],
+      "tips": [
+        "Always credit the original skill/author",
+        "Document what you changed and why",
+        "Consider contributing improvements back upstream",
+        "Keep your fork updated with upstream changes"
+      ],
+      "relatedAchievements": ["skill_installer", "skill_updater", "skill_publisher"]
+    },
+    "skill_publisher": {
+      "longDescription": "Publishing a skill shares your creation with the Claude Code community. This involves preparing your skill for public consumption, creating a repository, writing comprehensive documentation, and making it discoverable. Published skills become part of the ecosystem, helping others and establishing your expertise in the community.",
+      "whyItMatters": "Publishing multiplies your skill's impact. Others benefit from your work, you receive feedback and contributions, and the community grows stronger. Published skills also serve as portfolio pieces demonstrating your capabilities.",
+      "difficulty": "advanced",
+      "howTo": {
+        "summary": "Prepare your skill for publication with complete documentation, then share via GitHub or a skill registry.",
+        "steps": [
+          {
+            "instruction": "Ensure your skill is complete and documented",
+            "code": {
+              "language": "bash",
+              "content": "# Verify essential files exist\nls ~/.claude/skills/my-skill/\n# Should have: SKILL.md, README.md, LICENSE, examples.md (recommended)"
+            }
+          },
+          {
+            "instruction": "Initialize git repository if not already",
+            "code": {
+              "language": "bash",
+              "content": "cd ~/.claude/skills/my-skill\ngit init\ngit add .\ngit commit -m \"Initial release of my-skill v1.0.0\""
+            }
+          },
+          {
+            "instruction": "Create GitHub repository and push",
+            "code": {
+              "language": "bash",
+              "content": "# Create repo via gh CLI\ngh repo create claude-skill-my-name --public --source=. --push\n\n# Or manually:\n# 1. Create repo on github.com\n# 2. Add remote and push\ngit remote add origin https://github.com/username/claude-skill-name.git\ngit push -u origin main"
+            }
+          },
+          {
+            "instruction": "Add repository topics for discoverability",
+            "code": {
+              "language": "bash",
+              "content": "gh repo edit --add-topic claude-code,claude-skill,ai-assistant"
+            }
+          },
+          {
+            "instruction": "Create a release",
+            "code": {
+              "language": "bash",
+              "content": "gh release create v1.0.0 --title \"Initial Release\" --notes \"First public release of my-skill\""
+            }
+          }
+        ],
+        "estimatedTime": "30-60 minutes"
+      },
+      "examples": [
+        {
+          "title": "Publishing Checklist README",
+          "description": "README structure for published skills",
+          "code": {
+            "language": "markdown",
+            "content": "# My Claude Skill\n\n> One-line description of what this skill does\n\n[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)\n\n## Features\n\n- Feature 1\n- Feature 2\n- Feature 3\n\n## Installation\n\n```bash\ncd ~/.claude/skills\ngit clone https://github.com/username/skill-name.git\n```\n\n## Usage\n\nExplain how to use the skill with examples.\n\n## Configuration\n\nDocument any configuration options.\n\n## Contributing\n\nPull requests welcome! Please read CONTRIBUTING.md first.\n\n## License\n\nMIT - see LICENSE file",
+            "filename": "README.md"
+          },
+          "explanation": "A well-structured README encourages adoption"
+        }
+      ],
+      "tips": [
+        "Write documentation from a user's perspective",
+        "Include installation verification steps",
+        "Add screenshots or demos if helpful",
+        "Respond to issues and PRs promptly"
+      ],
+      "relatedAchievements": ["published_skill", "versioned_skill", "skill_documenter", "skill_portfolio"]
+    },
+    "skill_portfolio": {
+      "longDescription": "Building a portfolio of 5 or more skills demonstrates mastery of the skill system and creates a comprehensive personal toolkit. Each skill in your portfolio addresses different needs, from code generation to documentation to workflow automation. A diverse portfolio shows you understand when to create specialized skills versus general ones, and how to maintain multiple skills effectively.",
+      "whyItMatters": "A skill portfolio is your personalized AI enhancement layer. It represents your accumulated knowledge, workflows, and automation - a library of capabilities that make you more effective with Claude Code across all your projects.",
+      "difficulty": "advanced",
+      "howTo": {
+        "summary": "Create at least 5 distinct skills covering different aspects of your workflow.",
+        "steps": [
+          {
+            "instruction": "Identify 5+ distinct areas where skills would help",
+            "note": "Consider: code generation, testing, documentation, deployment, code review"
+          },
+          {
+            "instruction": "Create skills for each area",
+            "code": {
+              "language": "bash",
+              "content": "# Example portfolio structure\nmkdir -p ~/.claude/skills/{code-generator,test-helper,docs-writer,deploy-assistant,review-buddy}"
+            }
+          },
+          {
+            "instruction": "Ensure each skill has a unique purpose",
+            "code": {
+              "language": "text",
+              "content": "Portfolio Example:\n\n1. code-generator/     - Generate boilerplate code\n2. test-helper/        - Write and run tests\n3. docs-writer/        - Generate documentation\n4. deploy-assistant/   - Deployment workflows\n5. review-buddy/       - Code review assistance\n6. refactor-guide/     - Refactoring patterns (bonus)"
+            }
+          },
+          {
+            "instruction": "Maintain consistency across skills",
+            "note": "Use similar structure, documentation style, and conventions"
+          }
+        ],
+        "estimatedTime": "Several sessions"
+      },
+      "examples": [
+        {
+          "title": "Full Stack Developer Portfolio",
+          "description": "Skills for full stack development workflow",
+          "code": {
+            "language": "text",
+            "content": "~/.claude/skills/\n  api-builder/           # REST API generation\n  react-components/      # Frontend component patterns\n  database-manager/      # Database operations\n  test-suite/            # Testing utilities\n  ci-cd-helper/          # CI/CD configuration\n  docker-helper/         # Containerization\n  security-checker/      # Security analysis"
+          },
+          "explanation": "Each skill covers a different aspect of full stack development"
+        },
+        {
+          "title": "Data Science Portfolio",
+          "description": "Skills for data science workflows",
+          "code": {
+            "language": "text",
+            "content": "~/.claude/skills/\n  data-cleaner/          # Data preprocessing\n  viz-generator/         # Visualization creation\n  model-trainer/         # ML model workflows\n  notebook-helper/       # Jupyter assistance\n  stats-analyzer/        # Statistical analysis\n  pipeline-builder/      # Data pipeline creation"
+          },
+          "explanation": "Specialized skills for data science workflows"
+        }
+      ],
+      "tips": [
+        "Start with your most common tasks",
+        "Avoid overlapping functionality between skills",
+        "Review and refine skills regularly",
+        "Consider sharing your portfolio with the community"
+      ],
+      "relatedAchievements": ["skill_unlocked", "full_stack_skill", "skill_publisher", "multi_command_skill"]
+    }
+  }
+}

@@ -1,0 +1,535 @@
+{
+  "category": "collaboration",
+  "description": "Achievements focused on team workflows, shared knowledge, and collaborative development practices with Claude Code",
+  "content": {
+    "architecture_doc": {
+      "longDescription": "Document your project's architecture decisions directly in CLAUDE.md so Claude understands the reasoning behind your system design. Include ADRs (Architecture Decision Records), component diagrams references, and design rationale. This creates persistent context that helps Claude suggest changes aligned with your architectural vision, and helps new team members understand why the system is built the way it is.",
+      "whyItMatters": "Architecture context prevents Claude from suggesting changes that violate design principles. It creates institutional memory that persists across sessions and team members.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Add an Architecture or Design Decisions section to your project CLAUDE.md documenting key architectural choices.",
+        "steps": [
+          "Create or open your project's CLAUDE.md file in the repository root",
+          "Add an ## Architecture section with an overview of the system design",
+          "Document key design decisions with rationale: 'We use X because Y'",
+          "Reference any ADR documents: 'See docs/adr/ for detailed decision records'"
+        ]
+      },
+      "examples": [
+        {
+          "title": "Architecture section in CLAUDE.md",
+          "code": "## Architecture\n\nThis project follows a hexagonal architecture pattern:\n- `src/domain/` - Core business logic, no external dependencies\n- `src/adapters/` - External service integrations\n- `src/ports/` - Interface definitions\n\n### Design Decisions\n- ADR-001: We use PostgreSQL over MongoDB for ACID compliance\n- ADR-002: Event sourcing for audit trail requirements\n- ADR-003: Feature flags via LaunchDarkly for gradual rollouts\n\nWhen making changes, preserve the separation between domain and adapters."
+        }
+      ],
+      "tips": [
+        "Keep architecture docs high-level but actionable for Claude",
+        "Update when major architectural changes are made",
+        "Link to detailed ADR documents rather than duplicating content",
+        "Include diagrams as ASCII art or references to image files"
+      ],
+      "relatedAchievements": ["convention_keeper", "knowledge_sharer", "team_memory"]
+    },
+    "code_review_giver": {
+      "longDescription": "Leverage Claude to provide thoughtful code reviews on pull requests or code shared by teammates. Claude can analyze code for bugs, security issues, performance problems, and adherence to coding standards. You can share PR URLs, paste code snippets, or ask Claude to review changes in your local repository. This accelerates the review process while maintaining code quality standards.",
+      "whyItMatters": "Automated code review catches issues early, reduces reviewer fatigue, and ensures consistent application of coding standards across the team.",
+      "difficulty": "beginner",
+      "howTo": {
+        "summary": "Ask Claude to review code from pull requests, commits, or shared snippets for quality and issues.",
+        "steps": [
+          "Share a PR URL or paste code you want reviewed",
+          "Ask Claude to review for specific concerns: security, performance, style",
+          "Request Claude explain any issues found with suggested fixes",
+          "Use the feedback to improve the code before merging"
+        ]
+      },
+      "examples": [
+        {
+          "title": "Review a GitHub PR",
+          "code": "# In Claude Code, simply ask:\n\"Review this PR for security issues and code quality: https://github.com/org/repo/pull/123\"\n\n# Or review local changes:\n\"Review the changes in my current branch compared to main\""
+        },
+        {
+          "title": "Targeted code review",
+          "code": "# Ask for specific review focus:\n\"Review this authentication code for security vulnerabilities:\n\n```python\ndef authenticate(username, password):\n    user = db.query(f'SELECT * FROM users WHERE name={username}')\n    if user and user.password == password:\n        return create_session(user)\n    return None\n```\""
+        }
+      ],
+      "tips": [
+        "Be specific about what aspects you want reviewed",
+        "Include relevant context like coding standards or security requirements",
+        "Use /review-pr command if available for structured reviews",
+        "Follow up on Claude's suggestions with 'explain more about X'"
+      ],
+      "relatedAchievements": ["pr_automator", "convention_keeper", "mentorship"]
+    },
+    "commit_crafter": {
+      "longDescription": "Create a custom slash command that generates standardized commit messages for your team. The command can enforce conventional commits format, include ticket references, run pre-commit checks, and ensure consistent messaging across all contributors. This automates the tedious parts of committing while maintaining a clean, searchable git history.",
+      "whyItMatters": "Consistent commit messages improve git history readability, enable automated changelog generation, and make code archeology much easier for the team.",
+      "difficulty": "beginner",
+      "howTo": {
+        "summary": "Create a commit.md command file that generates commits following your team's conventions.",
+        "steps": [
+          "Create the directory: mkdir -p .claude/commands",
+          "Create .claude/commands/commit.md with your commit template",
+          "Define the commit message format (conventional commits, etc.)",
+          "Include instructions for extracting ticket numbers from branch names",
+          "Test with /commit in a Claude Code session"
+        ]
+      },
+      "examples": [
+        {
+          "title": "Conventional commits command",
+          "code": "---\ndescription: Create a conventional commit with ticket reference\n---\n\nAnalyze the staged changes and create a commit message following this format:\n\n```\n<type>(<scope>): <description>\n\n[optional body]\n\nRefs: <ticket-from-branch>\n```\n\nTypes: feat, fix, docs, style, refactor, test, chore\n\nExtract ticket number from branch name (e.g., feature/PROJ-123-foo -> PROJ-123).\n\nKeep the description under 72 characters.\nExplain WHY in the body, not WHAT (the diff shows what)."
+        }
+      ],
+      "tips": [
+        "Include your team's specific commit conventions",
+        "Add ticket number extraction from branch names",
+        "Consider adding pre-commit hook integration",
+        "Keep the command focused - use separate commands for complex workflows"
+      ],
+      "relatedAchievements": ["shared_commands", "pr_automator", "convention_keeper"]
+    },
+    "convention_keeper": {
+      "longDescription": "Define your team's coding standards, naming conventions, and style guidelines directly in CLAUDE.md. When Claude understands your conventions, it generates code that matches your existing codebase style automatically. This eliminates style-related code review comments and ensures consistency whether Claude or humans write the code.",
+      "whyItMatters": "Documented conventions reduce code review friction, accelerate onboarding, and ensure Claude-generated code integrates seamlessly with existing code.",
+      "difficulty": "beginner",
+      "howTo": {
+        "summary": "Add a Conventions or Style Guide section to CLAUDE.md documenting your team's coding standards.",
+        "steps": [
+          "Create or open CLAUDE.md in your project root",
+          "Add a ## Conventions or ## Style Guide section",
+          "Document naming patterns: files, functions, variables, classes",
+          "Include code organization rules and import ordering",
+          "Add examples of preferred patterns"
+        ]
+      },
+      "examples": [
+        {
+          "title": "Conventions section in CLAUDE.md",
+          "code": "## Conventions\n\n### Naming\n- Components: PascalCase (UserProfile.tsx)\n- Hooks: camelCase with 'use' prefix (useAuth.ts)\n- Utils: camelCase (formatDate.ts)\n- Constants: SCREAMING_SNAKE_CASE\n- CSS classes: kebab-case\n\n### Code Style\n- Prefer named exports over default exports\n- Use async/await over .then() chains\n- Destructure props in function parameters\n- Maximum function length: 50 lines\n\n### File Organization\n- One component per file\n- Colocate tests: Component.test.tsx\n- Group by feature, not by type"
+        }
+      ],
+      "tips": [
+        "Be specific with examples, not just rules",
+        "Include anti-patterns to avoid",
+        "Reference your ESLint/Prettier config if applicable",
+        "Update conventions as team practices evolve"
+      ],
+      "relatedAchievements": ["team_memory", "architecture_doc", "knowledge_sharer"]
+    },
+    "doc_collaborator": {
+      "longDescription": "Create a documentation command that helps your team generate and maintain project documentation consistently. The command can create README sections, API documentation, component docs, or user guides following your team's documentation standards. This ensures documentation stays current and follows a consistent format.",
+      "whyItMatters": "Automated documentation workflows reduce the friction of keeping docs updated. Consistent templates make documentation more useful and easier to maintain.",
+      "difficulty": "beginner",
+      "howTo": {
+        "summary": "Create a docs.md or document.md command that generates documentation following team standards.",
+        "steps": [
+          "Create .claude/commands/docs.md or document.md",
+          "Define your documentation template and format",
+          "Specify what information to include (examples, API signatures, etc.)",
+          "Add instructions for where to place generated docs",
+          "Test with /docs <component-name> in a session"
+        ]
+      },
+      "examples": [
+        {
+          "title": "Component documentation command",
+          "code": "---\ndescription: Generate component documentation\n---\n\nGenerate documentation for the specified component following this template:\n\n# Component Name\n\n## Overview\nBrief description of what the component does.\n\n## Props\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n\n## Usage\n```tsx\n// Basic usage example\n```\n\n## Examples\nShow 2-3 common use cases.\n\n## Notes\nAny gotchas, performance considerations, or accessibility notes.\n\nRead the component source code and generate accurate documentation.\nPlace output in docs/components/<name>.md"
+        }
+      ],
+      "tips": [
+        "Include template structure in the command",
+        "Add context about your documentation tools (Storybook, Docusaurus, etc.)",
+        "Consider separate commands for different doc types",
+        "Make the command update existing docs, not just create new ones"
+      ],
+      "relatedAchievements": ["shared_commands", "template_maker", "onboarding_guide"]
+    },
+    "issue_tracker": {
+      "longDescription": "Create a command that streamlines your team's issue and bug tracking workflow. The command can create GitHub or Linear issues with proper labels, link issues to code, or help triage and prioritize the backlog. This integrates your issue tracking directly into the development flow, reducing context switching.",
+      "whyItMatters": "Integrated issue tracking reduces context switching and ensures issues are created with proper detail, labels, and context from the start.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Create an issue.md or bug.md command that interfaces with your issue tracking system.",
+        "steps": [
+          "Create .claude/commands/issue.md or bug.md",
+          "Define the issue template your team uses",
+          "Include instructions for adding labels, assignees, and links",
+          "Add context extraction from current code or errors",
+          "Test with /issue or /bug in a session"
+        ]
+      },
+      "examples": [
+        {
+          "title": "GitHub issue creation command",
+          "code": "---\ndescription: Create a GitHub issue with proper formatting\n---\n\nCreate a GitHub issue following our team template.\n\nGather this information:\n1. Issue title (clear, actionable)\n2. Type: bug, feature, enhancement, or chore\n3. Priority: P0 (critical), P1 (high), P2 (medium), P3 (low)\n4. Detailed description with steps to reproduce (for bugs)\n\nUse this format:\n```\ngh issue create --title \"<title>\" \\\n  --label \"<type>,priority:<priority>\" \\\n  --body \"## Description\n<description>\n\n## Steps to Reproduce\n<steps>\n\n## Expected Behavior\n<expected>\n\n## Actual Behavior\n<actual>\"\n```\n\nIf context from current code is relevant, include file references."
+        }
+      ],
+      "tips": [
+        "Include your team's label taxonomy",
+        "Add template sections for different issue types",
+        "Consider integration with Linear, Jira, or other tools via CLI",
+        "Include automatic context from current file or error messages"
+      ],
+      "relatedAchievements": ["pr_automator", "shared_commands", "standup_automator"]
+    },
+    "knowledge_sharer": {
+      "longDescription": "Build a comprehensive project CLAUDE.md with 10 or more well-organized sections documenting team patterns, conventions, architecture, and workflows. This creates a rich knowledge base that helps Claude provide highly contextual assistance and serves as living documentation for the entire team. The more context you provide, the better Claude understands your project.",
+      "whyItMatters": "Comprehensive documentation enables Claude to provide expert-level assistance specific to your project. It preserves institutional knowledge that benefits current and future team members.",
+      "difficulty": "advanced",
+      "howTo": {
+        "summary": "Expand your CLAUDE.md to include 10+ sections covering all aspects of your project.",
+        "steps": [
+          "Start with Project Overview and Architecture sections",
+          "Add Conventions, Testing, and Deployment sections",
+          "Document team-specific patterns and anti-patterns",
+          "Include onboarding info and common workflows",
+          "Add troubleshooting guides and FAQ sections"
+        ]
+      },
+      "examples": [
+        {
+          "title": "Comprehensive CLAUDE.md structure",
+          "code": "# Project Name\n\n## Overview\nProject purpose and key features.\n\n## Architecture\nSystem design and component structure.\n\n## Tech Stack\nLanguages, frameworks, and tools.\n\n## Conventions\nNaming, code style, and organization.\n\n## Development Workflow\nBranching strategy, PR process.\n\n## Testing\nTest types, coverage requirements.\n\n## Deployment\nEnvironments, CI/CD pipeline.\n\n## Common Patterns\nReusable patterns used in codebase.\n\n## Anti-Patterns\nThings to avoid and why.\n\n## Troubleshooting\nCommon issues and solutions.\n\n## Onboarding\nGetting started for new team members.\n\n## Team\nContributors and areas of ownership."
+        }
+      ],
+      "tips": [
+        "Build incrementally - add sections as patterns emerge",
+        "Keep each section focused and actionable",
+        "Use @import to split into multiple files if it grows large",
+        "Review and update regularly as the project evolves"
+      ],
+      "relatedAchievements": ["architecture_doc", "convention_keeper", "onboarding_guide"]
+    },
+    "mentorship": {
+      "longDescription": "Use Claude as a learning companion by asking it to explain code concepts, design patterns, or technology choices in your codebase. Claude can break down complex code, explain the reasoning behind architectural decisions, or teach new programming concepts in context. This transforms code exploration into an educational experience.",
+      "whyItMatters": "Contextual learning accelerates skill development. Understanding the 'why' behind code helps you make better decisions and contribute more effectively.",
+      "difficulty": "beginner",
+      "howTo": {
+        "summary": "Ask Claude to explain code concepts, patterns, or decisions in educational detail.",
+        "steps": [
+          "Point Claude to code you want to understand better",
+          "Ask 'explain how this works' or 'why is it built this way'",
+          "Request comparisons with alternative approaches",
+          "Follow up with clarifying questions"
+        ]
+      },
+      "examples": [
+        {
+          "title": "Learning from codebase",
+          "code": "# Ask Claude educational questions:\n\n\"Explain how the authentication flow works in this codebase.\nI'm new to OAuth and want to understand the token refresh logic.\"\n\n\"Why does this service use the Repository pattern?\nWhat are the trade-offs compared to direct database access?\"\n\n\"Walk me through how this React context provider works.\nI'm learning about state management.\""
+        }
+      ],
+      "tips": [
+        "Be specific about what you want to learn",
+        "Ask for real-world analogies when concepts are abstract",
+        "Request pros and cons of different approaches",
+        "Use 'explain like I'm a junior developer' for fundamentals"
+      ],
+      "relatedAchievements": ["onboarding_helper", "code_review_giver", "pair_programmer"]
+    },
+    "onboarding_guide": {
+      "longDescription": "Create onboarding documentation within CLAUDE.md or custom commands that helps new team members get up to speed quickly. Include setup instructions, key concepts, important files to review, and common workflows. This transforms the onboarding experience by giving new developers an AI-powered guide who knows the codebase.",
+      "whyItMatters": "Structured onboarding reduces ramp-up time for new team members and ensures they learn the right patterns from day one.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Add onboarding-focused content to CLAUDE.md or create dedicated onboarding commands.",
+        "steps": [
+          "Add an ## Onboarding or ## Getting Started section to CLAUDE.md",
+          "Document setup steps and prerequisites",
+          "List key files and directories to understand first",
+          "Include common first-week tasks and workflows",
+          "Optionally create .claude/commands/onboard.md for interactive guidance"
+        ]
+      },
+      "examples": [
+        {
+          "title": "Onboarding section in CLAUDE.md",
+          "code": "## Onboarding\n\n### Prerequisites\n- Node.js 20+\n- Docker Desktop\n- Access to 1Password vault 'Engineering'\n\n### Setup Steps\n1. Clone repo and run `npm install`\n2. Copy `.env.example` to `.env.local`\n3. Get secrets: `op read op://Engineering/app-secrets`\n4. Start services: `docker-compose up -d`\n5. Run migrations: `npm run db:migrate`\n6. Start dev server: `npm run dev`\n\n### Key Areas to Understand First\n- `src/domain/` - Core business logic\n- `src/api/` - API routes and handlers\n- `docs/architecture.md` - System design\n\n### First Week Checklist\n- [ ] Complete local setup\n- [ ] Review architecture docs\n- [ ] Shadow a PR review\n- [ ] Make a small bug fix"
+        }
+      ],
+      "tips": [
+        "Include common 'gotchas' new developers encounter",
+        "Link to video walkthroughs or detailed docs",
+        "Add team contacts for different areas",
+        "Keep setup steps tested and current"
+      ],
+      "relatedAchievements": ["knowledge_sharer", "team_memory", "mentorship"]
+    },
+    "onboarding_helper": {
+      "longDescription": "Use Claude to explore and understand a new codebase when you join a project or start working in unfamiliar code. Ask Claude to explain the project structure, identify key components, trace request flows, or summarize what different modules do. This accelerates your understanding and helps you become productive faster.",
+      "whyItMatters": "Rapid codebase comprehension enables faster contributions and reduces the cognitive load of navigating unfamiliar code.",
+      "difficulty": "beginner",
+      "howTo": {
+        "summary": "Ask Claude to explain project architecture, key files, and how different parts connect.",
+        "steps": [
+          "Open Claude Code in the project directory",
+          "Ask for a high-level overview of the project structure",
+          "Request explanations of specific directories or modules",
+          "Trace through a request or feature flow"
+        ]
+      },
+      "examples": [
+        {
+          "title": "Exploring a new codebase",
+          "code": "# Ask Claude to help you understand:\n\n\"Give me an overview of this project's architecture.\nWhat are the main directories and what do they contain?\"\n\n\"Trace a user login request from the frontend to the database.\nShow me the key files involved.\"\n\n\"What are the main domain models in this project?\nHow do they relate to each other?\"\n\n\"Where would I add a new API endpoint for user preferences?\""
+        }
+      ],
+      "tips": [
+        "Start with high-level questions, then drill down",
+        "Ask about the 'why' behind architectural choices",
+        "Request diagrams or ASCII art for complex flows",
+        "Keep notes in a personal CLAUDE.md as you learn"
+      ],
+      "relatedAchievements": ["mentorship", "onboarding_guide", "architecture_doc"]
+    },
+    "pair_programmer": {
+      "longDescription": "Share your Claude Code session with a teammate for collaborative problem-solving. Whether screen sharing during a pairing session, working through a complex feature together, or reviewing code as a group, using Claude together amplifies the collaboration. The AI becomes a third participant that can answer questions, suggest approaches, and help both developers.",
+      "whyItMatters": "Collaborative sessions with AI assistance combine human creativity with AI capabilities. Multiple perspectives plus AI insights lead to better solutions.",
+      "difficulty": "beginner",
+      "howTo": {
+        "summary": "Work with a teammate while using Claude Code as a shared resource for the pairing session.",
+        "steps": [
+          "Start a screen share or collaborative session with your teammate",
+          "Open Claude Code in the project you're working on",
+          "Use Claude as a shared resource - both can suggest prompts",
+          "Have Claude explain decisions so both pairing partners understand"
+        ]
+      },
+      "examples": [
+        {
+          "title": "Collaborative debugging session",
+          "code": "# During a pairing session, use Claude together:\n\n\"We're debugging why the payment webhook fails.\nPartner A thinks it's a timing issue,\nPartner B thinks it's a signature validation problem.\nAnalyze the webhook handler and help us investigate both theories.\"\n\n\"We're designing a new feature for bulk imports.\nHelp us think through the architecture.\nWhat are the key decisions we need to make?\""
+        }
+      ],
+      "tips": [
+        "Take turns driving and prompting Claude",
+        "Have Claude explain its reasoning for learning opportunities",
+        "Use Claude to resolve disagreements with data and analysis",
+        "Document agreed-upon decisions in CLAUDE.md together"
+      ],
+      "relatedAchievements": ["mentorship", "code_review_giver", "team_memory"]
+    },
+    "pr_automator": {
+      "longDescription": "Create a command that automates your team's pull request workflow. The command can generate PR descriptions, create PRs with proper labels and reviewers, or prepare branches for review. This ensures every PR follows team standards and includes necessary context for reviewers.",
+      "whyItMatters": "Consistent PR workflows improve review quality and speed. Automated PR creation ensures nothing is forgotten and reviewers have the context they need.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Create a pr.md or review-pr.md command that streamlines your pull request process.",
+        "steps": [
+          "Create .claude/commands/pr.md or pull-request.md",
+          "Define your PR template and required sections",
+          "Include instructions for generating descriptions from commits",
+          "Add reviewer assignment and labeling logic",
+          "Test with /pr in a session"
+        ]
+      },
+      "examples": [
+        {
+          "title": "PR creation command",
+          "code": "---\ndescription: Create a pull request with proper formatting\n---\n\nCreate a pull request for the current branch following our team standards.\n\n1. Analyze all commits since branching from main\n2. Generate a PR description with:\n   - Summary of changes (2-3 sentences)\n   - List of key changes (bullet points)\n   - Testing notes\n   - Screenshots if UI changes (prompt user)\n\n3. Extract ticket number from branch name for title prefix\n\n4. Create PR:\n```bash\ngh pr create \\\n  --title \"[TICKET-123] Clear description\" \\\n  --body \"<generated body>\" \\\n  --label \"needs-review\" \\\n  --reviewer \"@org/team-reviewers\"\n```\n\nInclude a ## Test Plan section with verification steps."
+        }
+      ],
+      "tips": [
+        "Include your team's PR template structure",
+        "Add automatic reviewer assignment based on files changed",
+        "Consider a separate review-pr.md for reviewing incoming PRs",
+        "Include checklist items for common PR requirements"
+      ],
+      "relatedAchievements": ["commit_crafter", "code_review_giver", "shared_commands"]
+    },
+    "release_manager": {
+      "longDescription": "Create a command that streamlines your release process - generating changelogs, creating release notes, or preparing version bumps. The command can analyze commits since the last release, categorize changes by type, and produce release documentation that keeps stakeholders informed about what changed and why.",
+      "whyItMatters": "Automated release workflows reduce human error and ensure consistent, informative release notes. Stakeholders stay informed without manual documentation effort.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Create a release.md or changelog.md command that automates release documentation.",
+        "steps": [
+          "Create .claude/commands/release.md or changelog.md",
+          "Define your changelog format (Keep a Changelog, etc.)",
+          "Include commit parsing for categorization",
+          "Add version bumping logic (semver)",
+          "Test with /release in a session"
+        ]
+      },
+      "examples": [
+        {
+          "title": "Release notes command",
+          "code": "---\ndescription: Generate release notes and update changelog\n---\n\nGenerate release notes for the upcoming release.\n\n1. Get commits since last tag: `git log $(git describe --tags --abbrev=0)..HEAD --oneline`\n\n2. Categorize changes:\n   - Added: New features (feat:)\n   - Changed: Modifications (refactor:, perf:)\n   - Fixed: Bug fixes (fix:)\n   - Security: Security patches\n   - Deprecated: Deprecation notices\n   - Removed: Removed features\n\n3. Suggest version bump based on changes:\n   - MAJOR: Breaking changes\n   - MINOR: New features\n   - PATCH: Bug fixes only\n\n4. Update CHANGELOG.md with new section\n\n5. Output release notes for GitHub release body\n\nFollow Keep a Changelog format: https://keepachangelog.com"
+        }
+      ],
+      "tips": [
+        "Use conventional commits for easier categorization",
+        "Include breaking change detection for major versions",
+        "Consider separate commands for changelog vs full release",
+        "Add integration with your release tooling (semantic-release, etc.)"
+      ],
+      "relatedAchievements": ["commit_crafter", "pr_automator", "shared_commands"]
+    },
+    "retro_generator": {
+      "longDescription": "Create a command that helps generate retrospective content from your development activity. The command can summarize what was accomplished, identify patterns in commits or PRs, and help prepare discussion points for team retros. This brings data-driven insights to your retrospective meetings.",
+      "whyItMatters": "Data-driven retrospectives surface patterns that memory alone might miss. Automated summaries ensure comprehensive coverage of the iteration's work.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Create a retro.md command that generates retrospective content from recent development activity.",
+        "steps": [
+          "Create .claude/commands/retro.md or retrospective.md",
+          "Define the time period to analyze (sprint, week, etc.)",
+          "Include git log and PR analysis",
+          "Add prompts for what went well and improvement areas",
+          "Test with /retro in a session"
+        ]
+      },
+      "examples": [
+        {
+          "title": "Retrospective generation command",
+          "code": "---\ndescription: Generate retrospective summary for team meeting\n---\n\nGenerate a retrospective summary for the past sprint/iteration.\n\n1. Gather data:\n   - Commits in the past 2 weeks\n   - PRs merged\n   - Issues closed\n\n2. Generate summary:\n   ## What We Shipped\n   - List major features and fixes\n   \n   ## By the Numbers\n   - Commits: X\n   - PRs merged: X\n   - Issues closed: X\n   \n   ## Patterns Observed\n   - Areas with most activity\n   - Types of changes (features vs fixes)\n   \n   ## Discussion Points\n   - What went well?\n   - What could be improved?\n   - Any recurring issues?\n\n3. Output in a format suitable for team wiki or Slack"
+        }
+      ],
+      "tips": [
+        "Include configurable time periods",
+        "Add sentiment analysis from commit messages if useful",
+        "Consider team member contribution summaries",
+        "Link to specific PRs or issues for discussion"
+      ],
+      "relatedAchievements": ["standup_automator", "release_manager", "shared_commands"]
+    },
+    "shared_commands": {
+      "longDescription": "Create three or more custom commands in your project's .claude/commands directory that the entire team can use. These project-level commands are committed to the repository and automatically available to anyone using Claude Code on the project. This creates a shared toolkit of Claude-powered workflows.",
+      "whyItMatters": "Shared commands create consistency across the team and codify best practices. Once created, they benefit everyone without duplicating effort.",
+      "difficulty": "beginner",
+      "howTo": {
+        "summary": "Create at least 3 command files in .claude/commands/ and commit them to the repository.",
+        "steps": [
+          "Create the commands directory: mkdir -p .claude/commands",
+          "Create your first command file (e.g., test.md)",
+          "Add at least 2 more useful commands for your team",
+          "Commit the .claude/commands directory to git",
+          "Share with team so they can use /command-name"
+        ]
+      },
+      "examples": [
+        {
+          "title": "Three useful team commands",
+          "code": "# .claude/commands/test.md\n---\ndescription: Run tests for changed files\n---\nIdentify changed files and run relevant tests.\nReport results and suggest fixes for failures.\n\n# .claude/commands/format.md\n---\ndescription: Format code and fix lint issues\n---\nRun prettier and eslint --fix on staged files.\nReport any issues that couldn't be auto-fixed.\n\n# .claude/commands/review.md\n---\ndescription: Review code for common issues\n---\nReview the current changes for:\n- Security vulnerabilities\n- Performance issues\n- Style violations\n- Missing tests"
+        }
+      ],
+      "tips": [
+        "Start with workflows your team repeats frequently",
+        "Keep commands focused on one task each",
+        "Document commands in your project README",
+        "Iterate on commands based on team feedback"
+      ],
+      "relatedAchievements": ["commit_crafter", "pr_automator", "doc_collaborator"]
+    },
+    "standup_automator": {
+      "longDescription": "Create a command that generates daily standup summaries from your git activity. The command analyzes your recent commits, PRs, and work to produce a structured standup update. This saves time preparing for standups and ensures you don't forget to mention important work.",
+      "whyItMatters": "Automated standup prep ensures comprehensive updates and saves the mental effort of reconstructing what you worked on.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Create a standup.md or daily.md command that generates standup updates from recent activity.",
+        "steps": [
+          "Create .claude/commands/standup.md or daily.md",
+          "Define your standup format (Yesterday/Today/Blockers)",
+          "Include git log analysis for recent commits",
+          "Add PR and issue context if available",
+          "Test with /standup in a session"
+        ]
+      },
+      "examples": [
+        {
+          "title": "Standup generation command",
+          "code": "---\ndescription: Generate daily standup update\n---\n\nGenerate my standup update based on recent activity.\n\n1. Yesterday (last working day):\n   - Analyze commits from yesterday\n   - Check PRs merged or updated\n   - List completed work\n\n2. Today:\n   - Look at open PRs needing attention\n   - Check assigned issues\n   - Suggest likely focus areas\n\n3. Blockers:\n   - Note any failing CI\n   - Pending reviews needed\n   - Questions or dependencies\n\nFormat for Slack:\n```\n*Yesterday:*\n- Completed X\n- Reviewed Y\n\n*Today:*\n- Will work on Z\n- Planning to finish A\n\n*Blockers:*\n- None / Waiting on B\n```"
+        }
+      ],
+      "tips": [
+        "Customize the time window (since yesterday vs last 24 hours)",
+        "Include PR review activity if relevant",
+        "Add team-specific standup format",
+        "Consider Slack or Teams formatting"
+      ],
+      "relatedAchievements": ["standup_writer", "retro_generator", "shared_commands"]
+    },
+    "standup_writer": {
+      "longDescription": "Ask Claude to help you summarize your recent work for a standup meeting. Simply describe what you've been working on or have Claude analyze your recent commits to generate a clear, concise standup update. This is the quick, ad-hoc version of standup preparation without a formal command.",
+      "whyItMatters": "Quick standup summaries help you communicate effectively in team meetings without preparation overhead.",
+      "difficulty": "beginner",
+      "howTo": {
+        "summary": "Ask Claude to summarize your recent work into a standup-ready format.",
+        "steps": [
+          "Open Claude Code in your project",
+          "Ask Claude to summarize recent commits for standup",
+          "Or describe your work and ask for a formatted summary",
+          "Copy the output to your standup channel"
+        ]
+      },
+      "examples": [
+        {
+          "title": "Quick standup generation",
+          "code": "# Simple standup request:\n\n\"Summarize my commits from yesterday for standup.\nFormat as: Yesterday/Today/Blockers\"\n\n# Or with context:\n\n\"Generate a standup update. Yesterday I worked on:\n- Fixed the login bug (PR #234)\n- Started the API refactor\n- Reviewed Sarah's PR\n\nToday I'm continuing the API work.\nNo blockers.\""
+        }
+      ],
+      "tips": [
+        "Include specific ticket or PR numbers for clarity",
+        "Ask for specific formatting (Slack, bullet points, etc.)",
+        "Mention blockers explicitly so Claude includes them",
+        "Consider creating a /standup command if you do this daily"
+      ],
+      "relatedAchievements": ["standup_automator", "mentorship", "pair_programmer"]
+    },
+    "team_memory": {
+      "longDescription": "Create a project-level CLAUDE.md that includes team context - who contributes to the project, areas of ownership, collaboration norms, and how to work effectively as a team. This helps Claude understand the human dynamics and provide team-appropriate suggestions.",
+      "whyItMatters": "Team context helps Claude provide suggestions that fit your collaboration style and respect ownership boundaries.",
+      "difficulty": "beginner",
+      "howTo": {
+        "summary": "Add team collaboration context to your project CLAUDE.md.",
+        "steps": [
+          "Create or open CLAUDE.md in your project root",
+          "Add a section about team structure or contributors",
+          "Document areas of ownership or expertise",
+          "Include collaboration norms and communication preferences",
+          "Note any relevant team workflows or rituals"
+        ]
+      },
+      "examples": [
+        {
+          "title": "Team context in CLAUDE.md",
+          "code": "## Team\n\n### Contributors\n- Alice - Frontend lead, design system owner\n- Bob - Backend services, API design\n- Carol - DevOps, infrastructure\n- Dave - Full-stack, payments integration\n\n### Areas of Ownership\n- UI components: Alice\n- API endpoints: Bob\n- CI/CD: Carol\n- Payment flow: Dave\n\n### Collaboration Norms\n- PRs require 1 approval from code owner\n- Major changes need RFC in docs/rfcs/\n- Use #eng-team Slack for async discussions\n- Pair on complex features\n\n### When Claude makes suggestions:\n- Tag relevant owners for their domain\n- Follow existing patterns in each area"
+        }
+      ],
+      "tips": [
+        "Keep ownership info current as team changes",
+        "Include communication preferences",
+        "Note timezone distributions if relevant",
+        "Add links to team docs or wiki"
+      ],
+      "relatedAchievements": ["convention_keeper", "knowledge_sharer", "onboarding_guide"]
+    },
+    "template_maker": {
+      "longDescription": "Create reusable templates in a .claude/templates directory that Claude can use to generate consistent output. Templates can include file scaffolds, documentation formats, code patterns, or any repeatable structure. This ensures Claude generates output matching your team's established formats.",
+      "whyItMatters": "Templates ensure consistency and reduce cognitive load. Once a good pattern is captured, it can be reused without reinvention.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Create template files in .claude/templates/ that Claude can reference for consistent output.",
+        "steps": [
+          "Create the templates directory: mkdir -p .claude/templates",
+          "Create template files for common patterns (component.tsx.template, etc.)",
+          "Reference templates in your CLAUDE.md or commands",
+          "Instruct Claude to use templates when generating similar content"
+        ]
+      },
+      "examples": [
+        {
+          "title": "Template directory structure",
+          "code": "# .claude/templates/component.tsx.template\nimport React from 'react';\nimport styles from './__NAME__.module.css';\n\ninterface __NAME__Props {\n  // Props here\n}\n\nexport function __NAME__({ }: __NAME__Props) {\n  return (\n    <div className={styles.container}>\n      {/* Component content */}\n    </div>\n  );\n}\n\n# .claude/templates/api-route.ts.template\nimport { NextRequest, NextResponse } from 'next/server';\n\nexport async function GET(request: NextRequest) {\n  try {\n    // Implementation\n    return NextResponse.json({ data: null });\n  } catch (error) {\n    return NextResponse.json(\n      { error: 'Internal Server Error' },\n      { status: 500 }\n    );\n  }\n}"
+        }
+      ],
+      "tips": [
+        "Use clear placeholder names like __NAME__ or {{variable}}",
+        "Include template for each common file type you create",
+        "Reference templates in CLAUDE.md so Claude knows they exist",
+        "Keep templates updated as patterns evolve"
+      ],
+      "relatedAchievements": ["shared_commands", "doc_collaborator", "convention_keeper"]
+    }
+  }
+}

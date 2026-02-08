@@ -165,52 +165,25 @@ ${description}`;
 }
 
 /**
- * Format as Daily Tip (education-first)
+ * Format as Daily Tip (education-first, no achievement references)
  */
 function formatDailyTip(achievement: Achievement, siteUrl: string): TweetThread {
   const emoji = CATEGORY_EMOJI[achievement.category];
   const howTo = generateTutorial(achievement.detection, achievement.description);
 
-  const main = `💡 Claude Code Tip
+  // First tweet: Pure education, no gamification
+  const main = `${emoji} Claude Code Tip
 
 ${achievement.description}
 
-${howTo}
+${howTo}`;
 
-${emoji} ${CATEGORY_NAME[achievement.category]} | +${achievement.xp} XP
+  // Second tweet: Achievement reference + CTA
+  const reply = `🎮 This is the "${achievement.name}" achievement (+${achievement.xp} XP)
 
-${siteUrl}/achievement/${achievement.id}`;
+Track your Claude Code mastery with Claude Quest - 365 achievements to discover.
 
-  const reply = `Want to track your Claude Code mastery?
-
-Run /quest in Claude Code to install Claude Quest and see all 365 achievements.
-
-${siteUrl}
-
-#ClaudeCode #AI #CodingWithAI`;
-
-  return { main, replies: [reply] };
-}
-
-/**
- * Format as "Did You Know?" (discovery)
- */
-function formatDidYouKnow(achievement: Achievement, siteUrl: string): TweetThread {
-  const emoji = CATEGORY_EMOJI[achievement.category];
-
-  const main = `Did you know? 🤔
-
-${achievement.description}
-
-${generateTutorial(achievement.detection, achievement.description)}
-
-${emoji} +${achievement.xp} XP
-
-${siteUrl}/achievement/${achievement.id}`;
-
-  const reply = `Discover more Claude Code secrets at ${siteUrl}
-
-Run /quest in Claude Code to track your progress!
+${siteUrl}/achievement/${achievement.id}
 
 #ClaudeCode #AI`;
 
@@ -218,7 +191,32 @@ Run /quest in Claude Code to track your progress!
 }
 
 /**
- * Format as Problem → Solution
+ * Format as "Did You Know?" (discovery, education-first)
+ */
+function formatDidYouKnow(achievement: Achievement, siteUrl: string): TweetThread {
+  const emoji = CATEGORY_EMOJI[achievement.category];
+
+  // First tweet: Pure discovery/education
+  const main = `${emoji} Did you know?
+
+${achievement.description}
+
+${generateTutorial(achievement.detection, achievement.description)}`;
+
+  // Second tweet: Achievement + CTA
+  const reply = `🎮 "${achievement.name}" achievement (+${achievement.xp} XP)
+
+Discover all 365 Claude Code achievements with Claude Quest.
+
+${siteUrl}/achievement/${achievement.id}
+
+#ClaudeCode #AI`;
+
+  return { main, replies: [reply] };
+}
+
+/**
+ * Format as Problem → Solution (education-first)
  */
 function formatProblemSolution(achievement: Achievement, siteUrl: string): TweetThread {
   const emoji = CATEGORY_EMOJI[achievement.category];
@@ -244,75 +242,76 @@ function formatProblemSolution(achievement: Achievement, siteUrl: string): Tweet
 
   const problem = problems[achievement.category] || 'Want to improve your Claude Code experience?';
 
-  const main = `${problem} 🤔
+  // First tweet: Problem + solution (pure education)
+  const main = `${emoji} ${problem}
 
-Here's a tip: ${achievement.description.toLowerCase()}
+Here's how: ${achievement.description.toLowerCase()}
 
-${generateTutorial(achievement.detection, achievement.description)}
+${generateTutorial(achievement.detection, achievement.description)}`;
 
-${emoji} +${achievement.xp} XP
-${siteUrl}/achievement/${achievement.id}`;
+  // Second tweet: Achievement + CTA
+  const reply = `🎮 "${achievement.name}" achievement (+${achievement.xp} XP)
 
-  const reply = `Track your Claude Code mastery: ${siteUrl}
-
-Run /quest to get started!
-
-#ClaudeCode #AI #DevTools`;
-
-  return { main, replies: [reply] };
-}
-
-/**
- * Format as Tutorial Thread (multi-tweet)
- */
-function formatTutorialThread(achievement: Achievement, siteUrl: string): TweetThread {
-  const emoji = CATEGORY_EMOJI[achievement.category];
-  const howTo = generateTutorial(achievement.detection, achievement.description);
-
-  const main = `${emoji} ${achievement.name}
-
-${achievement.description}
-
-Here's how to unlock it 🧵`;
-
-  const step1 = `Step 1: Understand what it does
-
-${howTo}
-
-This ${CATEGORY_NAME[achievement.category].toLowerCase()} achievement teaches you a key Claude Code pattern.`;
-
-  const step2 = `Step 2: Try it yourself
-
-The best way to learn is by doing. Open Claude Code and experiment with this feature.
-
-+${achievement.xp} XP when you unlock it!`;
-
-  const cta = `Want to master all 365 achievements?
-
-Run /quest in Claude Code
-Browse: ${siteUrl}
+Track your Claude Code mastery with Claude Quest.
 
 ${siteUrl}/achievement/${achievement.id}
 
 #ClaudeCode #AI`;
 
-  return { main, replies: [step1, step2, cta] };
+  return { main, replies: [reply] };
 }
 
 /**
- * Format as TIL (Today I Learned) - short and punchy
+ * Format as Tutorial Thread (multi-tweet, education-first)
+ */
+function formatTutorialThread(achievement: Achievement, siteUrl: string): TweetThread {
+  const emoji = CATEGORY_EMOJI[achievement.category];
+  const howTo = generateTutorial(achievement.detection, achievement.description);
+
+  // First tweet: Pure intro (no achievement name)
+  const main = `${emoji} Claude Code Tutorial
+
+${achievement.description}
+
+Here's how 🧵`;
+
+  // Second tweet: The actual tutorial steps
+  const step1 = `${howTo}
+
+This teaches you a key ${CATEGORY_NAME[achievement.category].toLowerCase()} pattern in Claude Code.`;
+
+  // Third tweet: Achievement reference + CTA
+  const cta = `🎮 "${achievement.name}" achievement (+${achievement.xp} XP)
+
+Master all 365 Claude Code achievements with Claude Quest.
+
+${siteUrl}/achievement/${achievement.id}
+
+#ClaudeCode #AI`;
+
+  return { main, replies: [step1, cta] };
+}
+
+/**
+ * Format as TIL (Today I Learned) - short and punchy, education-first
  */
 function formatTIL(achievement: Achievement, siteUrl: string): TweetThread {
   const emoji = CATEGORY_EMOJI[achievement.category];
-  const rarity = RARITY_EMOJI[achievement.rarity];
+  const howTo = generateTutorial(achievement.detection, achievement.description);
 
-  const main = `TIL: ${achievement.description} ${emoji}
+  // First tweet: Pure TIL education
+  const main = `${emoji} TIL in Claude Code:
 
-${rarity} ${achievement.rarity.charAt(0).toUpperCase() + achievement.rarity.slice(1)} | +${achievement.xp} XP
+${achievement.description}
 
-${siteUrl}/achievement/${achievement.id}`;
+${howTo}`;
 
-  const reply = `Track your Claude Code journey: ${siteUrl}
+  // Second tweet: Achievement + CTA
+  const reply = `🎮 "${achievement.name}" achievement (+${achievement.xp} XP)
+
+Track your Claude Code journey with Claude Quest.
+
+${siteUrl}/achievement/${achievement.id}
 
 #ClaudeCode #AI`;
 

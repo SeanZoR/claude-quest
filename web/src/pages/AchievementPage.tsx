@@ -37,7 +37,7 @@ export default function AchievementPage() {
     return (
       <div className="min-h-screen bg-[#0f0f23] text-white flex flex-col items-center justify-center">
         <h1 className="text-2xl font-bold mb-4">Achievement Not Found</h1>
-        <Link to="/" className="text-amber-400 hover:underline">
+        <Link to="/quest" className="text-amber-400 hover:underline">
           ← Back to Dashboard
         </Link>
       </div>
@@ -49,7 +49,7 @@ export default function AchievementPage() {
       {/* Header */}
       <header className="border-b border-white/10 bg-[#0a0a1a]">
         <div className="max-w-4xl mx-auto px-4 py-4 flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-3">
+          <Link to="/quest" className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-amber-500 to-purple-600 flex items-center justify-center">
               <Sword className="w-6 h-6 text-white" />
             </div>
@@ -69,7 +69,7 @@ export default function AchievementPage() {
       <main className="max-w-4xl mx-auto px-4 py-8">
         {/* Back link */}
         <Link
-          to="/achievements"
+          to="/quest/achievements"
           className="inline-flex items-center gap-2 text-gray-400 hover:text-white mb-8 transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
@@ -112,7 +112,7 @@ export default function AchievementPage() {
               <div className="flex items-center gap-4">
                 <span className="text-2xl font-bold text-amber-400">+{achievement.xp} XP</span>
                 <Link
-                  to={`/achievements?category=${achievement.category}`}
+                  to={`/quest/achievements?category=${achievement.category}`}
                   className="text-sm px-3 py-1 rounded-full border border-white/20 hover:border-white/40 transition-colors"
                   style={{ borderColor: `${category?.color}40`, color: category?.color }}
                 >
@@ -188,7 +188,7 @@ export default function AchievementPage() {
                 return (
                   <Link
                     key={related.id}
-                    to={`/achievement/${related.id}`}
+                    to={`/quest/achievement/${related.id}`}
                     className={`p-4 rounded-xl border transition-all hover:scale-[1.02] ${
                       relatedUnlocked
                         ? 'border-green-500/30 bg-green-500/5'
@@ -211,7 +211,7 @@ export default function AchievementPage() {
 
       {/* Footer */}
       <footer className="border-t border-white/10 mt-12 py-8 text-center text-gray-500 text-sm">
-        <Link to="/" className="text-amber-400 hover:underline">← Back to Dashboard</Link>
+        <Link to="/quest" className="text-amber-400 hover:underline">← Back to Dashboard</Link>
       </footer>
     </div>
   );

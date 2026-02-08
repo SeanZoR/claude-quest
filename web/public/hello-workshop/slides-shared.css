@@ -149,11 +149,12 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 4rem;
+    padding: 2rem 3rem;
     opacity: 0;
     transform: translateX(100%);
     transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     pointer-events: none;
+    overflow-y: auto;
 }
 
 .slide.active {
@@ -169,6 +170,7 @@ body {
 .slide-content {
     max-width: 1000px;
     width: 100%;
+    max-height: 100%;
 }
 
 /* Slide Typography */
@@ -255,10 +257,10 @@ body {
     background: var(--bg-code);
     border: 1px solid var(--border);
     border-radius: 12px;
-    padding: 1.25rem 1.5rem;
+    padding: 1rem 1.25rem;
     font-family: 'JetBrains Mono', monospace;
-    font-size: 1rem;
-    margin: 1.5rem 0;
+    font-size: 0.9rem;
+    margin: 1rem 0;
     overflow-x: auto;
     white-space: pre;
 }
@@ -276,15 +278,15 @@ body {
 .feature-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 1.5rem;
-    margin: 2rem 0;
+    gap: 1rem;
+    margin: 1rem 0;
 }
 
 .feature-card {
     background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: 12px;
-    padding: 1.5rem;
+    padding: 1rem 1.25rem;
     transition: all 0.3s;
 }
 
@@ -501,7 +503,7 @@ body {
 /* Responsive */
 @media (max-width: 768px) {
     .slide {
-        padding: 2rem;
+        padding: 1.5rem;
     }
     .slide h1 {
         font-size: 2rem;

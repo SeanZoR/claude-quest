@@ -55,6 +55,47 @@ export type Category =
 
 export type Rarity = 'common' | 'uncommon' | 'rare' | 'epic' | 'legendary';
 
+export type Difficulty = 'beginner' | 'intermediate' | 'advanced';
+
+// Achievement content types for educational content
+export interface CodeBlock {
+  language: string;
+  content: string;
+  filename?: string;
+}
+
+export interface Step {
+  instruction: string;
+  code?: CodeBlock;
+  note?: string;
+}
+
+export interface HowToGuide {
+  summary: string;
+  steps: Step[];
+  estimatedTime?: string;
+}
+
+export interface Example {
+  title: string;
+  description?: string;
+  code: CodeBlock;
+  explanation?: string;
+}
+
+export interface AchievementContent {
+  longDescription: string;
+  whyItMatters: string;
+  difficulty: Difficulty;
+  howTo: HowToGuide;
+  examples: Example[];
+  tips?: string[];
+  gotchas?: string[];
+  relatedAchievements?: string[];
+  hints?: string[];
+  tags?: string[];
+}
+
 export interface Achievement {
   id: string;
   name: string;
@@ -63,6 +104,11 @@ export interface Achievement {
   xp: number;
   rarity: Rarity;
   detection: Detection;
+}
+
+export interface AchievementContentData {
+  version: string;
+  content: Record<string, AchievementContent>;
 }
 
 export interface AchievementsData {

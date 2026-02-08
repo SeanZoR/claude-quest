@@ -1,0 +1,1249 @@
+{
+  "category": "workflow",
+  "content": {
+    "background_task": {
+      "longDescription": "Running Claude Code in background or headless mode enables automated task execution without requiring an interactive terminal session. This powerful capability allows you to queue up complex operations, run batch processing jobs, or integrate Claude into CI/CD pipelines. Background mode transforms Claude from an interactive assistant into an autonomous agent that can handle tasks while you focus on other work.",
+      "whyItMatters": "Background execution unlocks automation scenarios like nightly code reviews, batch file processing, and integration with build systems. It transforms Claude from a conversation partner into a powerful automation engine.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Use the --background flag or headless mode to run Claude without an interactive terminal.",
+        "steps": [
+          {
+            "instruction": "Run Claude with a specific task in background mode",
+            "code": {
+              "language": "bash",
+              "content": "claude --background --print \"Analyze all TypeScript files for type errors\""
+            }
+          },
+          {
+            "instruction": "Use headless mode for scripted automation",
+            "code": {
+              "language": "bash",
+              "content": "claude --headless -p \"Review the latest commit and write a summary\" > review.md"
+            }
+          },
+          {
+            "instruction": "Combine with output redirection for batch jobs",
+            "code": {
+              "language": "bash",
+              "content": "claude --print --output-format json \"List all TODO comments\" > todos.json"
+            }
+          }
+        ],
+        "estimatedTime": "5-10 minutes"
+      },
+      "examples": [
+        {
+          "title": "Automated Code Review Script",
+          "description": "Run code review on new commits in CI",
+          "code": {
+            "language": "bash",
+            "content": "#!/bin/bash\n# ci-review.sh - Run Claude code review in CI pipeline\ngit diff HEAD~1 > /tmp/changes.diff\nclaude --headless --print \"Review these changes for bugs and security issues: $(cat /tmp/changes.diff)\" > review-report.md",
+            "filename": "ci-review.sh"
+          },
+          "explanation": "This script captures the diff from the last commit and sends it to Claude for review in headless mode."
+        }
+      ],
+      "tips": [
+        "Use --print flag to output results to stdout for piping",
+        "Combine with --output-format json for machine-readable output",
+        "Set reasonable timeouts for background tasks to avoid runaway processes"
+      ],
+      "relatedAchievements": ["session_namer", "session_librarian", "multi_project"]
+    },
+    "bypass_mode": {
+      "longDescription": "The bypassPermissions setting allows you to skip interactive permission prompts for specific tools or all tools during a session. This is particularly useful for automation scenarios, trusted environments, or when you have established confidence in Claude's tool usage patterns. While powerful, this feature should be used thoughtfully to maintain appropriate oversight of Claude's actions.",
+      "whyItMatters": "Permission prompts ensure safety but can interrupt workflow in trusted scenarios. Bypass mode enables smoother automation while still letting you configure exactly which permissions to grant automatically.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Configure bypassPermissions in settings.json to automatically approve specific tool operations.",
+        "steps": [
+          {
+            "instruction": "Create or edit your Claude settings file",
+            "code": {
+              "language": "bash",
+              "content": "mkdir -p .claude && touch .claude/settings.json"
+            }
+          },
+          {
+            "instruction": "Add bypassPermissions for specific tools",
+            "code": {
+              "language": "json",
+              "content": "{\n  \"bypassPermissions\": {\n    \"Read\": true,\n    \"Glob\": true,\n    \"Grep\": true\n  }\n}",
+              "filename": ".claude/settings.json"
+            }
+          },
+          {
+            "instruction": "Or bypass all permissions for fully automated mode",
+            "code": {
+              "language": "json",
+              "content": "{\n  \"bypassPermissions\": true\n}",
+              "filename": ".claude/settings.json"
+            }
+          }
+        ],
+        "estimatedTime": "2-5 minutes"
+      },
+      "examples": [
+        {
+          "title": "Safe Read-Only Bypass",
+          "description": "Allow all read operations while prompting for writes",
+          "code": {
+            "language": "json",
+            "content": "{\n  \"bypassPermissions\": {\n    \"Read\": true,\n    \"Glob\": true,\n    \"Grep\": true,\n    \"WebFetch\": true\n  }\n}",
+            "filename": ".claude/settings.json"
+          },
+          "explanation": "This configuration auto-approves read operations while still requiring confirmation for file modifications and command execution."
+        }
+      ],
+      "tips": [
+        "Start with read-only tool bypasses before adding write permissions",
+        "Use project-level settings for project-specific bypass rules",
+        "Consider using allowedTools instead for more granular control"
+      ],
+      "gotchas": [
+        "Full bypass mode should only be used in isolated/sandboxed environments",
+        "Always review what tools are being bypassed before enabling"
+      ],
+      "relatedAchievements": ["permission_config", "permission_sculptor", "local_override"]
+    },
+    "compact_mode": {
+      "longDescription": "The /compact command summarizes your conversation history into a condensed form, freeing up context window space while preserving the essential information Claude needs to continue helping you effectively. This is particularly valuable during long sessions where you have accumulated substantial context from file reads, code exploration, and discussions.",
+      "whyItMatters": "Claude has a finite context window. As conversations grow, older context gets truncated. Using /compact lets you strategically preserve important information while making room for new work.",
+      "difficulty": "beginner",
+      "howTo": {
+        "summary": "Use /compact when your context window is filling up to summarize and free space.",
+        "steps": [
+          {
+            "instruction": "Check your current context usage with /context",
+            "code": {
+              "language": "text",
+              "content": "/context"
+            }
+          },
+          {
+            "instruction": "When context is high (>70%), run /compact to summarize",
+            "code": {
+              "language": "text",
+              "content": "/compact"
+            }
+          },
+          {
+            "instruction": "Optionally provide instructions for what to preserve",
+            "code": {
+              "language": "text",
+              "content": "/compact Focus on preserving the API schema details and implementation decisions"
+            }
+          }
+        ],
+        "estimatedTime": "1 minute"
+      },
+      "examples": [
+        {
+          "title": "Compact with Custom Focus",
+          "description": "Preserve specific context during compaction",
+          "code": {
+            "language": "text",
+            "content": "/compact Keep the database schema, the API endpoints we discussed, and the test failures we identified"
+          },
+          "explanation": "Adding specific instructions helps Claude prioritize what to retain in the summary."
+        }
+      ],
+      "tips": [
+        "Run /context before /compact to see how much space you will reclaim",
+        "Use descriptive instructions to guide what context to preserve",
+        "Consider compacting before starting a major new task in the same session"
+      ],
+      "relatedAchievements": ["context_watcher", "rewinder", "history_navigator"]
+    },
+    "context_watcher": {
+      "longDescription": "The /context command displays your current context window usage, showing how much of Claude's available memory is being used by the conversation history, file contents, and system context. Understanding your context usage helps you make informed decisions about when to compact, start fresh, or be more selective about what files to read.",
+      "whyItMatters": "Context awareness prevents unexpected truncation of important information. Knowing when you are approaching limits lets you proactively manage the conversation for optimal results.",
+      "difficulty": "beginner",
+      "howTo": {
+        "summary": "Use /context to view your current context window utilization.",
+        "steps": [
+          {
+            "instruction": "Run the context command to see current usage",
+            "code": {
+              "language": "text",
+              "content": "/context"
+            }
+          },
+          {
+            "instruction": "Review the output showing tokens used and available",
+            "code": {
+              "language": "text",
+              "content": "Context: 45,230 / 128,000 tokens (35%)"
+            },
+            "note": "Example output showing 35% context utilization"
+          }
+        ],
+        "estimatedTime": "30 seconds"
+      },
+      "examples": [
+        {
+          "title": "Context Check Before Large File Read",
+          "description": "Check context before reading a large file",
+          "code": {
+            "language": "text",
+            "content": "/context\n# If context is >60%, consider /compact first\n# Then read your large file"
+          },
+          "explanation": "Checking context before adding large amounts of content helps avoid losing important earlier context."
+        }
+      ],
+      "tips": [
+        "Check context periodically during long sessions",
+        "High context usage (>70%) suggests it is time to /compact",
+        "Consider starting a new session if context is critically full"
+      ],
+      "relatedAchievements": ["compact_mode", "cost_tracker", "history_navigator"]
+    },
+    "cost_tracker": {
+      "longDescription": "The /cost command displays your API usage and associated costs for the current session and cumulative usage. This transparency helps you understand the economic impact of your Claude interactions, make informed decisions about usage patterns, and optimize your workflows to balance productivity with cost efficiency.",
+      "whyItMatters": "Understanding costs enables smarter usage decisions. Track which types of tasks consume more tokens so you can optimize expensive operations and budget effectively.",
+      "difficulty": "beginner",
+      "howTo": {
+        "summary": "Use /cost to view your current and cumulative API usage costs.",
+        "steps": [
+          {
+            "instruction": "Run the cost command to see session spending",
+            "code": {
+              "language": "text",
+              "content": "/cost"
+            }
+          },
+          {
+            "instruction": "Review both session and total usage",
+            "code": {
+              "language": "text",
+              "content": "Session cost: $0.42\nTotal usage today: $3.15"
+            },
+            "note": "Example output showing session and daily costs"
+          }
+        ],
+        "estimatedTime": "30 seconds"
+      },
+      "examples": [
+        {
+          "title": "Cost-Conscious Workflow",
+          "description": "Check costs before and after expensive operations",
+          "code": {
+            "language": "text",
+            "content": "/cost\n# Note the current cost\n# Now perform your large codebase analysis\n/cost\n# Compare to see the operation's cost"
+          },
+          "explanation": "Bracketing expensive operations with /cost commands helps you understand which tasks consume the most tokens."
+        }
+      ],
+      "tips": [
+        "Check /cost after expensive operations like full codebase analysis",
+        "Use /compact to reduce costs in long-running sessions",
+        "Large file reads and multi-file edits typically cost more"
+      ],
+      "relatedAchievements": ["context_watcher", "compact_mode"]
+    },
+    "git_ready": {
+      "longDescription": "Using Claude Code within a Git repository unlocks powerful version control integration. Claude can understand your repository structure, read commit history, analyze diffs, help write commit messages, and assist with branching strategies. This foundational capability enables many advanced workflows combining AI assistance with proper version control practices.",
+      "whyItMatters": "Git integration means Claude understands your project history and can help with commits, branches, and code review. It transforms Claude from a coding assistant into a version control partner.",
+      "difficulty": "beginner",
+      "howTo": {
+        "summary": "Initialize or navigate to a Git repository before starting Claude.",
+        "steps": [
+          {
+            "instruction": "Navigate to your Git repository or initialize one",
+            "code": {
+              "language": "bash",
+              "content": "cd /path/to/your/project\ngit init  # if not already a repo"
+            }
+          },
+          {
+            "instruction": "Start Claude in the repository directory",
+            "code": {
+              "language": "bash",
+              "content": "claude"
+            }
+          },
+          {
+            "instruction": "Claude will automatically detect the Git context",
+            "code": {
+              "language": "text",
+              "content": "# Claude now has access to:\n# - Repository structure\n# - Commit history\n# - Current branch info\n# - Staged/unstaged changes"
+            }
+          }
+        ],
+        "estimatedTime": "1-2 minutes"
+      },
+      "examples": [
+        {
+          "title": "Git-Aware Claude Session",
+          "description": "Starting Claude in a Git repo",
+          "code": {
+            "language": "bash",
+            "content": "cd ~/projects/my-app\ngit status  # verify repo status\nclaude\n# Now ask Claude: \"What were the recent changes to the auth module?\""
+          },
+          "explanation": "Claude can analyze git log, blame, and diff to answer questions about code history."
+        }
+      ],
+      "tips": [
+        "Claude can help write commit messages based on staged changes",
+        "Ask Claude to explain recent commits or compare branches",
+        "Use Claude for code review by asking about specific commits"
+      ],
+      "relatedAchievements": ["plan_creator", "session_namer", "workspace_wizard"]
+    },
+    "history_navigator": {
+      "longDescription": "The /history command lets you browse and explore your past Claude sessions, making it easy to find previous conversations, resume interrupted work, or reference earlier solutions. This creates a persistent knowledge base of your interactions with Claude, turning ephemeral conversations into a searchable archive of solutions and discussions.",
+      "whyItMatters": "Your past sessions contain valuable context and solutions. History navigation lets you build on previous work instead of starting fresh every time.",
+      "difficulty": "beginner",
+      "howTo": {
+        "summary": "Use /history to browse and resume previous Claude sessions.",
+        "steps": [
+          {
+            "instruction": "View your session history",
+            "code": {
+              "language": "text",
+              "content": "/history"
+            }
+          },
+          {
+            "instruction": "Browse through listed sessions to find the one you need",
+            "code": {
+              "language": "text",
+              "content": "# History shows:\n# - Session timestamps\n# - Project directories\n# - Session names (if named)\n# - Brief context"
+            }
+          },
+          {
+            "instruction": "Resume a specific session by selecting it or using --resume",
+            "code": {
+              "language": "bash",
+              "content": "claude --resume"
+            }
+          }
+        ],
+        "estimatedTime": "1-2 minutes"
+      },
+      "examples": [
+        {
+          "title": "Finding a Previous Session",
+          "description": "Search through history for a specific project",
+          "code": {
+            "language": "text",
+            "content": "/history\n# Scan the list for sessions in your target project\n# Named sessions are easier to find"
+          },
+          "explanation": "Regular use of session naming makes history navigation much more effective."
+        }
+      ],
+      "tips": [
+        "Name important sessions to find them easily later",
+        "Sessions are organized by project directory",
+        "Use /history early in a new session to check for relevant past work"
+      ],
+      "relatedAchievements": ["session_namer", "session_librarian", "rewinder"]
+    },
+    "local_override": {
+      "longDescription": "The settings.local.json file allows you to maintain personal configuration overrides that are not committed to version control. This is ideal for individual preferences, local environment settings, or temporary configurations that should not affect your team. The local settings merge with project settings, giving you personalized control without polluting shared configuration.",
+      "whyItMatters": "Local overrides let you personalize Claude without affecting teammates. Keep your vim mode, custom permissions, or experimental settings separate from shared project configuration.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Create .claude/settings.local.json for personal settings that override project defaults.",
+        "steps": [
+          {
+            "instruction": "Create the local settings file",
+            "code": {
+              "language": "bash",
+              "content": "mkdir -p .claude\ntouch .claude/settings.local.json"
+            }
+          },
+          {
+            "instruction": "Add your personal preferences",
+            "code": {
+              "language": "json",
+              "content": "{\n  \"vimMode\": true,\n  \"bypassPermissions\": {\n    \"Read\": true,\n    \"Glob\": true\n  }\n}",
+              "filename": ".claude/settings.local.json"
+            }
+          },
+          {
+            "instruction": "Add to .gitignore to keep it local",
+            "code": {
+              "language": "text",
+              "content": "# .gitignore\n.claude/settings.local.json",
+              "filename": ".gitignore"
+            }
+          }
+        ],
+        "estimatedTime": "2-3 minutes"
+      },
+      "examples": [
+        {
+          "title": "Personal Development Preferences",
+          "description": "Local settings for individual workflow",
+          "code": {
+            "language": "json",
+            "content": "{\n  \"vimMode\": true,\n  \"outputStyle\": \"minimal\",\n  \"bypassPermissions\": {\n    \"Read\": true,\n    \"Glob\": true,\n    \"Grep\": true\n  }\n}",
+            "filename": ".claude/settings.local.json"
+          },
+          "explanation": "This config enables vim keybindings and auto-approves read operations without affecting team settings."
+        }
+      ],
+      "tips": [
+        "Always add settings.local.json to .gitignore",
+        "Local settings override project settings for the same keys",
+        "Use for personal preferences that teammates might not share"
+      ],
+      "gotchas": [
+        "Ensure the file contains valid JSON to avoid startup errors",
+        "Local settings do not inherit; they override completely for each key"
+      ],
+      "relatedAchievements": ["permission_config", "bypass_mode", "vim_mode"]
+    },
+    "mono_repo_master": {
+      "longDescription": "Working with monorepo structures in Claude Code demonstrates understanding of complex project architectures. Monorepos contain multiple packages, applications, or services within a single repository, requiring Claude to navigate between distinct modules while maintaining awareness of shared dependencies and cross-package relationships.",
+      "whyItMatters": "Monorepos are common in enterprise environments. Claude's ability to navigate multi-package architectures enables effective assistance across complex codebases with interdependent modules.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Claude automatically detects and navigates monorepo structures with packages/, apps/, or workspace configurations.",
+        "steps": [
+          {
+            "instruction": "Ensure your monorepo has standard structure indicators",
+            "code": {
+              "language": "text",
+              "content": "my-monorepo/\n  packages/\n    shared-utils/\n    api-client/\n  apps/\n    web/\n    mobile/\n  package.json (with workspaces)"
+            }
+          },
+          {
+            "instruction": "Start Claude in the monorepo root",
+            "code": {
+              "language": "bash",
+              "content": "cd ~/projects/my-monorepo\nclaude"
+            }
+          },
+          {
+            "instruction": "Ask Claude to work across packages",
+            "code": {
+              "language": "text",
+              "content": "Help me add a new utility to shared-utils and use it in the web app"
+            }
+          }
+        ],
+        "estimatedTime": "5 minutes"
+      },
+      "examples": [
+        {
+          "title": "Cross-Package Refactoring",
+          "description": "Working across monorepo packages",
+          "code": {
+            "language": "text",
+            "content": "# Ask Claude to:\n\"Move the validateEmail function from apps/web/src/utils to packages/shared-utils and update all imports\""
+          },
+          "explanation": "Claude understands package relationships and can manage cross-package dependencies."
+        }
+      ],
+      "tips": [
+        "Keep workspace configuration in root package.json",
+        "Use consistent naming conventions across packages",
+        "Let Claude know which packages are relevant to your current task"
+      ],
+      "relatedAchievements": ["workspace_wizard", "git_ready", "multi_project"]
+    },
+    "multi_project": {
+      "longDescription": "Using Claude Code across five or more different projects demonstrates versatility and regular engagement with AI-assisted development across your portfolio. Each project provides unique context, and Claude adapts to different codebases, languages, frameworks, and conventions. This breadth of usage builds experience with Claude's capabilities across diverse scenarios.",
+      "whyItMatters": "Working across multiple projects builds fluency with Claude in different contexts. You learn how Claude adapts to various codebases and discover capabilities useful across your entire portfolio.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Use Claude regularly across different project directories to earn this achievement.",
+        "steps": [
+          {
+            "instruction": "Start Claude sessions in different project directories",
+            "code": {
+              "language": "bash",
+              "content": "cd ~/projects/project-1 && claude\n# ... work on project 1\n# Then later:\ncd ~/projects/project-2 && claude"
+            }
+          },
+          {
+            "instruction": "Use /cd to switch between projects in a session",
+            "code": {
+              "language": "text",
+              "content": "/cd ~/projects/project-3"
+            }
+          },
+          {
+            "instruction": "Claude tracks sessions by project directory automatically",
+            "code": {
+              "language": "text",
+              "content": "# Each unique directory counts as a distinct project"
+            }
+          }
+        ],
+        "estimatedTime": "Ongoing usage"
+      },
+      "examples": [
+        {
+          "title": "Multi-Project Workflow",
+          "description": "Working across your project portfolio",
+          "code": {
+            "language": "bash",
+            "content": "# Morning: Frontend work\ncd ~/projects/web-app && claude\n\n# Afternoon: API development\ncd ~/projects/api-server && claude\n\n# Evening: Personal project\ncd ~/projects/side-hustle && claude"
+          },
+          "explanation": "Regular usage across different projects naturally earns this achievement over time."
+        }
+      ],
+      "tips": [
+        "Name sessions by project for easier history navigation",
+        "Each project benefits from its own CLAUDE.md with project-specific instructions",
+        "Use /cd for quick project switching within sessions"
+      ],
+      "relatedAchievements": ["project_hopper", "session_namer", "history_navigator"]
+    },
+    "output_styler": {
+      "longDescription": "Claude Code supports different output styles that affect how responses are formatted and presented. You can configure Claude for verbose explanatory output, minimal concise responses, or other styles that match your preferences and workflow needs. This customization helps Claude's communication style match your expectations.",
+      "whyItMatters": "Output style affects how you interact with Claude. Some prefer detailed explanations while others want terse, efficient responses. Customizing this makes Claude feel more natural to work with.",
+      "difficulty": "beginner",
+      "howTo": {
+        "summary": "Configure outputStyle in settings.json to change how Claude formats responses.",
+        "steps": [
+          {
+            "instruction": "Edit your global or project settings",
+            "code": {
+              "language": "bash",
+              "content": "mkdir -p ~/.claude\ntouch ~/.claude/settings.json"
+            }
+          },
+          {
+            "instruction": "Set your preferred output style",
+            "code": {
+              "language": "json",
+              "content": "{\n  \"outputStyle\": \"minimal\"\n}",
+              "filename": "~/.claude/settings.json"
+            }
+          },
+          {
+            "instruction": "Available styles include minimal, standard, and verbose",
+            "code": {
+              "language": "json",
+              "content": "{\n  \"outputStyle\": \"verbose\"\n}",
+              "filename": "~/.claude/settings.json"
+            },
+            "note": "Choose based on whether you prefer detailed explanations or concise responses"
+          }
+        ],
+        "estimatedTime": "1-2 minutes"
+      },
+      "examples": [
+        {
+          "title": "Minimal Output for Experienced Users",
+          "description": "Concise responses for efficient workflows",
+          "code": {
+            "language": "json",
+            "content": "{\n  \"outputStyle\": \"minimal\"\n}",
+            "filename": "~/.claude/settings.json"
+          },
+          "explanation": "Minimal style reduces explanatory text, focusing on direct answers and code."
+        }
+      ],
+      "tips": [
+        "Try different styles to find what works for you",
+        "Minimal is great for experienced users; verbose helps when learning",
+        "Style can be overridden per-project in .claude/settings.json"
+      ],
+      "relatedAchievements": ["vim_mode", "local_override", "permission_config"]
+    },
+    "permission_config": {
+      "longDescription": "Configuring default permissions in Claude Code allows you to pre-authorize certain operations while maintaining safety boundaries. The permissions system controls which tools Claude can use automatically versus which require explicit approval. Thoughtful permission configuration balances workflow efficiency with appropriate oversight.",
+      "whyItMatters": "Permission configuration puts you in control of Claude's autonomy level. Well-configured permissions reduce interruptions while maintaining safety for sensitive operations.",
+      "difficulty": "beginner",
+      "howTo": {
+        "summary": "Configure the permissions key in settings.json to set default tool authorizations.",
+        "steps": [
+          {
+            "instruction": "Create or edit your settings file",
+            "code": {
+              "language": "bash",
+              "content": "mkdir -p .claude\ntouch .claude/settings.json"
+            }
+          },
+          {
+            "instruction": "Add permissions configuration",
+            "code": {
+              "language": "json",
+              "content": "{\n  \"permissions\": {\n    \"allow\": [\n      \"Read\",\n      \"Glob\",\n      \"Grep\",\n      \"WebFetch\"\n    ],\n    \"deny\": [\n      \"Bash(rm *)\",\n      \"Bash(sudo *)\"\n    ]\n  }\n}",
+              "filename": ".claude/settings.json"
+            }
+          },
+          {
+            "instruction": "Restart Claude for settings to take effect",
+            "code": {
+              "language": "text",
+              "content": "/exit"
+            }
+          }
+        ],
+        "estimatedTime": "3-5 minutes"
+      },
+      "examples": [
+        {
+          "title": "Development-Friendly Permissions",
+          "description": "Allow common operations while blocking dangerous ones",
+          "code": {
+            "language": "json",
+            "content": "{\n  \"permissions\": {\n    \"allow\": [\n      \"Read\",\n      \"Glob\",\n      \"Grep\",\n      \"Edit\",\n      \"Write\",\n      \"Bash(npm *)\",\n      \"Bash(git *)\"\n    ],\n    \"deny\": [\n      \"Bash(rm -rf *)\",\n      \"Bash(sudo *)\",\n      \"Bash(chmod 777 *)\"\n    ]\n  }\n}",
+            "filename": ".claude/settings.json"
+          },
+          "explanation": "This configuration allows standard development operations while blocking potentially dangerous commands."
+        }
+      ],
+      "tips": [
+        "Start with allow list for read operations, add write operations as needed",
+        "Use deny list for commands you never want auto-approved",
+        "Wildcard patterns like Bash(npm *) match any npm command"
+      ],
+      "gotchas": [
+        "Overly permissive settings can lead to unintended changes",
+        "Test permission patterns carefully before relying on them"
+      ],
+      "relatedAchievements": ["permission_sculptor", "bypass_mode", "local_override"]
+    },
+    "permission_sculptor": {
+      "longDescription": "Granular tool-specific permissions represent advanced Claude Code configuration. Rather than broad allow/deny rules, permission sculpting lets you specify exact patterns for MCP tools, bash commands, and file operations. This precision enables sophisticated automation workflows while maintaining tight security boundaries around sensitive operations.",
+      "whyItMatters": "Granular permissions enable sophisticated automation without compromising security. You can auto-approve specific MCP tools while requiring confirmation for others from the same server.",
+      "difficulty": "advanced",
+      "howTo": {
+        "summary": "Configure specific tool patterns in permissions to create precise authorization rules.",
+        "steps": [
+          {
+            "instruction": "Understand the pattern syntax for tool permissions",
+            "code": {
+              "language": "text",
+              "content": "Format: ToolName(pattern)\nExamples:\n  mcp__github__create_issue\n  Bash(git commit *)\n  Edit(/src/**/*.ts)"
+            }
+          },
+          {
+            "instruction": "Create granular MCP tool permissions",
+            "code": {
+              "language": "json",
+              "content": "{\n  \"permissions\": {\n    \"allow\": [\n      \"mcp__github__list_issues\",\n      \"mcp__github__get_issue\",\n      \"mcp__postgres__query\"\n    ],\n    \"deny\": [\n      \"mcp__github__delete_*\",\n      \"mcp__postgres__execute\"\n    ]\n  }\n}",
+              "filename": ".claude/settings.json"
+            }
+          },
+          {
+            "instruction": "Combine with path-based file permissions",
+            "code": {
+              "language": "json",
+              "content": "{\n  \"permissions\": {\n    \"allow\": [\n      \"Edit(/src/**/*)\",\n      \"Write(/tests/**/*)\"\n    ],\n    \"deny\": [\n      \"Edit(/config/**/*)\",\n      \"Edit(/.env*)\"\n    ]\n  }\n}",
+              "filename": ".claude/settings.json"
+            }
+          }
+        ],
+        "estimatedTime": "10-15 minutes"
+      },
+      "examples": [
+        {
+          "title": "Production-Safe MCP Permissions",
+          "description": "Fine-grained control over MCP tool access",
+          "code": {
+            "language": "json",
+            "content": "{\n  \"permissions\": {\n    \"allow\": [\n      \"mcp__cloudflare__workers_list\",\n      \"mcp__cloudflare__workers_get_worker\",\n      \"mcp__database__query\"\n    ],\n    \"deny\": [\n      \"mcp__cloudflare__workers_delete*\",\n      \"mcp__database__execute\",\n      \"mcp__database__drop*\"\n    ]\n  }\n}",
+            "filename": ".claude/settings.json"
+          },
+          "explanation": "This allows read operations on Cloudflare workers and database queries while blocking destructive operations."
+        }
+      ],
+      "tips": [
+        "Use wildcards (*) sparingly and test patterns carefully",
+        "MCP tool names follow the pattern mcp__servername__toolname",
+        "Deny rules take precedence over allow rules"
+      ],
+      "gotchas": [
+        "Typos in tool names silently fail - verify names with actual MCP server",
+        "Path patterns are glob-style, not regex"
+      ],
+      "relatedAchievements": ["permission_config", "bypass_mode", "project_mcp"]
+    },
+    "plan_creator": {
+      "longDescription": "Creating plan files establishes structured documentation for complex tasks, features, or projects. Plan files in Claude Code provide a shared understanding between you and Claude about goals, approach, and progress. They serve as persistent memory across sessions and help organize multi-step work into manageable phases.",
+      "whyItMatters": "Plans transform vague ideas into actionable roadmaps. A good plan file gives Claude context to make better decisions and helps you track progress across sessions.",
+      "difficulty": "beginner",
+      "howTo": {
+        "summary": "Create markdown plan files in .claude/plans/ or a project plans/ directory.",
+        "steps": [
+          {
+            "instruction": "Create the plans directory",
+            "code": {
+              "language": "bash",
+              "content": "mkdir -p .claude/plans"
+            }
+          },
+          {
+            "instruction": "Create a plan file for your feature or task",
+            "code": {
+              "language": "markdown",
+              "content": "# Authentication System Plan\n\n## Goals\n- Implement JWT-based authentication\n- Add OAuth2 social login\n- Create password reset flow\n\n## Phases\n1. [ ] Setup JWT infrastructure\n2. [ ] Implement login/register endpoints\n3. [ ] Add social OAuth providers\n4. [ ] Build password reset\n\n## Technical Decisions\n- Using jose library for JWT\n- Storing refresh tokens in httpOnly cookies",
+              "filename": ".claude/plans/auth-system.md"
+            }
+          },
+          {
+            "instruction": "Reference the plan in your Claude sessions",
+            "code": {
+              "language": "text",
+              "content": "Let's continue working on the auth system plan - we're on phase 2"
+            }
+          }
+        ],
+        "estimatedTime": "5-10 minutes"
+      },
+      "examples": [
+        {
+          "title": "Feature Implementation Plan",
+          "description": "Structured plan for a new feature",
+          "code": {
+            "language": "markdown",
+            "content": "# Search Feature Plan\n\n## Overview\nAdd full-text search to the blog platform.\n\n## Requirements\n- Search posts by title and content\n- Filter by date, author, tags\n- Highlight matched terms\n\n## Implementation\n1. [ ] Add search index (Elasticsearch/Meilisearch)\n2. [ ] Create search API endpoint\n3. [ ] Build search UI component\n4. [ ] Add result highlighting\n\n## Progress\n- 2024-01-15: Started phase 1, chose Meilisearch",
+            "filename": ".claude/plans/search-feature.md"
+          },
+          "explanation": "This plan provides clear goals, phases, and a progress log for tracking work across sessions."
+        }
+      ],
+      "tips": [
+        "Use checkboxes [ ] to track completed phases",
+        "Include technical decisions and their rationale",
+        "Update plans as requirements evolve"
+      ],
+      "relatedAchievements": ["plan_mode", "plan_strategist", "todo_tracker"]
+    },
+    "plan_mode": {
+      "longDescription": "Plan mode is a special Claude Code mode focused on planning and thinking through problems before implementation. Activated with /plan or Shift+Tab, it encourages Claude to reason through approaches, consider alternatives, and outline strategies without immediately jumping to code. This deliberate planning phase often leads to better solutions.",
+      "whyItMatters": "Planning before coding prevents wasted effort on wrong approaches. Plan mode encourages thoughtful analysis of problems, resulting in better architecture and fewer rewrites.",
+      "difficulty": "beginner",
+      "howTo": {
+        "summary": "Enter plan mode with /plan or Shift+Tab to focus Claude on thinking and planning.",
+        "steps": [
+          {
+            "instruction": "Enter plan mode at the start of a complex task",
+            "code": {
+              "language": "text",
+              "content": "/plan"
+            }
+          },
+          {
+            "instruction": "Or use the keyboard shortcut",
+            "code": {
+              "language": "text",
+              "content": "Press Shift+Tab to toggle plan mode"
+            }
+          },
+          {
+            "instruction": "Describe your goal and let Claude think it through",
+            "code": {
+              "language": "text",
+              "content": "I need to refactor our authentication to support multiple providers. What's the best approach?"
+            }
+          },
+          {
+            "instruction": "Exit plan mode when ready to implement",
+            "code": {
+              "language": "text",
+              "content": "Press Shift+Tab again or type /plan to exit"
+            }
+          }
+        ],
+        "estimatedTime": "Varies by task"
+      },
+      "examples": [
+        {
+          "title": "Architecture Planning Session",
+          "description": "Using plan mode for system design",
+          "code": {
+            "language": "text",
+            "content": "/plan\nI want to add real-time notifications to our app. We have a React frontend and Node backend. Help me think through the options - WebSockets, SSE, or a service like Pusher?"
+          },
+          "explanation": "Plan mode encourages Claude to compare approaches and discuss tradeoffs before recommending an implementation."
+        }
+      ],
+      "tips": [
+        "Use plan mode for architectural decisions",
+        "Great for exploring multiple approaches to a problem",
+        "Shift+Tab provides quick toggle access"
+      ],
+      "relatedAchievements": ["plan_creator", "plan_strategist", "todo_tracker"]
+    },
+    "plan_strategist": {
+      "longDescription": "Creating multiple plan files for different features demonstrates organized, strategic project management. Rather than one monolithic plan, having dedicated plans for distinct features, migrations, or initiatives helps maintain clarity and allows parallel progress tracking. This approach scales well as projects grow in complexity.",
+      "whyItMatters": "Multiple plans enable parallel workstreams and clear boundaries between features. Each plan can evolve independently, making it easier to context-switch and track progress.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Create and maintain 3+ plan files in your .claude/plans/ directory for different features or initiatives.",
+        "steps": [
+          {
+            "instruction": "Organize your plans directory",
+            "code": {
+              "language": "bash",
+              "content": "mkdir -p .claude/plans\nls .claude/plans/"
+            }
+          },
+          {
+            "instruction": "Create distinct plans for different features",
+            "code": {
+              "language": "bash",
+              "content": "# Create multiple focused plans\ntouch .claude/plans/auth-system.md\ntouch .claude/plans/search-feature.md\ntouch .claude/plans/api-v2-migration.md"
+            }
+          },
+          {
+            "instruction": "Reference specific plans when context-switching",
+            "code": {
+              "language": "text",
+              "content": "Let's switch to the search feature - check .claude/plans/search-feature.md for where we left off"
+            }
+          }
+        ],
+        "estimatedTime": "15-30 minutes setup"
+      },
+      "examples": [
+        {
+          "title": "Multi-Feature Project Organization",
+          "description": "Organized plans directory structure",
+          "code": {
+            "language": "text",
+            "content": ".claude/plans/\n  auth-overhaul.md      # Authentication system rewrite\n  api-v2.md             # API version 2 migration\n  mobile-app.md         # Mobile app development\n  infra-terraform.md    # Infrastructure as code\n  perf-optimization.md  # Performance improvements"
+          },
+          "explanation": "Each plan file focuses on a specific initiative, enabling clean context-switching and progress tracking."
+        }
+      ],
+      "tips": [
+        "Name plans descriptively for easy identification",
+        "Keep each plan focused on a single feature or initiative",
+        "Archive completed plans rather than deleting them"
+      ],
+      "relatedAchievements": ["plan_creator", "plan_mode", "multi_project"]
+    },
+    "project_hopper": {
+      "longDescription": "The /cd command allows you to change Claude's working directory without leaving your current session. This enables fluid navigation between related projects, monorepo packages, or different areas of a large codebase. Project hopping within a session preserves your conversation context while shifting Claude's file system focus.",
+      "whyItMatters": "Switching directories without ending your session preserves context from earlier work. This is invaluable when working across related projects or navigating large codebases.",
+      "difficulty": "beginner",
+      "howTo": {
+        "summary": "Use /cd followed by a path to change Claude's working directory.",
+        "steps": [
+          {
+            "instruction": "Change to a different directory",
+            "code": {
+              "language": "text",
+              "content": "/cd ~/projects/other-project"
+            }
+          },
+          {
+            "instruction": "Navigate to a relative path",
+            "code": {
+              "language": "text",
+              "content": "/cd ../sibling-project"
+            }
+          },
+          {
+            "instruction": "Claude's file operations now use the new directory as root",
+            "code": {
+              "language": "text",
+              "content": "# Now when you say \"read package.json\"\n# Claude reads from ~/projects/other-project/package.json"
+            }
+          }
+        ],
+        "estimatedTime": "30 seconds"
+      },
+      "examples": [
+        {
+          "title": "Monorepo Navigation",
+          "description": "Moving between packages in a monorepo",
+          "code": {
+            "language": "text",
+            "content": "# Start in the web app\n/cd ~/monorepo/apps/web\n# Work on frontend...\n\n# Switch to API\n/cd ~/monorepo/apps/api\n# Work on backend...\n\n# Jump to shared library\n/cd ~/monorepo/packages/shared"
+          },
+          "explanation": "The /cd command enables smooth navigation across monorepo packages while keeping conversation context."
+        }
+      ],
+      "tips": [
+        "Use absolute paths to avoid confusion about current location",
+        "Tab completion works for directory paths",
+        "Conversation context is preserved when changing directories"
+      ],
+      "relatedAchievements": ["multi_project", "mono_repo_master", "workspace_wizard"]
+    },
+    "rewinder": {
+      "longDescription": "The /rewind command lets you roll back the conversation to an earlier point, effectively undoing recent exchanges with Claude. This is invaluable when a conversation takes a wrong turn, when you want to try a different approach, or when Claude misunderstood your request. Rewinding gives you a time-travel capability for your AI interactions.",
+      "whyItMatters": "Conversations sometimes go off track. Rewind lets you course-correct without starting over, preserving valuable context from earlier in the session while discarding unhelpful tangents.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Use /rewind to undo recent conversation turns and try a different approach.",
+        "steps": [
+          {
+            "instruction": "When a conversation goes wrong, invoke rewind",
+            "code": {
+              "language": "text",
+              "content": "/rewind"
+            }
+          },
+          {
+            "instruction": "Optionally specify how many turns to rewind",
+            "code": {
+              "language": "text",
+              "content": "/rewind 3"
+            },
+            "note": "Rewinds the last 3 exchanges"
+          },
+          {
+            "instruction": "The conversation is restored to the earlier state",
+            "code": {
+              "language": "text",
+              "content": "# Claude's memory is now at the earlier point\n# You can try a different approach"
+            }
+          }
+        ],
+        "estimatedTime": "30 seconds"
+      },
+      "examples": [
+        {
+          "title": "Course Correction After Misunderstanding",
+          "description": "Using rewind to try a different approach",
+          "code": {
+            "language": "text",
+            "content": "# Original request led to wrong solution\nUser: Add logging to the auth module\nClaude: [Adds verbose logging everywhere]\n\n# Rewind and be more specific\n/rewind\nUser: Add structured JSON logging only to the login and logout functions in auth.ts"
+          },
+          "explanation": "Rewinding lets you rephrase your request without the context of Claude's initial misunderstanding."
+        }
+      ],
+      "tips": [
+        "Rewind before Claude makes irreversible changes",
+        "Use when Claude misunderstands and you want a fresh attempt",
+        "Combine with more specific instructions after rewinding"
+      ],
+      "relatedAchievements": ["compact_mode", "history_navigator", "session_librarian"]
+    },
+    "session_librarian": {
+      "longDescription": "Resuming a previously named session demonstrates effective session management practices. By naming important sessions and later resuming them, you create continuity across work periods. Claude can pick up exactly where you left off, with full context of your previous discussion, making it easy to continue complex multi-session projects.",
+      "whyItMatters": "Named sessions create a library of your work that you can return to anytime. Resuming sessions means no lost context and no re-explaining project requirements.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Resume a named session using --resume or by selecting from /history.",
+        "steps": [
+          {
+            "instruction": "First, ensure you've named sessions you want to resume",
+            "code": {
+              "language": "bash",
+              "content": "claude --name \"auth-refactor\""
+            }
+          },
+          {
+            "instruction": "Resume the most recent session",
+            "code": {
+              "language": "bash",
+              "content": "claude --resume"
+            }
+          },
+          {
+            "instruction": "Or resume a specific named session",
+            "code": {
+              "language": "bash",
+              "content": "claude --resume \"auth-refactor\""
+            }
+          },
+          {
+            "instruction": "Alternatively, use /history to browse and select",
+            "code": {
+              "language": "text",
+              "content": "/history\n# Select the session you want to resume"
+            }
+          }
+        ],
+        "estimatedTime": "1 minute"
+      },
+      "examples": [
+        {
+          "title": "Multi-Day Feature Development",
+          "description": "Continuing work across days",
+          "code": {
+            "language": "bash",
+            "content": "# Monday: Start the feature\nclaude --name \"payment-integration\"\n# Work on payment system...\n\n# Tuesday: Continue where you left off\nclaude --resume \"payment-integration\"\n# Claude remembers all context from Monday"
+          },
+          "explanation": "Named sessions persist across days, allowing seamless continuation of complex work."
+        }
+      ],
+      "tips": [
+        "Name sessions with descriptive, searchable names",
+        "Use consistent naming conventions across projects",
+        "Resumed sessions maintain full conversation history"
+      ],
+      "relatedAchievements": ["session_namer", "history_navigator", "multi_project"]
+    },
+    "session_namer": {
+      "longDescription": "Naming sessions with descriptive identifiers transforms ephemeral conversations into organized, retrievable work records. A named session is easy to find in history, resume later, and reference when discussing related work. This simple practice dramatically improves session management and long-term productivity.",
+      "whyItMatters": "Named sessions are findable sessions. Good names help you quickly locate past work, resume interrupted projects, and maintain organization across your Claude usage.",
+      "difficulty": "beginner",
+      "howTo": {
+        "summary": "Name sessions with --name flag at start or /name command during session.",
+        "steps": [
+          {
+            "instruction": "Name a session when starting Claude",
+            "code": {
+              "language": "bash",
+              "content": "claude --name \"api-v2-migration\""
+            }
+          },
+          {
+            "instruction": "Or name an existing session with /name",
+            "code": {
+              "language": "text",
+              "content": "/name api-v2-migration"
+            }
+          },
+          {
+            "instruction": "Use descriptive names that identify the work",
+            "code": {
+              "language": "bash",
+              "content": "claude --name \"fix-auth-bug-issue-123\"\nclaude --name \"refactor-database-layer\"\nclaude --name \"add-stripe-payments\""
+            }
+          }
+        ],
+        "estimatedTime": "30 seconds"
+      },
+      "examples": [
+        {
+          "title": "Session Naming Conventions",
+          "description": "Examples of effective session names",
+          "code": {
+            "language": "bash",
+            "content": "# Feature-based names\nclaude --name \"feature-user-dashboard\"\n\n# Bug fix names with issue reference\nclaude --name \"bugfix-login-timeout-gh-456\"\n\n# Exploration/learning sessions\nclaude --name \"explore-graphql-schema\"\n\n# Date-based for recurring tasks\nclaude --name \"code-review-2024-01-15\""
+          },
+          "explanation": "Consistent naming patterns make sessions easy to find and understand at a glance."
+        }
+      ],
+      "tips": [
+        "Include project name for multi-project users",
+        "Reference issue numbers for bug fixes",
+        "Use consistent prefixes like feature-, bugfix-, explore-"
+      ],
+      "relatedAchievements": ["session_librarian", "history_navigator", "multi_project"]
+    },
+    "todo_tracker": {
+      "longDescription": "The /todo command provides integrated task management within Claude Code sessions. You can track tasks, mark progress, and maintain a checklist of items to address during your coding session. This keeps you organized and helps Claude understand what work remains, enabling better assistance and progress tracking.",
+      "whyItMatters": "Built-in task tracking keeps you focused during complex sessions. Claude can see your todo list and help prioritize, suggest next steps, and track completion.",
+      "difficulty": "beginner",
+      "howTo": {
+        "summary": "Use /todo to view, add, and manage tasks within your Claude session.",
+        "steps": [
+          {
+            "instruction": "View current todos",
+            "code": {
+              "language": "text",
+              "content": "/todo"
+            }
+          },
+          {
+            "instruction": "Add a new task",
+            "code": {
+              "language": "text",
+              "content": "/todo add Fix the login validation bug"
+            }
+          },
+          {
+            "instruction": "Mark a task complete",
+            "code": {
+              "language": "text",
+              "content": "/todo done 1"
+            },
+            "note": "Completes task #1"
+          },
+          {
+            "instruction": "Clear completed tasks",
+            "code": {
+              "language": "text",
+              "content": "/todo clear"
+            }
+          }
+        ],
+        "estimatedTime": "1-2 minutes"
+      },
+      "examples": [
+        {
+          "title": "Session Task Management",
+          "description": "Using todos to organize a coding session",
+          "code": {
+            "language": "text",
+            "content": "/todo add Implement user authentication\n/todo add Write unit tests for auth\n/todo add Update API documentation\n/todo add Deploy to staging\n\n# Work on first task...\n/todo done 1\n\n# Check remaining\n/todo"
+          },
+          "explanation": "The todo list helps structure your session and shows Claude what work remains."
+        }
+      ],
+      "tips": [
+        "Add todos at the start of a session to set goals",
+        "Claude can see and reference your todo list",
+        "Use for both coding tasks and discussion points"
+      ],
+      "relatedAchievements": ["plan_creator", "plan_mode", "session_namer"]
+    },
+    "vim_mode": {
+      "longDescription": "Enabling vim mode in Claude Code provides vim-style keybindings for the input interface. For developers proficient with vim, this creates a familiar editing experience with modal editing, efficient navigation, and powerful text manipulation. Vim mode respects muscle memory and integrates naturally with vim-centric workflows.",
+      "whyItMatters": "Vim keybindings mean faster, more natural input for vim users. Your existing muscle memory for navigation and editing works directly in Claude Code.",
+      "difficulty": "beginner",
+      "howTo": {
+        "summary": "Enable vimMode in settings.json to use vim keybindings in Claude Code.",
+        "steps": [
+          {
+            "instruction": "Create or edit your settings file",
+            "code": {
+              "language": "bash",
+              "content": "mkdir -p ~/.claude\ntouch ~/.claude/settings.json"
+            }
+          },
+          {
+            "instruction": "Enable vim mode",
+            "code": {
+              "language": "json",
+              "content": "{\n  \"vimMode\": true\n}",
+              "filename": "~/.claude/settings.json"
+            }
+          },
+          {
+            "instruction": "Restart Claude for the setting to take effect",
+            "code": {
+              "language": "bash",
+              "content": "claude"
+            }
+          }
+        ],
+        "estimatedTime": "1-2 minutes"
+      },
+      "examples": [
+        {
+          "title": "Vim Mode Configuration",
+          "description": "Enable vim keybindings globally",
+          "code": {
+            "language": "json",
+            "content": "{\n  \"vimMode\": true,\n  \"outputStyle\": \"minimal\"\n}",
+            "filename": "~/.claude/settings.json"
+          },
+          "explanation": "Vim mode works well with minimal output style for an efficient, keyboard-driven experience."
+        }
+      ],
+      "tips": [
+        "Standard vim navigation (hjkl) works in the input",
+        "Press Escape to enter normal mode, i to insert",
+        "Combine with minimal output style for streamlined workflow"
+      ],
+      "relatedAchievements": ["output_styler", "local_override", "permission_config"]
+    },
+    "workspace_wizard": {
+      "longDescription": "Working with npm, yarn, or pnpm workspaces demonstrates familiarity with modern JavaScript monorepo tooling. Workspace configurations allow multiple packages to share dependencies and be managed together. Claude understands workspace structures and can help manage cross-package dependencies, scripts, and builds.",
+      "whyItMatters": "Workspaces are essential for modern JavaScript monorepos. Claude's awareness of workspace configuration helps with dependency management and cross-package operations.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Configure workspaces in package.json or pnpm-workspace.yaml for multi-package projects.",
+        "steps": [
+          {
+            "instruction": "Define workspaces in your root package.json",
+            "code": {
+              "language": "json",
+              "content": "{\n  \"name\": \"my-monorepo\",\n  \"private\": true,\n  \"workspaces\": [\n    \"packages/*\",\n    \"apps/*\"\n  ]\n}",
+              "filename": "package.json"
+            }
+          },
+          {
+            "instruction": "Or use pnpm-workspace.yaml for pnpm",
+            "code": {
+              "language": "yaml",
+              "content": "packages:\n  - 'packages/*'\n  - 'apps/*'",
+              "filename": "pnpm-workspace.yaml"
+            }
+          },
+          {
+            "instruction": "Claude detects workspace config and understands the structure",
+            "code": {
+              "language": "text",
+              "content": "# Start Claude in workspace root\nclaude\n# Ask: \"Help me add a shared dependency across all packages\""
+            }
+          }
+        ],
+        "estimatedTime": "5-10 minutes"
+      },
+      "examples": [
+        {
+          "title": "npm Workspaces Configuration",
+          "description": "Standard workspace setup",
+          "code": {
+            "language": "json",
+            "content": "{\n  \"name\": \"@company/monorepo\",\n  \"private\": true,\n  \"workspaces\": [\n    \"packages/shared-utils\",\n    \"packages/ui-components\",\n    \"apps/web\",\n    \"apps/api\"\n  ],\n  \"scripts\": {\n    \"build\": \"npm run build --workspaces\",\n    \"test\": \"npm run test --workspaces\"\n  }\n}",
+            "filename": "package.json"
+          },
+          "explanation": "This configuration sets up workspaces with both packages and apps, plus workspace-wide scripts."
+        }
+      ],
+      "tips": [
+        "Use workspaces for shared code between packages",
+        "Run scripts across all packages with --workspaces flag",
+        "Claude can help resolve cross-package dependency issues"
+      ],
+      "relatedAchievements": ["mono_repo_master", "project_hopper", "multi_project"]
+    },
+    "json_master": {
+      "longDescription": "Working with JSON configuration files is fundamental to Claude Code customization. Both .claude/settings.json and .mcp.json use JSON format for defining preferences, permissions, MCP servers, and other configuration. Understanding JSON structure and common configuration patterns enables effective Claude Code customization.",
+      "whyItMatters": "JSON configuration is the foundation of Claude Code customization. Mastering JSON settings unlocks permissions, MCP servers, output styles, and all advanced features.",
+      "difficulty": "beginner",
+      "howTo": {
+        "summary": "Create and edit JSON configuration files in .claude/ directory or project root.",
+        "steps": [
+          {
+            "instruction": "Create the Claude configuration directory",
+            "code": {
+              "language": "bash",
+              "content": "mkdir -p .claude"
+            }
+          },
+          {
+            "instruction": "Create a basic settings.json",
+            "code": {
+              "language": "json",
+              "content": "{\n  \"permissions\": {\n    \"allow\": [\"Read\", \"Glob\", \"Grep\"]\n  }\n}",
+              "filename": ".claude/settings.json"
+            }
+          },
+          {
+            "instruction": "Create an MCP configuration file",
+            "code": {
+              "language": "json",
+              "content": "{\n  \"mcpServers\": {\n    \"filesystem\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"@modelcontextprotocol/server-filesystem\", \"/path/to/allowed\"]\n    }\n  }\n}",
+              "filename": ".mcp.json"
+            }
+          }
+        ],
+        "estimatedTime": "5 minutes"
+      },
+      "examples": [
+        {
+          "title": "Comprehensive Settings File",
+          "description": "Example of a well-structured settings.json",
+          "code": {
+            "language": "json",
+            "content": "{\n  \"vimMode\": false,\n  \"outputStyle\": \"standard\",\n  \"permissions\": {\n    \"allow\": [\n      \"Read\",\n      \"Glob\",\n      \"Grep\",\n      \"Bash(git *)\",\n      \"Bash(npm *)\"\n    ],\n    \"deny\": [\n      \"Bash(rm -rf *)\"\n    ]\n  }\n}",
+            "filename": ".claude/settings.json"
+          },
+          "explanation": "This settings file configures interface preferences and a balanced permission set."
+        },
+        {
+          "title": "Project MCP Configuration",
+          "description": "MCP server setup for a project",
+          "code": {
+            "language": "json",
+            "content": "{\n  \"mcpServers\": {\n    \"github\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"@modelcontextprotocol/server-github\"],\n      \"env\": {\n        \"GITHUB_TOKEN\": \"${GITHUB_TOKEN}\"\n      }\n    }\n  }\n}",
+            "filename": ".mcp.json"
+          },
+          "explanation": "Project-level MCP configuration with environment variable for authentication."
+        }
+      ],
+      "tips": [
+        "Validate JSON syntax before saving to avoid errors",
+        "Use VS Code or similar editors with JSON validation",
+        "Environment variables can be referenced with ${VAR_NAME}"
+      ],
+      "gotchas": [
+        "Trailing commas cause JSON parse errors",
+        "Keys and string values must be double-quoted",
+        "Restart Claude after changing configuration files"
+      ],
+      "relatedAchievements": ["permission_config", "local_override", "first_server"]
+    }
+  }
+}

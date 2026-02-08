@@ -1,0 +1,1092 @@
+{
+  "category": "agents",
+  "content": {
+    "agent_army": {
+      "longDescription": "Building an agent army demonstrates mastery of the agent system by creating five or more specialized agents, each designed for different tasks. This achievement recognizes users who have developed a comprehensive suite of AI assistants that can handle diverse workflows, from code review to documentation to testing. A well-designed agent army provides coverage for most development scenarios you encounter.",
+      "whyItMatters": "Having multiple specialized agents allows you to delegate tasks to the right AI for the job, improving both efficiency and output quality across your entire development workflow.",
+      "difficulty": "advanced",
+      "howTo": {
+        "summary": "Create five or more agent definition files in your agents directory, each specialized for different tasks.",
+        "steps": [
+          {
+            "instruction": "Plan your agent fleet by identifying the key workflows you want to automate",
+            "note": "Consider: code review, testing, documentation, security auditing, and refactoring"
+          },
+          {
+            "instruction": "Create the agents directory if it does not exist",
+            "code": {
+              "language": "bash",
+              "content": "mkdir -p ~/.claude/agents"
+            }
+          },
+          {
+            "instruction": "Create your first agent for code review",
+            "code": {
+              "language": "markdown",
+              "content": "---\nname: Code Reviewer\ndescription: Thorough code review focusing on quality and best practices\nmodel: sonnet\ncolor: blue\nallowed-tools:\n  - Read\n  - Glob\n  - Grep\n---\n\nYou are a meticulous code reviewer...",
+              "filename": "~/.claude/agents/reviewer.md"
+            }
+          },
+          {
+            "instruction": "Create agents for testing, documentation, security, and refactoring",
+            "note": "Each agent should have a distinct purpose and appropriate model/tool configuration"
+          },
+          {
+            "instruction": "Verify you have five or more agent files",
+            "code": {
+              "language": "bash",
+              "content": "ls -la ~/.claude/agents/*.md | wc -l"
+            }
+          }
+        ],
+        "estimatedTime": "45-60 minutes"
+      },
+      "examples": [
+        {
+          "title": "Complete Agent Fleet",
+          "description": "A balanced set of five specialized agents",
+          "code": {
+            "language": "bash",
+            "content": "# Your agents directory structure:\n~/.claude/agents/\n  reviewer.md      # Code review (Sonnet, read-only)\n  tester.md        # Test writing (Sonnet, full access)\n  documenter.md    # Documentation (Haiku, fast)\n  security.md      # Security audit (Opus, thorough)\n  refactor.md      # Code refactoring (Sonnet, full access)"
+          },
+          "explanation": "Each agent serves a specific purpose with model and tool access tailored to their role."
+        }
+      ],
+      "tips": [
+        "Start with agents for your most frequent tasks before expanding",
+        "Use different models based on task complexity - Haiku for simple tasks, Opus for complex analysis",
+        "Keep agent prompts focused - a specialized agent outperforms a generalist",
+        "Review and refine your agents periodically based on real-world performance"
+      ],
+      "relatedAchievements": ["multi_agent_fleet", "agent_creator", "model_mixer", "specialist"]
+    },
+    "agent_creator": {
+      "longDescription": "Creating your first custom agent marks your entry into the world of AI orchestration with Claude Code. Agents are specialized AI assistants defined in markdown files that can be spawned to handle specific tasks. Each agent can have its own personality, capabilities, model selection, and tool access, allowing you to craft the perfect assistant for any job.",
+      "whyItMatters": "Custom agents let you pre-configure AI assistants for recurring tasks, ensuring consistent behavior and saving time compared to explaining requirements every session.",
+      "difficulty": "beginner",
+      "howTo": {
+        "summary": "Create a markdown file in your agents directory with frontmatter defining the agent's properties and a system prompt.",
+        "steps": [
+          {
+            "instruction": "Create the agents directory",
+            "code": {
+              "language": "bash",
+              "content": "mkdir -p ~/.claude/agents"
+            }
+          },
+          {
+            "instruction": "Create your first agent file with frontmatter and system prompt",
+            "code": {
+              "language": "markdown",
+              "content": "---\nname: My First Agent\ndescription: A helpful coding assistant\n---\n\nYou are a helpful coding assistant that writes clean, well-documented code.\n\nWhen asked to write code:\n1. Follow best practices for the language\n2. Include helpful comments\n3. Handle edge cases appropriately",
+              "filename": "~/.claude/agents/helper.md"
+            }
+          },
+          {
+            "instruction": "Restart Claude Code to load the new agent",
+            "note": "Use /exit and reopen, or start a new session"
+          },
+          {
+            "instruction": "Use the Task tool to spawn your agent",
+            "note": "Ask Claude to delegate a task to your custom agent"
+          }
+        ],
+        "estimatedTime": "5-10 minutes"
+      },
+      "examples": [
+        {
+          "title": "Simple Helper Agent",
+          "description": "A basic agent with minimal configuration",
+          "code": {
+            "language": "markdown",
+            "content": "---\nname: Quick Helper\ndescription: Fast assistance for simple tasks\n---\n\nYou are a quick helper for simple coding tasks.\nBe concise and efficient in your responses.",
+            "filename": "~/.claude/agents/quick.md"
+          },
+          "explanation": "The simplest valid agent needs just a name in frontmatter and some system prompt text."
+        },
+        {
+          "title": "Configured Agent with Model",
+          "description": "An agent specifying which Claude model to use",
+          "code": {
+            "language": "markdown",
+            "content": "---\nname: Deep Thinker\ndescription: Complex problem solver using Opus\nmodel: opus\ncolor: purple\n---\n\nYou are a deep thinking assistant for complex problems.\nTake your time to reason through problems thoroughly.",
+            "filename": "~/.claude/agents/thinker.md"
+          },
+          "explanation": "Adding model: opus ensures this agent uses the most capable model for complex reasoning tasks."
+        }
+      ],
+      "tips": [
+        "Start with a simple agent and iterate based on results",
+        "The description field helps you remember what each agent does",
+        "Agent files are just markdown - you can version control them with git"
+      ],
+      "relatedAchievements": ["agent_documenter", "model_override", "tool_selector", "color_coder"]
+    },
+    "agent_delegator": {
+      "longDescription": "Successfully delegating a task to a custom agent demonstrates practical use of the agent orchestration system. Using the Task tool, you can spawn sub-agents to handle specific parts of a larger workflow, allowing for parallel execution and specialized handling. This pattern enables sophisticated multi-agent workflows where different agents contribute their expertise.",
+      "whyItMatters": "Task delegation unlocks the full power of multi-agent workflows, letting you break complex problems into specialized subtasks handled by purpose-built agents.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Create a custom agent, then use the Task tool to spawn it for handling a specific task.",
+        "steps": [
+          {
+            "instruction": "Ensure you have at least one custom agent defined",
+            "code": {
+              "language": "bash",
+              "content": "ls ~/.claude/agents/"
+            }
+          },
+          {
+            "instruction": "Ask Claude to delegate a task to your custom agent",
+            "note": "Example: 'Use my reviewer agent to check the code in src/utils.ts'"
+          },
+          {
+            "instruction": "Claude will use the Task tool to spawn your agent",
+            "note": "The spawned agent runs with its configured model, tools, and system prompt"
+          },
+          {
+            "instruction": "Review the agent's output when it completes",
+            "note": "The parent conversation receives the agent's response"
+          }
+        ],
+        "estimatedTime": "10-15 minutes"
+      },
+      "examples": [
+        {
+          "title": "Delegating Code Review",
+          "description": "Spawning a review agent for a specific file",
+          "code": {
+            "language": "text",
+            "content": "User: Please use my reviewer agent to review the authentication\n      module in src/auth/\n\nClaude: I'll delegate this to your reviewer agent.\n[Uses Task tool with agent: reviewer]\n\nReviewer Agent: [Provides detailed code review]\n\nClaude: Here's what the review found..."
+          },
+          "explanation": "Claude identifies the appropriate agent and delegates the task, returning results to the main conversation."
+        }
+      ],
+      "tips": [
+        "Be specific about what task you want delegated",
+        "Custom agents inherit some context but work semi-independently",
+        "You can delegate multiple tasks to different agents in parallel",
+        "The parent Claude can synthesize results from multiple delegated tasks"
+      ],
+      "relatedAchievements": ["agent_creator", "agent_orchestrator", "agent_reviewer"]
+    },
+    "agent_documenter": {
+      "longDescription": "Well-documented agents are easier to understand, maintain, and share. Adding a clear description in the agent's frontmatter helps both you and Claude understand the agent's purpose and capabilities. Good documentation includes what the agent does, when to use it, and any special behaviors or limitations.",
+      "whyItMatters": "Clear descriptions help Claude select the right agent for tasks and make your agent library self-documenting for future reference.",
+      "difficulty": "beginner",
+      "howTo": {
+        "summary": "Add a meaningful description field to your agent's frontmatter that clearly explains its purpose.",
+        "steps": [
+          {
+            "instruction": "Open an existing agent file or create a new one",
+            "code": {
+              "language": "bash",
+              "content": "cat ~/.claude/agents/my-agent.md"
+            }
+          },
+          {
+            "instruction": "Add or improve the description field in frontmatter",
+            "code": {
+              "language": "markdown",
+              "content": "---\nname: Code Reviewer\ndescription: Performs thorough code reviews focusing on correctness, performance, security, and maintainability. Best for reviewing pull requests and critical code paths.\n---",
+              "filename": "~/.claude/agents/reviewer.md"
+            }
+          },
+          {
+            "instruction": "Save and verify the description is valid YAML",
+            "note": "Descriptions should be one clear sentence or phrase"
+          }
+        ],
+        "estimatedTime": "5 minutes"
+      },
+      "examples": [
+        {
+          "title": "Descriptive Agent Documentation",
+          "description": "A well-documented agent with comprehensive description",
+          "code": {
+            "language": "markdown",
+            "content": "---\nname: Security Auditor\ndescription: Analyzes code for security vulnerabilities including OWASP Top 10, injection attacks, and authentication flaws. Uses read-only tools to safely inspect code without modifications.\nmodel: opus\ncolor: red\nallowed-tools:\n  - Read\n  - Glob\n  - Grep\n---\n\nYou are a security-focused code auditor...",
+            "filename": "~/.claude/agents/security.md"
+          },
+          "explanation": "The description clearly states purpose, scope, and safety characteristics."
+        }
+      ],
+      "tips": [
+        "Include what the agent specializes in and when to use it",
+        "Mention any limitations or restrictions",
+        "Keep descriptions concise but informative",
+        "Update descriptions as you refine the agent's capabilities"
+      ],
+      "relatedAchievements": ["agent_creator", "capability_definer"]
+    },
+    "agent_orchestrator": {
+      "longDescription": "Agent orchestration involves creating agents that can coordinate with other agents, forming sophisticated multi-agent workflows. An orchestrator agent references other agents in its prompt, enabling it to delegate subtasks, aggregate results, or manage complex multi-step processes. This pattern allows for hierarchical agent structures where a coordinator manages specialist agents.",
+      "whyItMatters": "Orchestration enables complex workflows where different specialized agents collaborate, managed by a coordinator that ensures coherent results.",
+      "difficulty": "advanced",
+      "howTo": {
+        "summary": "Create an agent whose system prompt references other agents for delegation, enabling multi-agent coordination.",
+        "steps": [
+          {
+            "instruction": "First, create several specialist agents",
+            "note": "You need agents to orchestrate before building an orchestrator"
+          },
+          {
+            "instruction": "Create an orchestrator agent that references other agents",
+            "code": {
+              "language": "markdown",
+              "content": "---\nname: PR Orchestrator\ndescription: Coordinates comprehensive PR reviews using specialist agents\nmodel: sonnet\n---\n\nYou are a PR review coordinator. For comprehensive reviews:\n\n1. Delegate security analysis to @security-agent\n2. Delegate code quality review to @reviewer-agent  \n3. Delegate test coverage check to @test-agent\n4. Synthesize findings into a unified report\n\nAlways invoke specialist agents for their domain expertise,\nthen compile their findings with your overall assessment.",
+              "filename": "~/.claude/agents/pr-orchestrator.md"
+            }
+          },
+          {
+            "instruction": "Use the orchestrator for complex multi-faceted tasks",
+            "note": "It will coordinate the specialist agents automatically"
+          }
+        ],
+        "estimatedTime": "30-45 minutes"
+      },
+      "examples": [
+        {
+          "title": "Full-Stack Review Orchestrator",
+          "description": "Coordinates multiple specialist agents for comprehensive review",
+          "code": {
+            "language": "markdown",
+            "content": "---\nname: Full Review Coordinator\ndescription: Orchestrates comprehensive code reviews\nmodel: opus\n---\n\nYou coordinate thorough code reviews by delegating to specialists:\n\n- Use @security-agent for vulnerability assessment\n- Use @performance-agent for optimization opportunities  \n- Use @docs-agent for documentation completeness\n- Use @test-agent for test coverage analysis\n\nAfter all agents report, synthesize findings into:\n1. Critical issues requiring immediate attention\n2. Suggestions for improvement\n3. Overall code health assessment\n\nCall agents in parallel when possible for efficiency.",
+            "filename": "~/.claude/agents/coordinator.md"
+          },
+          "explanation": "This orchestrator manages four specialist agents and synthesizes their outputs into a cohesive review."
+        }
+      ],
+      "tips": [
+        "Build specialist agents first, then create orchestrators",
+        "Clearly define how findings should be synthesized",
+        "Use Opus for orchestrators since coordination requires advanced reasoning",
+        "Consider which subtasks can run in parallel vs sequentially"
+      ],
+      "relatedAchievements": ["agent_army", "agent_delegator", "specialist", "model_mixer"]
+    },
+    "agent_reviewer": {
+      "longDescription": "Creating an agent specifically for code review establishes a consistent, thorough review process for your codebase. A dedicated review agent can be configured with your team's coding standards, common pitfalls to watch for, and preferred review format. Using the agent for reviews ensures every piece of code receives the same level of scrutiny.",
+      "whyItMatters": "Consistent code review improves code quality and catches bugs early. A dedicated agent ensures reviews are thorough and aligned with your standards.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Create an agent optimized for code review tasks with appropriate model, tools, and review guidelines.",
+        "steps": [
+          {
+            "instruction": "Create a dedicated code review agent",
+            "code": {
+              "language": "markdown",
+              "content": "---\nname: Code Reviewer\ndescription: Thorough code review with focus on quality, security, and maintainability\nmodel: sonnet\ncolor: blue\nallowed-tools:\n  - Read\n  - Glob\n  - Grep\n---\n\nYou are an expert code reviewer. For each review:\n\n## Review Checklist\n- [ ] Logic correctness and edge cases\n- [ ] Security vulnerabilities\n- [ ] Performance implications\n- [ ] Code style and readability\n- [ ] Test coverage\n- [ ] Documentation completeness\n\n## Output Format\nProvide findings organized by severity:\n1. **Critical** - Must fix before merge\n2. **Important** - Should fix\n3. **Suggestions** - Nice to have\n4. **Praise** - What's done well",
+              "filename": "~/.claude/agents/reviewer.md"
+            }
+          },
+          {
+            "instruction": "Spawn the agent for a code review task",
+            "note": "Ask Claude to use your reviewer agent on specific files or directories"
+          },
+          {
+            "instruction": "Review and iterate on the agent's output",
+            "note": "Refine the prompt based on the quality of reviews"
+          }
+        ],
+        "estimatedTime": "20-30 minutes"
+      },
+      "examples": [
+        {
+          "title": "Specialized Review Agent",
+          "description": "A review agent with team-specific standards",
+          "code": {
+            "language": "markdown",
+            "content": "---\nname: Team Reviewer\ndescription: Reviews code against our team standards\nmodel: sonnet\nallowed-tools:\n  - Read\n  - Glob  \n  - Grep\n---\n\nYou review code for the Acme team. Our standards:\n\n1. **TypeScript**: Strict mode, no any types\n2. **React**: Functional components only, hooks for state\n3. **Testing**: 80% coverage minimum\n4. **Naming**: camelCase for functions, PascalCase for components\n\nAlways check for:\n- Unused imports and variables\n- Missing error handling\n- Hardcoded values that should be constants\n- Missing TypeScript types",
+            "filename": "~/.claude/agents/team-reviewer.md"
+          },
+          "explanation": "This agent encodes team-specific standards for consistent enforcement."
+        }
+      ],
+      "tips": [
+        "Include your team's specific coding standards in the prompt",
+        "Use read-only tools to prevent accidental modifications during review",
+        "Define a clear output format for actionable feedback",
+        "Consider separate agents for security review vs general review"
+      ],
+      "relatedAchievements": ["agent_creator", "sandboxed_agent", "security_agent"]
+    },
+    "budget_optimizer": {
+      "longDescription": "Using Claude Haiku for appropriate tasks demonstrates smart resource management. Haiku is significantly faster and more cost-effective than Sonnet or Opus, making it ideal for simpler tasks like formatting, basic code generation, or quick lookups. Creating an agent that explicitly uses Haiku optimizes both speed and cost without sacrificing quality for tasks that don't require advanced reasoning.",
+      "whyItMatters": "Matching model capability to task complexity reduces costs and improves response time, making your agent fleet more efficient overall.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Create an agent with model: haiku for tasks that benefit from speed and cost efficiency.",
+        "steps": [
+          {
+            "instruction": "Identify tasks that don't need advanced reasoning",
+            "note": "Good candidates: formatting, simple code generation, syntax fixes, documentation stubs"
+          },
+          {
+            "instruction": "Create an agent that uses Haiku",
+            "code": {
+              "language": "markdown",
+              "content": "---\nname: Quick Formatter\ndescription: Fast code formatting and simple transformations\nmodel: haiku\ncolor: green\n---\n\nYou are a fast code formatter. Your tasks:\n- Format code according to language conventions\n- Fix simple syntax errors\n- Add missing semicolons or brackets\n- Convert between code styles (tabs/spaces, quotes)\n\nBe quick and efficient. No explanations needed\nunless specifically requested.",
+              "filename": "~/.claude/agents/formatter.md"
+            }
+          },
+          {
+            "instruction": "Use this agent for appropriate simple tasks",
+            "note": "Haiku responds much faster than Sonnet or Opus"
+          }
+        ],
+        "estimatedTime": "10 minutes"
+      },
+      "examples": [
+        {
+          "title": "Documentation Stub Generator",
+          "description": "Fast agent for generating documentation templates",
+          "code": {
+            "language": "markdown",
+            "content": "---\nname: Doc Generator\ndescription: Quickly generates documentation stubs and templates\nmodel: haiku\ncolor: cyan\n---\n\nYou generate documentation quickly:\n- JSDoc comments for functions\n- README templates\n- API documentation stubs\n- Changelog entries\n\nOutput skeleton documentation that can be filled in.\nSpeed over completeness - provide structure, not prose.",
+            "filename": "~/.claude/agents/doc-gen.md"
+          },
+          "explanation": "Documentation stubs don't need deep reasoning, making Haiku perfect for fast generation."
+        }
+      ],
+      "tips": [
+        "Haiku excels at well-defined, structured tasks",
+        "Avoid Haiku for complex reasoning, security analysis, or nuanced decisions",
+        "Combine Haiku agents with Opus orchestrators for efficient workflows",
+        "Monitor quality - upgrade to Sonnet if Haiku's output needs improvement"
+      ],
+      "relatedAchievements": ["model_override", "model_mixer", "power_agent"]
+    },
+    "capability_definer": {
+      "longDescription": "Explicitly defining an agent's capabilities in its prompt helps both users and the agent understand its scope. A capabilities section documents what the agent can do, what it's optimized for, and potentially what falls outside its expertise. This clarity improves task delegation and sets appropriate expectations.",
+      "whyItMatters": "Clear capability definitions help Claude route tasks to the right agent and prevent misuse of specialized agents for inappropriate tasks.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Add an explicit capabilities section to your agent's system prompt detailing what it can and cannot do.",
+        "steps": [
+          {
+            "instruction": "Create or edit an agent file",
+            "code": {
+              "language": "bash",
+              "content": "nano ~/.claude/agents/specialist.md"
+            }
+          },
+          {
+            "instruction": "Add a capabilities section to the prompt",
+            "code": {
+              "language": "markdown",
+              "content": "---\nname: API Expert\ndescription: REST API design and implementation specialist\nmodel: sonnet\n---\n\n## Capabilities\n\nI am specialized in:\n- Designing RESTful APIs following best practices\n- OpenAPI/Swagger specification writing\n- API versioning strategies\n- Authentication and authorization patterns\n- Rate limiting and caching strategies\n- API documentation generation\n\n## Limitations\n\nI should not be used for:\n- GraphQL (use @graphql-agent instead)\n- WebSocket implementations\n- General frontend work\n- Database schema design (use @database-agent)",
+              "filename": "~/.claude/agents/api-expert.md"
+            }
+          },
+          {
+            "instruction": "Test that the agent respects its defined scope",
+            "note": "Well-defined agents should acknowledge when a task is outside their expertise"
+          }
+        ],
+        "estimatedTime": "15 minutes"
+      },
+      "examples": [
+        {
+          "title": "Database Agent with Clear Capabilities",
+          "description": "An agent with explicit scope definition",
+          "code": {
+            "language": "markdown",
+            "content": "---\nname: Database Architect\ndescription: Database design and optimization specialist\nmodel: sonnet\n---\n\n## Capabilities:\n- Schema design (relational, NoSQL, graph)\n- Query optimization and indexing strategies\n- Migration planning and execution\n- Database performance tuning\n- Data modeling and normalization\n- Connection pooling and caching\n\n## Not My Expertise:\n- Application code (delegate to code agents)\n- Infrastructure/DevOps (use @infra-agent)\n- Security auditing (use @security-agent)",
+            "filename": "~/.claude/agents/db-architect.md"
+          },
+          "explanation": "Both capabilities and limitations are clearly stated, enabling smart task routing."
+        }
+      ],
+      "tips": [
+        "Be specific about what the agent excels at",
+        "Include limitations to prevent inappropriate use",
+        "Reference other agents for out-of-scope tasks",
+        "Update capabilities as you refine the agent"
+      ],
+      "relatedAchievements": ["agent_documenter", "specialist", "agent_orchestrator"]
+    },
+    "color_coder": {
+      "longDescription": "Adding custom colors to agents provides visual differentiation in the Claude Code interface. When you have multiple agents, colors help you quickly identify which agent is active or being referenced. Choose colors that semantically match the agent's purpose - red for security, green for testing, blue for general assistance.",
+      "whyItMatters": "Visual differentiation makes it easier to track which agent is handling tasks, especially in complex multi-agent workflows.",
+      "difficulty": "beginner",
+      "howTo": {
+        "summary": "Add a color field to your agent's frontmatter to customize its appearance.",
+        "steps": [
+          {
+            "instruction": "Edit your agent file and add the color field",
+            "code": {
+              "language": "markdown",
+              "content": "---\nname: Security Auditor\ndescription: Security-focused code analysis\nmodel: opus\ncolor: red\n---\n\nYou are a security auditor...",
+              "filename": "~/.claude/agents/security.md"
+            }
+          },
+          {
+            "instruction": "Choose semantically meaningful colors",
+            "note": "Common conventions: red=security, green=testing, blue=general, purple=creative"
+          },
+          {
+            "instruction": "Restart Claude Code to see the new color",
+            "code": {
+              "language": "bash",
+              "content": "# Exit and restart Claude Code"
+            }
+          }
+        ],
+        "estimatedTime": "2 minutes"
+      },
+      "examples": [
+        {
+          "title": "Color-Coded Agent Fleet",
+          "description": "A set of agents with meaningful color assignments",
+          "code": {
+            "language": "yaml",
+            "content": "# Semantic color scheme for agents:\nsecurity.md:    color: red      # Danger/security\ntester.md:      color: green    # Success/testing  \nreviewer.md:    color: blue     # Information/review\ncreative.md:    color: purple   # Creative/design\noptimizer.md:   color: orange   # Warning/performance\ndocs.md:        color: cyan     # Documentation"
+          },
+          "explanation": "Each color conveys the agent's domain at a glance."
+        }
+      ],
+      "tips": [
+        "Use consistent colors across related agents",
+        "Match colors to common conventions (red for danger/security)",
+        "Available colors depend on your terminal configuration",
+        "Colors are purely visual - they don't affect agent behavior"
+      ],
+      "relatedAchievements": ["agent_creator", "agent_documenter"]
+    },
+    "docs_agent": {
+      "longDescription": "A documentation agent specializes in writing and improving project documentation, from README files to API docs to inline code comments. This agent understands documentation best practices and can generate consistent, high-quality documentation that helps others understand your code. Documentation agents often use faster models since the task is well-structured.",
+      "whyItMatters": "Good documentation is essential but often neglected. A dedicated agent makes documentation generation quick and consistent.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Create an agent specialized for documentation tasks with appropriate prompting and model selection.",
+        "steps": [
+          {
+            "instruction": "Create a documentation-focused agent",
+            "code": {
+              "language": "markdown",
+              "content": "---\nname: Documentation Writer\ndescription: Generates and improves project documentation\nmodel: sonnet\ncolor: cyan\n---\n\nYou are a technical documentation specialist.\n\n## Documentation Types\n- README.md files with proper structure\n- API documentation (OpenAPI, JSDoc, docstrings)\n- Architecture decision records (ADRs)\n- User guides and tutorials\n- Changelog entries\n- Code comments and inline documentation\n\n## Style Guidelines\n- Clear, concise language\n- Code examples for all concepts\n- Proper markdown formatting\n- Consistent terminology\n- Accessible to different skill levels",
+              "filename": "~/.claude/agents/docs.md"
+            }
+          },
+          {
+            "instruction": "Use the agent to generate documentation",
+            "note": "Ask Claude to delegate documentation tasks to this agent"
+          }
+        ],
+        "estimatedTime": "15 minutes"
+      },
+      "examples": [
+        {
+          "title": "Full Documentation Agent",
+          "description": "Comprehensive documentation specialist",
+          "code": {
+            "language": "markdown",
+            "content": "---\nname: Docs Expert\ndescription: Creates comprehensive project documentation\nmodel: sonnet\ncolor: cyan\nallowed-tools:\n  - Read\n  - Glob\n  - Grep\n  - Write\n---\n\nYou write excellent documentation.\n\n## README Structure\n1. Project title and badges\n2. Brief description\n3. Installation\n4. Quick start\n5. Features\n6. API reference\n7. Contributing\n8. License\n\n## JSDoc Format\n```javascript\n/**\n * Brief description.\n * @param {Type} name - Description\n * @returns {Type} Description\n * @throws {Error} When...\n * @example\n * functionName(arg);\n */\n```\n\nAlways read existing docs before creating new ones.",
+            "filename": "~/.claude/agents/docs-expert.md"
+          },
+          "explanation": "This agent knows multiple documentation formats and follows consistent structure."
+        }
+      ],
+      "tips": [
+        "Include templates for common documentation types",
+        "Haiku can handle simple doc tasks; Sonnet for comprehensive docs",
+        "Have the agent read existing docs first for consistency",
+        "Include your project's documentation style guide in the prompt"
+      ],
+      "relatedAchievements": ["agent_creator", "specialist", "budget_optimizer"]
+    },
+    "generalist": {
+      "longDescription": "A generalist agent is designed to handle a broad range of tasks rather than specializing in one domain. Unlike specialist agents, generalists are configured with diverse capabilities and fewer restrictions, making them suitable as default agents for varied work. A good generalist balances breadth with usefulness, avoiding being so broad as to be mediocre at everything.",
+      "whyItMatters": "Generalist agents serve as reliable defaults when you don't need specialized expertise, reducing the overhead of selecting the right agent for every task.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Create an agent with broad capabilities and balanced prompting that handles diverse tasks effectively.",
+        "steps": [
+          {
+            "instruction": "Design an agent with multiple capability areas",
+            "code": {
+              "language": "markdown",
+              "content": "---\nname: General Assistant\ndescription: Versatile coding assistant for diverse tasks\nmodel: sonnet\ncolor: blue\n---\n\nYou are a versatile development assistant capable of:\n\n## Core Capabilities\n- **Code Writing**: Multiple languages and frameworks\n- **Code Review**: Quality and best practices\n- **Debugging**: Systematic problem solving\n- **Documentation**: Clear technical writing\n- **Architecture**: Design patterns and structure\n\n## Working Style\n- Adapt to the task at hand\n- Ask clarifying questions when needed\n- Provide context with answers\n- Suggest improvements proactively\n\n## When to Defer\nFor specialized needs, recommend:\n- Security audits -> @security-agent\n- Performance optimization -> @perf-agent\n- Complex architecture -> @architect-agent",
+              "filename": "~/.claude/agents/general.md"
+            }
+          },
+          {
+            "instruction": "Test the agent across different task types",
+            "note": "Ensure it handles variety without being mediocre"
+          }
+        ],
+        "estimatedTime": "20 minutes"
+      },
+      "examples": [
+        {
+          "title": "Balanced Generalist",
+          "description": "An agent that handles diverse tasks while knowing its limits",
+          "code": {
+            "language": "markdown",
+            "content": "---\nname: Dev Assistant\ndescription: General-purpose development helper\nmodel: sonnet\n---\n\nI'm your general-purpose development assistant.\n\nI can help with:\n- Writing and reviewing code in any language\n- Explaining concepts and debugging issues\n- Creating tests and documentation\n- Refactoring and code improvements\n- Git operations and workflows\n\nI know when to recommend specialists:\n- Deep security analysis needs @security-agent\n- Major architectural decisions need @architect-agent\n- Production deployment needs @devops-agent\n\nI aim to be helpful without overstepping into\ndomains requiring specialized expertise.",
+            "filename": "~/.claude/agents/assistant.md"
+          },
+          "explanation": "This generalist is capable but self-aware about when to defer to specialists."
+        }
+      ],
+      "tips": [
+        "Generalists should know when to recommend specialists",
+        "Don't make generalists so broad they're mediocre at everything",
+        "Sonnet is a good model choice - capable without Opus cost",
+        "Include guidance on what kinds of tasks suit this agent"
+      ],
+      "relatedAchievements": ["specialist", "agent_army", "capability_definer"]
+    },
+    "model_mixer": {
+      "longDescription": "Creating agents that use different Claude models demonstrates strategic model selection. Haiku for fast, simple tasks; Sonnet for balanced capability; Opus for complex reasoning. A model-mixed agent fleet optimizes both cost and quality by routing tasks to the appropriate model. This requires understanding each model's strengths.",
+      "whyItMatters": "Different models have different cost-performance tradeoffs. Mixing models strategically gives you the best of speed, capability, and cost efficiency.",
+      "difficulty": "advanced",
+      "howTo": {
+        "summary": "Create multiple agents that specify different models based on their task requirements.",
+        "steps": [
+          {
+            "instruction": "Create a fast agent using Haiku",
+            "code": {
+              "language": "markdown",
+              "content": "---\nname: Quick Tasks\ndescription: Fast simple operations\nmodel: haiku\n---\n\nYou handle quick, simple tasks efficiently.",
+              "filename": "~/.claude/agents/quick.md"
+            }
+          },
+          {
+            "instruction": "Create a balanced agent using Sonnet",
+            "code": {
+              "language": "markdown",
+              "content": "---\nname: Standard Work\ndescription: General development tasks\nmodel: sonnet\n---\n\nYou handle typical development work.",
+              "filename": "~/.claude/agents/standard.md"
+            }
+          },
+          {
+            "instruction": "Create a power agent using Opus",
+            "code": {
+              "language": "markdown",
+              "content": "---\nname: Complex Analysis\ndescription: Deep analysis and complex reasoning\nmodel: opus\n---\n\nYou handle complex, nuanced tasks requiring deep reasoning.",
+              "filename": "~/.claude/agents/complex.md"
+            }
+          },
+          {
+            "instruction": "Verify you have agents with different models",
+            "code": {
+              "language": "bash",
+              "content": "grep -l 'model:' ~/.claude/agents/*.md | xargs grep 'model:'"
+            }
+          }
+        ],
+        "estimatedTime": "20 minutes"
+      },
+      "examples": [
+        {
+          "title": "Strategic Model Assignment",
+          "description": "Agents matched to appropriate models by task complexity",
+          "code": {
+            "language": "text",
+            "content": "Model Assignment Strategy:\n\nHaiku (Fast & Cheap):\n- formatter.md     # Code formatting\n- stub-gen.md      # Documentation stubs\n- simple-fix.md    # Syntax fixes\n\nSonnet (Balanced):\n- reviewer.md      # Code review\n- tester.md        # Test writing\n- docs.md          # Documentation\n- refactor.md      # Refactoring\n\nOpus (Maximum Capability):\n- security.md      # Security analysis\n- architect.md     # Architecture decisions\n- orchestrator.md  # Agent coordination\n- complex-debug.md # Difficult bugs"
+          },
+          "explanation": "Each agent uses the model that best fits its task complexity and importance."
+        }
+      ],
+      "tips": [
+        "Haiku: formatting, simple generation, quick lookups",
+        "Sonnet: most coding tasks, reviews, documentation",
+        "Opus: security analysis, architecture, complex reasoning",
+        "Consider creating an orchestrator (Opus) that delegates to specialists (various models)"
+      ],
+      "relatedAchievements": ["budget_optimizer", "power_agent", "model_override", "agent_army"]
+    },
+    "model_override": {
+      "longDescription": "Specifying a model in your agent's frontmatter overrides the default model selection, giving you control over which Claude model powers the agent. This is essential for creating agents tailored to specific task complexities - using Opus for critical analysis, Sonnet for balanced work, or Haiku for speed-critical simple tasks.",
+      "whyItMatters": "Model selection directly impacts response quality, speed, and cost. Explicit specification ensures your agent always uses the appropriate model.",
+      "difficulty": "beginner",
+      "howTo": {
+        "summary": "Add the model field to your agent's frontmatter to specify which Claude model it should use.",
+        "steps": [
+          {
+            "instruction": "Choose the appropriate model for your agent's purpose",
+            "note": "Options: haiku (fast/cheap), sonnet (balanced), opus (most capable)"
+          },
+          {
+            "instruction": "Add the model field to your agent's frontmatter",
+            "code": {
+              "language": "markdown",
+              "content": "---\nname: Deep Analyzer\ndescription: Complex code analysis requiring deep reasoning\nmodel: opus\n---\n\nYou perform deep code analysis...",
+              "filename": "~/.claude/agents/analyzer.md"
+            }
+          },
+          {
+            "instruction": "Verify the model is set correctly",
+            "code": {
+              "language": "bash",
+              "content": "grep 'model:' ~/.claude/agents/analyzer.md"
+            }
+          }
+        ],
+        "estimatedTime": "5 minutes"
+      },
+      "examples": [
+        {
+          "title": "Model Selection Examples",
+          "description": "Different models for different purposes",
+          "code": {
+            "language": "yaml",
+            "content": "# Haiku - Fast and economical\n---\nname: Quick Helper\nmodel: haiku\n---\n\n# Sonnet - Balanced capability  \n---\nname: Code Reviewer\nmodel: sonnet\n---\n\n# Opus - Maximum reasoning\n---\nname: Security Auditor\nmodel: opus\n---"
+          },
+          "explanation": "Each agent specifies the model that matches its task requirements."
+        }
+      ],
+      "tips": [
+        "Default to Sonnet for most tasks - good balance of capability and cost",
+        "Use Opus for security, architecture, and complex debugging",
+        "Use Haiku for formatting, simple generation, and speed-critical tasks",
+        "Model names are lowercase: haiku, sonnet, opus"
+      ],
+      "relatedAchievements": ["budget_optimizer", "power_agent", "model_mixer"]
+    },
+    "multi_agent_fleet": {
+      "longDescription": "Creating three or more agents marks the beginning of a true agent fleet, where you have enough variety to cover common development scenarios. A small fleet typically includes a general assistant, a code reviewer, and at least one specialist. This collection enables basic task delegation and workflow optimization.",
+      "whyItMatters": "A multi-agent fleet provides coverage for common tasks and demonstrates understanding of agent specialization principles.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Create at least three different agents covering complementary use cases.",
+        "steps": [
+          {
+            "instruction": "Identify three core workflows you want agent support for",
+            "note": "Common choices: general help, code review, and one specialist area"
+          },
+          {
+            "instruction": "Create a general-purpose assistant",
+            "code": {
+              "language": "markdown",
+              "content": "---\nname: Assistant\ndescription: General development help\nmodel: sonnet\n---\n\nYou are a helpful coding assistant.",
+              "filename": "~/.claude/agents/assistant.md"
+            }
+          },
+          {
+            "instruction": "Create a code reviewer",
+            "code": {
+              "language": "markdown",
+              "content": "---\nname: Reviewer\ndescription: Code review specialist\nmodel: sonnet\nallowed-tools:\n  - Read\n  - Glob\n  - Grep\n---\n\nYou perform thorough code reviews.",
+              "filename": "~/.claude/agents/reviewer.md"
+            }
+          },
+          {
+            "instruction": "Create a specialist for your most common need",
+            "code": {
+              "language": "markdown",
+              "content": "---\nname: Test Writer\ndescription: Creates comprehensive tests\nmodel: sonnet\n---\n\nYou write thorough test suites.",
+              "filename": "~/.claude/agents/tester.md"
+            }
+          },
+          {
+            "instruction": "Verify you have at least three agents",
+            "code": {
+              "language": "bash",
+              "content": "ls ~/.claude/agents/*.md"
+            }
+          }
+        ],
+        "estimatedTime": "25 minutes"
+      },
+      "examples": [
+        {
+          "title": "Starter Fleet",
+          "description": "A balanced three-agent setup",
+          "code": {
+            "language": "text",
+            "content": "~/.claude/agents/\n  assistant.md  # General help (Sonnet)\n  reviewer.md   # Code review (Sonnet, read-only)\n  tester.md     # Test writing (Sonnet)"
+          },
+          "explanation": "Three agents covering general assistance, code quality, and testing."
+        }
+      ],
+      "tips": [
+        "Start with complementary agents that don't overlap much",
+        "Include at least one read-only agent for safe analysis tasks",
+        "Consider your most frequent tasks when choosing specialists",
+        "You can always add more agents as needs emerge"
+      ],
+      "relatedAchievements": ["agent_creator", "agent_army", "specialist"]
+    },
+    "power_agent": {
+      "longDescription": "Creating an agent that uses Claude Opus unlocks maximum reasoning capability for your most complex tasks. Opus excels at nuanced analysis, complex problem-solving, and tasks requiring deep understanding. Use Opus for security audits, architectural decisions, difficult debugging, and situations where quality is more important than speed or cost.",
+      "whyItMatters": "Some tasks require the highest level of reasoning capability. Opus-powered agents tackle challenges that simpler models might miss.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Create an agent with model: opus for tasks requiring advanced reasoning and analysis.",
+        "steps": [
+          {
+            "instruction": "Identify tasks that benefit from advanced reasoning",
+            "note": "Security analysis, architecture decisions, complex debugging, nuanced reviews"
+          },
+          {
+            "instruction": "Create an Opus-powered agent",
+            "code": {
+              "language": "markdown",
+              "content": "---\nname: Deep Analyst\ndescription: Complex analysis requiring advanced reasoning\nmodel: opus\ncolor: purple\n---\n\nYou are an expert analyst with deep reasoning capabilities.\n\n## Specialization\n- Security vulnerability analysis\n- Architectural review and recommendations\n- Complex bug investigation\n- Performance bottleneck identification\n- Code quality deep-dives\n\n## Approach\n- Consider all angles before concluding\n- Identify non-obvious issues and implications\n- Provide thorough, well-reasoned analysis\n- Acknowledge uncertainty when appropriate",
+              "filename": "~/.claude/agents/analyst.md"
+            }
+          },
+          {
+            "instruction": "Reserve this agent for tasks that truly need it",
+            "note": "Opus is powerful but slower and more expensive than Sonnet"
+          }
+        ],
+        "estimatedTime": "15 minutes"
+      },
+      "examples": [
+        {
+          "title": "Security Analyst with Opus",
+          "description": "Maximum capability for security-critical analysis",
+          "code": {
+            "language": "markdown",
+            "content": "---\nname: Security Expert\ndescription: Deep security analysis with maximum reasoning\nmodel: opus\ncolor: red\nallowed-tools:\n  - Read\n  - Glob\n  - Grep\n---\n\nYou are a senior security analyst.\n\n## Analysis Depth\n- OWASP Top 10 vulnerabilities\n- Authentication and authorization flaws\n- Injection vulnerabilities (SQL, XSS, etc.)\n- Cryptographic weaknesses\n- Logic flaws and race conditions\n- Supply chain risks\n\n## Reporting\nFor each finding:\n1. Severity (Critical/High/Medium/Low)\n2. Description and location\n3. Attack scenario\n4. Remediation steps\n5. Verification method",
+            "filename": "~/.claude/agents/security-expert.md"
+          },
+          "explanation": "Security analysis benefits from Opus's deep reasoning to catch subtle vulnerabilities."
+        }
+      ],
+      "tips": [
+        "Use Opus for quality-critical tasks where cost is secondary",
+        "Combine with read-only tools for safe but thorough analysis",
+        "Don't use Opus for simple tasks - it's overkill",
+        "Opus is ideal for orchestrator agents coordinating other agents"
+      ],
+      "relatedAchievements": ["model_override", "budget_optimizer", "model_mixer", "security_agent"]
+    },
+    "prompt_crafter": {
+      "longDescription": "A rich system prompt (1000+ characters) provides comprehensive guidance for agent behavior. Detailed prompts include task-specific instructions, output formats, quality criteria, edge case handling, and domain knowledge. Well-crafted prompts dramatically improve agent consistency and output quality by removing ambiguity about expectations.",
+      "whyItMatters": "Detailed prompts reduce variability and improve output quality by giving agents clear, comprehensive instructions for their tasks.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Create an agent with a comprehensive system prompt that covers all aspects of the agent's behavior.",
+        "steps": [
+          {
+            "instruction": "Plan the components of your detailed prompt",
+            "note": "Include: role, capabilities, methodology, output format, examples, edge cases"
+          },
+          {
+            "instruction": "Write a comprehensive agent prompt",
+            "code": {
+              "language": "markdown",
+              "content": "---\nname: Comprehensive Reviewer\ndescription: Thorough code review with detailed methodology\nmodel: sonnet\nallowed-tools:\n  - Read\n  - Glob\n  - Grep\n---\n\n# Code Review Specialist\n\nYou are an expert code reviewer with years of experience in software quality assurance. Your reviews are thorough, constructive, and educational.\n\n## Review Methodology\n\n### Phase 1: Understanding\n1. Read the code to understand its purpose\n2. Identify the programming language and frameworks\n3. Note the code's context within the larger system\n\n### Phase 2: Analysis\nCheck each of the following areas:\n\n#### Correctness\n- Logic errors and edge cases\n- Off-by-one errors\n- Null pointer risks\n- Error handling completeness\n\n#### Security\n- Input validation\n- Authentication/authorization\n- Injection vulnerabilities\n- Sensitive data handling\n\n#### Performance\n- Algorithm complexity\n- Database query efficiency\n- Memory usage patterns\n- Caching opportunities\n\n#### Maintainability\n- Code readability\n- Function/class size\n- Naming conventions\n- Documentation completeness\n\n### Phase 3: Reporting\n\nOrganize findings by severity:\n\n**Critical** - Blocks merge, security or data integrity risk\n**Major** - Should fix, significant quality issue\n**Minor** - Nice to fix, code quality improvement\n**Note** - Observations and suggestions\n\nFor each finding, provide:\n- Location (file and line)\n- Issue description\n- Why it matters\n- Suggested fix with code example\n\n## Output Format\n\n```markdown\n# Code Review: [File/Component Name]\n\n## Summary\n[1-2 sentence overview]\n\n## Critical Issues\n[List or \"None found\"]\n\n## Major Issues\n[List with details]\n\n## Minor Issues\n[List with details]\n\n## Notes and Suggestions\n[List]\n\n## Positive Observations\n[What's done well]\n```\n\n## Guidelines\n- Be constructive, not critical\n- Explain the \"why\" behind suggestions\n- Provide code examples for fixes\n- Acknowledge good practices\n- Consider the author's experience level",
+              "filename": "~/.claude/agents/comprehensive-reviewer.md"
+            }
+          },
+          {
+            "instruction": "Verify the prompt length",
+            "code": {
+              "language": "bash",
+              "content": "wc -c ~/.claude/agents/comprehensive-reviewer.md"
+            }
+          }
+        ],
+        "estimatedTime": "30-45 minutes"
+      },
+      "examples": [
+        {
+          "title": "Sections in a Rich Prompt",
+          "description": "Key components to include for comprehensive guidance",
+          "code": {
+            "language": "text",
+            "content": "Rich Prompt Structure:\n\n1. Role Definition (~100 chars)\n   \"You are an expert X with Y years experience...\"\n\n2. Methodology (~400 chars)\n   Step-by-step process the agent should follow\n\n3. Quality Criteria (~300 chars)\n   What good output looks like\n\n4. Output Format (~200 chars)\n   Template for structured responses\n\n5. Edge Cases (~150 chars)\n   How to handle unusual situations\n\n6. Examples (~200 chars)\n   Concrete examples of good work\n\n7. Guidelines (~100 chars)\n   Behavioral principles\n\nTotal: 1400+ characters of clear guidance"
+          },
+          "explanation": "Breaking the prompt into clear sections ensures comprehensive coverage."
+        }
+      ],
+      "tips": [
+        "Include concrete examples in your prompt",
+        "Define output format explicitly",
+        "Address common edge cases",
+        "Balance detail with readability - use headers and lists",
+        "Test the agent and refine based on output quality"
+      ],
+      "relatedAchievements": ["agent_creator", "capability_definer", "agent_documenter"]
+    },
+    "sandboxed_agent": {
+      "longDescription": "A sandboxed agent has restricted tool access, limiting it to safe operations like reading and searching code without the ability to make modifications. This is essential for agents performing analysis, review, or audit tasks where you want thorough inspection without any risk of unintended changes. Sandboxing follows the principle of least privilege.",
+      "whyItMatters": "Restricting tool access to only what's needed reduces risk and makes agents safer to run on critical code or in sensitive environments.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Create an agent with allowed-tools limited to read-only operations like Read, Glob, and Grep.",
+        "steps": [
+          {
+            "instruction": "Identify which tools your agent actually needs",
+            "note": "For analysis: Read, Glob, Grep. For modifications: add Write, Edit, Bash"
+          },
+          {
+            "instruction": "Create an agent with explicit tool restrictions",
+            "code": {
+              "language": "markdown",
+              "content": "---\nname: Safe Analyzer\ndescription: Read-only code analysis - cannot modify files\nmodel: sonnet\ncolor: green\nallowed-tools:\n  - Read\n  - Glob\n  - Grep\n---\n\nYou are a code analyzer with READ-ONLY access.\n\nYou can:\n- Read and analyze any file\n- Search for patterns across the codebase\n- Identify issues and suggest improvements\n\nYou cannot:\n- Modify any files\n- Run commands\n- Make any changes\n\nWhen you find issues, describe the fix needed\nbut do not attempt to make changes yourself.",
+              "filename": "~/.claude/agents/safe-analyzer.md"
+            }
+          },
+          {
+            "instruction": "Test that the agent respects tool restrictions",
+            "note": "It should not be able to use Write, Edit, or Bash tools"
+          }
+        ],
+        "estimatedTime": "10 minutes"
+      },
+      "examples": [
+        {
+          "title": "Security Audit Agent",
+          "description": "Read-only access for safe security analysis",
+          "code": {
+            "language": "markdown",
+            "content": "---\nname: Security Auditor\ndescription: Security analysis with no modification capability\nmodel: opus\ncolor: red\nallowed-tools:\n  - Read\n  - Glob\n  - Grep\n---\n\nYou perform security audits with READ-ONLY access.\n\nThis restriction ensures:\n- No accidental modifications during audit\n- Safe to run on production code\n- Findings require human review before action\n\nReport all findings with:\n- Severity level\n- Location in code\n- Recommended remediation\n- References to security standards",
+            "filename": "~/.claude/agents/security-audit.md"
+          },
+          "explanation": "Security auditors should never modify code - they inspect and report only."
+        }
+      ],
+      "tips": [
+        "Use read-only agents for all analysis and audit tasks",
+        "The allowed-tools list is a whitelist - unlisted tools are blocked",
+        "Reinforce the restriction in the prompt text as well",
+        "Common read-only set: Read, Glob, Grep",
+        "Add WebFetch for agents that need to check documentation"
+      ],
+      "relatedAchievements": ["tool_selector", "security_agent", "agent_reviewer"]
+    },
+    "security_agent": {
+      "longDescription": "A security-focused agent specializes in identifying vulnerabilities, analyzing code for security issues, and ensuring compliance with security best practices. Security agents typically use Opus for deep reasoning capability and are sandboxed to read-only tools for safety. They understand OWASP Top 10, common vulnerability patterns, and security testing methodologies.",
+      "whyItMatters": "Security vulnerabilities can have severe consequences. A dedicated security agent ensures consistent, thorough security analysis across your codebase.",
+      "difficulty": "advanced",
+      "howTo": {
+        "summary": "Create an agent specialized for security analysis with Opus model and read-only tool access.",
+        "steps": [
+          {
+            "instruction": "Create a comprehensive security-focused agent",
+            "code": {
+              "language": "markdown",
+              "content": "---\nname: Security Analyst\ndescription: Identifies security vulnerabilities and compliance issues\nmodel: opus\ncolor: red\nallowed-tools:\n  - Read\n  - Glob\n  - Grep\n---\n\n# Security Analyst\n\nYou are a senior security analyst specializing in application security.\n\n## Analysis Scope\n\n### OWASP Top 10\n- A01: Broken Access Control\n- A02: Cryptographic Failures\n- A03: Injection\n- A04: Insecure Design\n- A05: Security Misconfiguration\n- A06: Vulnerable Components\n- A07: Authentication Failures\n- A08: Software Integrity Failures\n- A09: Logging Failures\n- A10: SSRF\n\n### Additional Checks\n- Input validation and sanitization\n- Secure session management\n- Proper error handling (no info leakage)\n- Secure communication (TLS)\n- Secrets management\n- Dependency vulnerabilities\n\n## Severity Ratings\n- **Critical**: Immediate exploitation risk\n- **High**: Significant security impact\n- **Medium**: Moderate risk\n- **Low**: Minor security concern\n- **Info**: Security best practice\n\n## Report Format\nFor each finding:\n1. Title and severity\n2. Location (file:line)\n3. Description of vulnerability\n4. Potential attack scenario\n5. Recommended remediation\n6. CWE/CVE references if applicable",
+              "filename": "~/.claude/agents/security.md"
+            }
+          },
+          {
+            "instruction": "Test the agent on known vulnerable code patterns",
+            "note": "Verify it catches common issues like SQL injection, XSS, etc."
+          }
+        ],
+        "estimatedTime": "30 minutes"
+      },
+      "examples": [
+        {
+          "title": "Language-Specific Security Agent",
+          "description": "Security agent tailored for JavaScript/Node.js",
+          "code": {
+            "language": "markdown",
+            "content": "---\nname: JS Security\ndescription: JavaScript and Node.js security specialist\nmodel: opus\ncolor: red\nallowed-tools:\n  - Read\n  - Glob\n  - Grep\n---\n\n# JavaScript Security Specialist\n\n## Focus Areas\n- XSS prevention (DOM-based, Reflected, Stored)\n- Prototype pollution\n- npm dependency vulnerabilities\n- eval() and dangerous functions\n- CSRF protection\n- JWT implementation issues\n- NoSQL injection\n- Path traversal\n- Server-side rendering security\n- Environment variable exposure\n\n## Tools/Patterns to Flag\n- eval(), Function(), innerHTML\n- child_process without sanitization\n- fs operations with user input\n- Missing Content-Security-Policy\n- Outdated dependencies",
+            "filename": "~/.claude/agents/js-security.md"
+          },
+          "explanation": "Language-specific security agents can provide deeper, more relevant analysis."
+        }
+      ],
+      "tips": [
+        "Always use Opus for security agents - catching vulnerabilities requires deep reasoning",
+        "Sandbox security agents to read-only tools",
+        "Include relevant security standards (OWASP, CWE) in the prompt",
+        "Consider language-specific security agents for deeper analysis",
+        "Update security agent prompts as new vulnerability types emerge"
+      ],
+      "relatedAchievements": ["sandboxed_agent", "power_agent", "specialist"]
+    },
+    "specialist": {
+      "longDescription": "A specialist agent has a narrow, focused purpose - it excels in one specific domain rather than trying to handle everything. Specialists typically outperform generalists in their domain because their entire prompt and configuration is optimized for specific tasks. Good specialists clearly define their scope and suggest alternative agents for out-of-scope requests.",
+      "whyItMatters": "Specialized agents deliver higher quality results in their domain by focusing all their context and configuration on one type of task.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Create an agent with a tightly focused purpose, clear boundaries, and deep domain knowledge.",
+        "steps": [
+          {
+            "instruction": "Choose a specific domain to specialize in",
+            "note": "Examples: testing, security, documentation, API design, database, DevOps"
+          },
+          {
+            "instruction": "Create a tightly-focused specialist agent",
+            "code": {
+              "language": "markdown",
+              "content": "---\nname: Test Specialist\ndescription: Focused exclusively on writing and improving tests\nmodel: sonnet\ncolor: green\n---\n\n# Test Writing Specialist\n\nI specialize EXCLUSIVELY in testing. My domain includes:\n\n## What I Do\n- Write unit tests\n- Write integration tests\n- Write end-to-end tests\n- Improve test coverage\n- Fix flaky tests\n- Test architecture advice\n- Mocking and stubbing strategies\n\n## What I Don't Do\n- Write production code (ask @developer-agent)\n- Security analysis (ask @security-agent)\n- Documentation (ask @docs-agent)\n- DevOps/deployment (ask @devops-agent)\n\n## Testing Expertise\n- Jest, Vitest, Mocha, Pytest, JUnit\n- Testing Library, Cypress, Playwright\n- Test patterns: AAA, Given-When-Then\n- Coverage metrics and strategies\n- TDD and BDD methodologies\n\nIf asked about non-testing topics,\nI'll politely redirect to appropriate agents.",
+              "filename": "~/.claude/agents/test-specialist.md"
+            }
+          },
+          {
+            "instruction": "Test that the agent stays in its lane",
+            "note": "Ask it about out-of-scope topics and verify it redirects appropriately"
+          }
+        ],
+        "estimatedTime": "20 minutes"
+      },
+      "examples": [
+        {
+          "title": "Database Specialist",
+          "description": "An agent focused exclusively on database work",
+          "code": {
+            "language": "markdown",
+            "content": "---\nname: Database Expert\ndescription: Database design, queries, and optimization only\nmodel: sonnet\n---\n\n# Database Specialist\n\n## My Expertise\n- Schema design and normalization\n- Query writing and optimization\n- Index strategy\n- Migration planning\n- Connection pooling\n- Caching strategies\n\n## Supported Databases\n- PostgreSQL, MySQL, SQLite\n- MongoDB, Redis, DynamoDB\n- Basic knowledge of others\n\n## Not My Area\n- Application code -> @developer-agent\n- API design -> @api-agent\n- Infrastructure -> @devops-agent\n\nI stay focused on data layer concerns.",
+            "filename": "~/.claude/agents/db-expert.md"
+          },
+          "explanation": "Clear scope boundaries and referrals make this agent predictable and effective."
+        }
+      ],
+      "tips": [
+        "Define both what the agent does AND what it doesn't do",
+        "Include referrals to other agents for out-of-scope requests",
+        "Deep domain knowledge beats broad shallow knowledge",
+        "Specialists work great with orchestrator agents",
+        "Consider the tools that match the specialty (read-only for analysis, etc.)"
+      ],
+      "relatedAchievements": ["generalist", "capability_definer", "agent_orchestrator"]
+    },
+    "team_agent": {
+      "longDescription": "A team agent is defined at the project level (in .claude/agents/) rather than globally, making it available to everyone working on that project. Team agents encode project-specific conventions, coding standards, and domain knowledge that all contributors should follow. They're version-controlled with the project, ensuring consistency.",
+      "whyItMatters": "Project-level agents ensure all team members have access to the same AI assistance configured for your specific codebase and standards.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Create an agent in your project's .claude/agents/ directory to share it with all project contributors.",
+        "steps": [
+          {
+            "instruction": "Create the project-level agents directory",
+            "code": {
+              "language": "bash",
+              "content": "mkdir -p ./.claude/agents"
+            }
+          },
+          {
+            "instruction": "Create an agent with project-specific knowledge",
+            "code": {
+              "language": "markdown",
+              "content": "---\nname: Project Assistant\ndescription: Knows our codebase conventions and architecture\nmodel: sonnet\n---\n\n# Acme Project Assistant\n\n## Project Context\n- TypeScript monorepo using pnpm workspaces\n- React frontend, Node.js backend\n- PostgreSQL database with Prisma ORM\n- Jest for testing, ESLint + Prettier for formatting\n\n## Code Conventions\n- Functional React components only\n- Use custom hooks for shared logic\n- All API calls through /lib/api client\n- Database access only through repositories\n\n## File Structure\n- /apps/web - React frontend\n- /apps/api - Express backend\n- /packages/shared - Shared types and utilities\n\n## Common Tasks\n- Run tests: pnpm test\n- Format code: pnpm format\n- Generate types: pnpm generate",
+              "filename": "./.claude/agents/project.md"
+            }
+          },
+          {
+            "instruction": "Commit the agent to version control",
+            "code": {
+              "language": "bash",
+              "content": "git add .claude/agents/project.md && git commit -m \"Add project assistant agent\""
+            }
+          },
+          {
+            "instruction": "Team members pull to get the agent",
+            "note": "The agent will be available to everyone working on the project"
+          }
+        ],
+        "estimatedTime": "15 minutes"
+      },
+      "examples": [
+        {
+          "title": "Project Code Reviewer",
+          "description": "A team agent that enforces project-specific standards",
+          "code": {
+            "language": "markdown",
+            "content": "---\nname: Acme Reviewer\ndescription: Reviews code against our team standards\nmodel: sonnet\nallowed-tools:\n  - Read\n  - Glob\n  - Grep\n---\n\n# Acme Code Reviewer\n\n## Our Standards\n- TypeScript strict mode - no any types\n- React: hooks only, no class components\n- Maximum function length: 50 lines\n- All exports must be typed\n- Test coverage minimum: 80%\n\n## Required Checks\n1. Types are properly defined\n2. Error boundaries for components\n3. Loading states handled\n4. Accessibility (aria labels, etc.)\n5. No console.log in production code\n\n## Naming Conventions\n- Components: PascalCase\n- Hooks: useXxx\n- Utils: camelCase\n- Constants: SCREAMING_SNAKE_CASE",
+            "filename": "./.claude/agents/reviewer.md"
+          },
+          "explanation": "This project-level reviewer knows the team's specific conventions."
+        }
+      ],
+      "tips": [
+        "Include project-specific conventions and architecture",
+        "Document common commands and workflows",
+        "Reference key files and directories",
+        "Update team agents as project standards evolve",
+        "Consider both global (personal) and project (team) agents working together"
+      ],
+      "relatedAchievements": ["agent_creator", "agent_documenter", "prompt_crafter"]
+    },
+    "test_agent": {
+      "longDescription": "A testing agent specializes in writing, improving, and analyzing tests. This agent understands testing frameworks, test design patterns, coverage strategies, and how to write effective tests that catch bugs without being brittle. Testing agents can help establish TDD practices and improve overall test quality across a project.",
+      "whyItMatters": "Good tests are essential for software quality. A dedicated testing agent ensures consistent, thorough test creation aligned with best practices.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Create an agent focused on testing with knowledge of testing frameworks and patterns.",
+        "steps": [
+          {
+            "instruction": "Create a testing-focused agent",
+            "code": {
+              "language": "markdown",
+              "content": "---\nname: Test Writer\ndescription: Creates comprehensive test suites\nmodel: sonnet\ncolor: green\n---\n\n# Test Writing Specialist\n\n## Testing Philosophy\n- Tests are documentation\n- Test behavior, not implementation\n- Each test should have one clear purpose\n- Fast tests run often\n\n## Test Types\n- **Unit Tests**: Isolated function/component testing\n- **Integration Tests**: Multiple units working together\n- **E2E Tests**: Full user flow testing\n\n## Framework Expertise\n- JavaScript: Jest, Vitest, Mocha, Testing Library\n- Python: pytest, unittest\n- General: Cypress, Playwright for E2E\n\n## Test Structure (AAA Pattern)\n```\n// Arrange - Set up test conditions\n// Act - Execute the code under test\n// Assert - Verify the results\n```\n\n## Best Practices\n- Descriptive test names\n- One assertion concept per test\n- Avoid test interdependence\n- Mock external dependencies\n- Test edge cases and errors",
+              "filename": "~/.claude/agents/tester.md"
+            }
+          },
+          {
+            "instruction": "Use the agent to write tests for your code",
+            "note": "Ask Claude to delegate test writing to your test agent"
+          }
+        ],
+        "estimatedTime": "20 minutes"
+      },
+      "examples": [
+        {
+          "title": "Framework-Specific Test Agent",
+          "description": "A test agent specialized for React Testing Library",
+          "code": {
+            "language": "markdown",
+            "content": "---\nname: React Tester\ndescription: React Testing Library expert\nmodel: sonnet\ncolor: green\n---\n\n# React Testing Library Specialist\n\n## Core Principles\n- Test from user's perspective\n- Query by role, label, text - not test IDs\n- Avoid testing implementation details\n- Test accessibility implicitly\n\n## Query Priority\n1. getByRole (most accessible)\n2. getByLabelText\n3. getByText\n4. getByPlaceholderText\n5. getByTestId (last resort)\n\n## Testing Patterns\n```javascript\ntest('user can submit form', async () => {\n  render(<LoginForm />);\n  \n  await userEvent.type(\n    screen.getByRole('textbox', { name: /email/i }),\n    'test@example.com'\n  );\n  \n  await userEvent.click(\n    screen.getByRole('button', { name: /submit/i })\n  );\n  \n  expect(screen.getByText(/success/i)).toBeInTheDocument();\n});\n```\n\n## Async Testing\n- Use waitFor for async state\n- Use findBy* for elements that appear async\n- Always await user events",
+            "filename": "~/.claude/agents/react-tester.md"
+          },
+          "explanation": "Framework-specific agents can provide more relevant, idiomatic test code."
+        }
+      ],
+      "tips": [
+        "Include your preferred testing frameworks in the prompt",
+        "Specify test structure patterns (AAA, Given-When-Then)",
+        "Include examples of good tests in your codebase",
+        "Consider separate agents for unit vs E2E testing",
+        "Test agents should also know how to fix flaky tests"
+      ],
+      "relatedAchievements": ["agent_creator", "specialist", "docs_agent"]
+    },
+    "tool_selector": {
+      "longDescription": "Defining allowed tools for an agent restricts which capabilities it can use, implementing the principle of least privilege. A well-configured allowed-tools list ensures the agent can do its job without having access to unnecessary or potentially risky capabilities. This is especially important for analysis agents that should only read, not modify.",
+      "whyItMatters": "Tool restrictions make agents safer and more predictable by limiting them to only the capabilities they need for their specific purpose.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Add an allowed-tools section to your agent's frontmatter listing only the tools it needs.",
+        "steps": [
+          {
+            "instruction": "Identify which tools your agent actually needs",
+            "note": "Read-only: Read, Glob, Grep. File modification: Write, Edit. Execution: Bash"
+          },
+          {
+            "instruction": "Add the allowed-tools list to frontmatter",
+            "code": {
+              "language": "markdown",
+              "content": "---\nname: Code Analyst\ndescription: Analyzes code without modification capability\nmodel: sonnet\nallowed-tools:\n  - Read\n  - Glob\n  - Grep\n---\n\nYou analyze code. You have read-only access.",
+              "filename": "~/.claude/agents/analyst.md"
+            }
+          },
+          {
+            "instruction": "Test that tool restrictions are enforced",
+            "note": "Try asking the agent to do something requiring unlisted tools"
+          }
+        ],
+        "estimatedTime": "10 minutes"
+      },
+      "examples": [
+        {
+          "title": "Tool Access Patterns",
+          "description": "Common tool configurations for different agent types",
+          "code": {
+            "language": "yaml",
+            "content": "# Read-only analyst\nallowed-tools:\n  - Read\n  - Glob\n  - Grep\n\n# Code modifier\nallowed-tools:\n  - Read\n  - Glob\n  - Grep\n  - Write\n  - Edit\n\n# Full access developer\nallowed-tools:\n  - Read\n  - Glob\n  - Grep\n  - Write\n  - Edit\n  - Bash\n\n# Web researcher\nallowed-tools:\n  - Read\n  - WebFetch\n  - WebSearch"
+          },
+          "explanation": "Match tool access to the agent's purpose - more is not always better."
+        }
+      ],
+      "tips": [
+        "Start with minimal tools and add only what's needed",
+        "Read, Glob, Grep is the standard read-only set",
+        "Avoid giving Bash access unless truly necessary",
+        "WebFetch/WebSearch for agents that need external information",
+        "Reinforce restrictions in the prompt text as well"
+      ],
+      "relatedAchievements": ["sandboxed_agent", "agent_creator", "security_agent"]
+    }
+  }
+}

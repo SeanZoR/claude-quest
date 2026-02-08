@@ -1,0 +1,1150 @@
+{
+  "category": "hooks",
+  "content": {
+    "hooked": {
+      "longDescription": "Hooks are Claude Code's event-driven automation system, allowing you to run custom code when specific events occur during a session. By configuring your first hook in settings.json, you unlock the ability to intercept tool calls, automate workflows, and add custom behaviors to Claude's operations. This foundational capability opens the door to powerful customizations.",
+      "whyItMatters": "Hooks transform Claude Code from a static assistant into a dynamic, customizable development environment. They are the foundation for automation, security, and personalized workflows.",
+      "difficulty": "beginner",
+      "howTo": {
+        "summary": "Add a hooks configuration to your settings.json file to enable event-driven automation.",
+        "steps": [
+          {
+            "instruction": "Open or create your Claude settings file",
+            "code": {
+              "language": "bash",
+              "content": "# For user-level settings\nmkdir -p ~/.claude\ntouch ~/.claude/settings.json\n\n# Or for project-level settings\nmkdir -p .claude\ntouch .claude/settings.json"
+            }
+          },
+          {
+            "instruction": "Add a basic hooks configuration",
+            "code": {
+              "language": "json",
+              "content": "{\n  \"hooks\": {\n    \"PreToolUse\": [\n      {\n        \"matcher\": \"*\",\n        \"command\": \"echo 'Tool about to run: $TOOL_NAME'\"\n      }\n    ]\n  }\n}",
+              "filename": "~/.claude/settings.json"
+            }
+          },
+          {
+            "instruction": "Restart Claude Code to load the new configuration",
+            "note": "Hooks are loaded at session start, so you need to restart for changes to take effect"
+          }
+        ],
+        "estimatedTime": "5 minutes"
+      },
+      "examples": [
+        {
+          "title": "Simple logging hook",
+          "description": "Log every tool that Claude uses to a file",
+          "code": {
+            "language": "json",
+            "content": "{\n  \"hooks\": {\n    \"PostToolUse\": [\n      {\n        \"matcher\": \"*\",\n        \"command\": \"echo \\\"$(date): $TOOL_NAME\\\" >> ~/.claude/tool-log.txt\"\n      }\n    ]\n  }\n}"
+          },
+          "explanation": "This hook fires after every tool use, appending the tool name and timestamp to a log file."
+        }
+      ],
+      "tips": [
+        "Start with simple echo commands to understand how hooks work before adding complex logic",
+        "Use project-level settings.json for project-specific hooks",
+        "Hook environment variables like $TOOL_NAME provide context about the triggering event"
+      ],
+      "relatedAchievements": ["pre_tool_hook", "post_tool_hook", "tool_matcher"]
+    },
+    "pre_tool_hook": {
+      "longDescription": "PreToolUse hooks fire before Claude executes any tool, giving you the opportunity to intercept, validate, or modify operations before they happen. This is your first line of defense for implementing safety checks, validations, or pre-processing logic. PreToolUse hooks can even block tool execution by returning a non-zero exit code.",
+      "whyItMatters": "PreToolUse hooks enable proactive control over Claude's actions. You can prevent unwanted operations, add logging, or validate inputs before any tool runs.",
+      "difficulty": "beginner",
+      "howTo": {
+        "summary": "Configure a PreToolUse hook that runs before tools are executed.",
+        "steps": [
+          {
+            "instruction": "Add a PreToolUse hook to your settings",
+            "code": {
+              "language": "json",
+              "content": "{\n  \"hooks\": {\n    \"PreToolUse\": [\n      {\n        \"matcher\": \"*\",\n        \"command\": \"echo \\\"About to use: $TOOL_NAME\\\"\"\n      }\n    ]\n  }\n}",
+              "filename": "~/.claude/settings.json"
+            }
+          },
+          {
+            "instruction": "Understand the available environment variables",
+            "note": "PreToolUse provides $TOOL_NAME, $TOOL_INPUT (JSON), and $SESSION_ID"
+          },
+          {
+            "instruction": "Test by using any tool and watching the output"
+          }
+        ],
+        "estimatedTime": "5 minutes"
+      },
+      "examples": [
+        {
+          "title": "Pre-execution validation",
+          "description": "Validate tool inputs before execution",
+          "code": {
+            "language": "json",
+            "content": "{\n  \"hooks\": {\n    \"PreToolUse\": [\n      {\n        \"matcher\": \"Bash\",\n        \"command\": \"echo \\\"Bash command: $(echo $TOOL_INPUT | jq -r '.command')\\\"\"\n      }\n    ]\n  }\n}"
+          },
+          "explanation": "This extracts and displays the command that will be executed, helping you understand what Claude is about to do."
+        },
+        {
+          "title": "Blocking dangerous commands",
+          "code": {
+            "language": "json",
+            "content": "{\n  \"hooks\": {\n    \"PreToolUse\": [\n      {\n        \"matcher\": \"Bash\",\n        \"command\": \"if echo $TOOL_INPUT | grep -q 'rm -rf /'; then exit 1; fi\"\n      }\n    ]\n  }\n}"
+          },
+          "explanation": "Returns exit code 1 to block execution if a dangerous pattern is detected."
+        }
+      ],
+      "tips": [
+        "Exit code 0 allows the tool to proceed; non-zero blocks it",
+        "Use jq to parse $TOOL_INPUT JSON for specific parameters",
+        "Combine with tool matchers to target specific tools"
+      ],
+      "relatedAchievements": ["hooked", "post_tool_hook", "safety_net", "validation_hook"]
+    },
+    "post_tool_hook": {
+      "longDescription": "PostToolUse hooks fire after Claude completes a tool execution, giving you access to both the input and output of the operation. This is ideal for logging, auditing, metrics collection, or triggering follow-up actions based on tool results. Unlike PreToolUse hooks, PostToolUse cannot block the operation but can process its results.",
+      "whyItMatters": "PostToolUse hooks enable comprehensive auditing and reactive automation. You can track every action Claude takes and respond to outcomes.",
+      "difficulty": "beginner",
+      "howTo": {
+        "summary": "Configure a PostToolUse hook that runs after tool execution completes.",
+        "steps": [
+          {
+            "instruction": "Add a PostToolUse hook to your settings",
+            "code": {
+              "language": "json",
+              "content": "{\n  \"hooks\": {\n    \"PostToolUse\": [\n      {\n        \"matcher\": \"*\",\n        \"command\": \"echo \\\"Completed: $TOOL_NAME\\\" >> ~/.claude/activity.log\"\n      }\n    ]\n  }\n}",
+              "filename": "~/.claude/settings.json"
+            }
+          },
+          {
+            "instruction": "Access the tool output in your hook",
+            "note": "PostToolUse provides $TOOL_OUTPUT in addition to PreToolUse variables"
+          }
+        ],
+        "estimatedTime": "5 minutes"
+      },
+      "examples": [
+        {
+          "title": "Logging tool results",
+          "code": {
+            "language": "json",
+            "content": "{\n  \"hooks\": {\n    \"PostToolUse\": [\n      {\n        \"matcher\": \"*\",\n        \"command\": \"echo '{\\\"tool\\\": \\\"'$TOOL_NAME'\\\", \\\"time\\\": \\\"'$(date -Iseconds)'\\\"}' >> ~/.claude/tool-audit.jsonl\"\n      }\n    ]\n  }\n}"
+          },
+          "explanation": "Creates a JSONL audit log of every tool execution with timestamps."
+        },
+        {
+          "title": "Error detection hook",
+          "code": {
+            "language": "json",
+            "content": "{\n  \"hooks\": {\n    \"PostToolUse\": [\n      {\n        \"matcher\": \"Bash\",\n        \"command\": \"if [ \\\"$TOOL_EXIT_CODE\\\" != \\\"0\\\" ]; then echo \\\"Command failed!\\\" | terminal-notifier -title \\\"Claude\\\"; fi\"\n      }\n    ]\n  }\n}"
+          },
+          "explanation": "Sends a desktop notification when a bash command fails."
+        }
+      ],
+      "tips": [
+        "$TOOL_OUTPUT contains the full output from the tool execution",
+        "$TOOL_EXIT_CODE is available for Bash commands",
+        "PostToolUse is ideal for audit trails and metrics"
+      ],
+      "relatedAchievements": ["hooked", "pre_tool_hook", "logging_hook", "metrics_collector"]
+    },
+    "tool_matcher": {
+      "longDescription": "Tool matchers allow you to target hooks at specific tools rather than running them for every tool use. Using the matcher field, you can specify exact tool names, wildcard patterns, or even regex patterns to precisely control which tool invocations trigger your hooks. This enables surgical precision in your automation.",
+      "whyItMatters": "Without matchers, hooks would run on every single tool use, causing noise and performance overhead. Matchers let you build focused, efficient automations.",
+      "difficulty": "beginner",
+      "howTo": {
+        "summary": "Use the matcher field to target specific tools in your hooks.",
+        "steps": [
+          {
+            "instruction": "Use an exact tool name as matcher",
+            "code": {
+              "language": "json",
+              "content": "{\n  \"hooks\": {\n    \"PreToolUse\": [\n      {\n        \"matcher\": \"Write\",\n        \"command\": \"echo \\\"Writing file: $(echo $TOOL_INPUT | jq -r '.file_path')\\\"\"\n      }\n    ]\n  }\n}"
+            }
+          },
+          {
+            "instruction": "Use wildcard patterns for broader matching",
+            "code": {
+              "language": "json",
+              "content": "{\n  \"hooks\": {\n    \"PreToolUse\": [\n      {\n        \"matcher\": \"mcp__*\",\n        \"command\": \"echo \\\"MCP tool: $TOOL_NAME\\\"\"\n      }\n    ]\n  }\n}"
+            },
+            "note": "The * wildcard matches any sequence of characters"
+          }
+        ],
+        "estimatedTime": "5 minutes"
+      },
+      "examples": [
+        {
+          "title": "Match file operation tools",
+          "code": {
+            "language": "json",
+            "content": "{\n  \"hooks\": {\n    \"PreToolUse\": [\n      {\n        \"matcher\": \"Write\",\n        \"command\": \"echo \\\"File write operation\\\"\"\n      },\n      {\n        \"matcher\": \"Edit\",\n        \"command\": \"echo \\\"File edit operation\\\"\"\n      },\n      {\n        \"matcher\": \"Read\",\n        \"command\": \"echo \\\"File read operation\\\"\"\n      }\n    ]\n  }\n}"
+          },
+          "explanation": "Separate hooks for different file operations allow specialized handling."
+        },
+        {
+          "title": "Match all MCP tools from a specific server",
+          "code": {
+            "language": "json",
+            "content": "{\n  \"hooks\": {\n    \"PreToolUse\": [\n      {\n        \"matcher\": \"mcp__cloudflare__*\",\n        \"command\": \"echo \\\"Cloudflare MCP operation\\\"\"\n      }\n    ]\n  }\n}"
+          },
+          "explanation": "Matches any tool from the cloudflare MCP server."
+        }
+      ],
+      "tips": [
+        "Use * to match all tools (good for logging)",
+        "Tool names are case-sensitive: use 'Bash' not 'bash'",
+        "MCP tools follow the pattern: mcp__servername__toolname",
+        "Multiple hooks with different matchers can coexist"
+      ],
+      "relatedAchievements": ["hooked", "bash_hook", "pre_tool_hook"]
+    },
+    "bash_hook": {
+      "longDescription": "The Bash tool is one of Claude's most powerful capabilities, executing arbitrary shell commands on your system. Creating a hook specifically for Bash tool usage enables you to monitor, log, validate, or restrict command execution. This is a critical security and auditing measure for any serious Claude Code user.",
+      "whyItMatters": "Bash commands can have significant system impact. Monitoring them specifically helps prevent accidents, enables auditing, and catches potentially dangerous operations.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Create a hook with matcher targeting the Bash tool specifically.",
+        "steps": [
+          {
+            "instruction": "Create a Bash-specific hook",
+            "code": {
+              "language": "json",
+              "content": "{\n  \"hooks\": {\n    \"PreToolUse\": [\n      {\n        \"matcher\": \"Bash\",\n        \"command\": \"echo \\\"[$(date)] Command: $(echo $TOOL_INPUT | jq -r '.command')\\\" >> ~/.claude/bash-commands.log\"\n      }\n    ]\n  }\n}",
+              "filename": "~/.claude/settings.json"
+            }
+          },
+          {
+            "instruction": "Extract and log the specific command being run",
+            "note": "The Bash tool input has a 'command' field containing the shell command"
+          }
+        ],
+        "estimatedTime": "10 minutes"
+      },
+      "examples": [
+        {
+          "title": "Comprehensive Bash auditing",
+          "code": {
+            "language": "json",
+            "content": "{\n  \"hooks\": {\n    \"PreToolUse\": [\n      {\n        \"matcher\": \"Bash\",\n        \"command\": \"CMD=$(echo $TOOL_INPUT | jq -r '.command'); echo '{\\\"time\\\":\\\"'$(date -Iseconds)'\\\",\\\"command\\\":\\\"'$CMD'\\\"}' >> ~/.claude/bash-audit.jsonl\"\n      }\n    ],\n    \"PostToolUse\": [\n      {\n        \"matcher\": \"Bash\",\n        \"command\": \"if [ \\\"$TOOL_EXIT_CODE\\\" != \\\"0\\\" ]; then echo \\\"Failed command logged\\\"; fi\"\n      }\n    ]\n  }\n}"
+          },
+          "explanation": "Creates a JSON log of all commands and tracks failures."
+        },
+        {
+          "title": "Block dangerous patterns",
+          "code": {
+            "language": "json",
+            "content": "{\n  \"hooks\": {\n    \"PreToolUse\": [\n      {\n        \"matcher\": \"Bash\",\n        \"command\": \"CMD=$(echo $TOOL_INPUT | jq -r '.command'); if echo \\\"$CMD\\\" | grep -qE '(rm -rf|mkfs|dd if=)'; then echo 'Blocked dangerous command'; exit 1; fi\"\n      }\n    ]\n  }\n}"
+          },
+          "explanation": "Blocks commands matching dangerous patterns like rm -rf."
+        }
+      ],
+      "tips": [
+        "Use jq to safely parse the JSON input",
+        "Consider both PreToolUse (prevention) and PostToolUse (auditing) hooks",
+        "The Bash tool also provides 'timeout' and 'description' fields"
+      ],
+      "relatedAchievements": ["tool_matcher", "safety_net", "logging_hook"]
+    },
+    "session_hook": {
+      "longDescription": "Session hooks fire at the start or end of a Claude Code session, enabling initialization and cleanup workflows. SessionStart hooks can set up your environment, load context, or display welcome messages. SessionEnd hooks can save session state, generate reports, or clean up temporary resources.",
+      "whyItMatters": "Session boundaries are natural points for setup and teardown. These hooks enable consistent environment configuration and proper resource management.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Configure SessionStart and/or SessionEnd hooks for initialization and cleanup.",
+        "steps": [
+          {
+            "instruction": "Add a SessionStart hook",
+            "code": {
+              "language": "json",
+              "content": "{\n  \"hooks\": {\n    \"SessionStart\": [\n      {\n        \"command\": \"echo \\\"Session started: $SESSION_ID at $(date)\\\"\"\n      }\n    ]\n  }\n}",
+              "filename": "~/.claude/settings.json"
+            }
+          },
+          {
+            "instruction": "Add a SessionEnd hook for cleanup",
+            "code": {
+              "language": "json",
+              "content": "{\n  \"hooks\": {\n    \"SessionEnd\": [\n      {\n        \"command\": \"echo \\\"Session $SESSION_ID ended at $(date)\\\" >> ~/.claude/sessions.log\"\n      }\n    ]\n  }\n}"
+            }
+          }
+        ],
+        "estimatedTime": "10 minutes"
+      },
+      "examples": [
+        {
+          "title": "Session tracking",
+          "code": {
+            "language": "json",
+            "content": "{\n  \"hooks\": {\n    \"SessionStart\": [\n      {\n        \"command\": \"echo '{\\\"session\\\":\\\"'$SESSION_ID'\\\",\\\"start\\\":\\\"'$(date -Iseconds)'\\\",\\\"cwd\\\":\\\"'$(pwd)'\\\"}' >> ~/.claude/sessions.jsonl\"\n      }\n    ],\n    \"SessionEnd\": [\n      {\n        \"command\": \"echo '{\\\"session\\\":\\\"'$SESSION_ID'\\\",\\\"end\\\":\\\"'$(date -Iseconds)'\\\"}' >> ~/.claude/sessions.jsonl\"\n      }\n    ]\n  }\n}"
+          },
+          "explanation": "Creates a JSONL log tracking session start times, end times, and working directories."
+        },
+        {
+          "title": "Environment setup",
+          "code": {
+            "language": "json",
+            "content": "{\n  \"hooks\": {\n    \"SessionStart\": [\n      {\n        \"command\": \"if [ -f .claude-env ]; then source .claude-env; fi\"\n      }\n    ]\n  }\n}"
+          },
+          "explanation": "Sources a project-specific environment file at session start."
+        }
+      ],
+      "tips": [
+        "SessionStart runs before the first user message is processed",
+        "SessionEnd may not fire if the process is killed forcefully",
+        "Use SessionStart for welcome messages or context loading"
+      ],
+      "relatedAchievements": ["hooked", "stop_hook", "notification_system"]
+    },
+    "stop_hook": {
+      "longDescription": "The Stop hook fires when Claude finishes processing and returns control to the user. This is different from SessionEnd - Stop fires after each complete response, not when the session closes. This enables you to run actions after Claude completes a task, such as notifications, status updates, or validation checks.",
+      "whyItMatters": "Stop hooks let you react when Claude finishes work, perfect for notifications or post-completion checks without waiting for full session end.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Configure a Stop hook that fires after Claude completes each response.",
+        "steps": [
+          {
+            "instruction": "Add a Stop hook to your settings",
+            "code": {
+              "language": "json",
+              "content": "{\n  \"hooks\": {\n    \"Stop\": [\n      {\n        \"command\": \"echo \\\"Claude finished at $(date)\\\"\"\n      }\n    ]\n  }\n}",
+              "filename": "~/.claude/settings.json"
+            }
+          }
+        ],
+        "estimatedTime": "5 minutes"
+      },
+      "examples": [
+        {
+          "title": "Task completion notification",
+          "code": {
+            "language": "json",
+            "content": "{\n  \"hooks\": {\n    \"Stop\": [\n      {\n        \"command\": \"terminal-notifier -title 'Claude' -message 'Task completed' -sound default\"\n      }\n    ]\n  }\n}"
+          },
+          "explanation": "Sends a macOS notification when Claude finishes working (requires terminal-notifier)."
+        },
+        {
+          "title": "Play a sound on completion",
+          "code": {
+            "language": "json",
+            "content": "{\n  \"hooks\": {\n    \"Stop\": [\n      {\n        \"command\": \"afplay /System/Library/Sounds/Glass.aiff\"\n      }\n    ]\n  }\n}"
+          },
+          "explanation": "Plays a system sound when Claude completes (macOS)."
+        }
+      ],
+      "tips": [
+        "Stop fires after each complete response, not just session end",
+        "Great for getting notified about long-running tasks",
+        "Different from SessionEnd which only fires once when closing"
+      ],
+      "relatedAchievements": ["session_hook", "notification_hook", "notification_system"]
+    },
+    "permission_hook": {
+      "longDescription": "PermissionRequest hooks fire when Claude requests permission to perform a restricted action. This gives you programmatic control over permission decisions, enabling automated approval workflows, logging of permission requests, or custom UI for handling sensitive operations. You can auto-approve certain patterns while flagging others.",
+      "whyItMatters": "PermissionRequest hooks enable sophisticated access control beyond simple allow/deny rules. You can implement context-aware permission policies.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Configure a PermissionRequest hook to handle permission requests programmatically.",
+        "steps": [
+          {
+            "instruction": "Add a PermissionRequest hook",
+            "code": {
+              "language": "json",
+              "content": "{\n  \"hooks\": {\n    \"PermissionRequest\": [\n      {\n        \"matcher\": \"*\",\n        \"command\": \"echo \\\"Permission requested for: $TOOL_NAME\\\" >> ~/.claude/permissions.log\"\n      }\n    ]\n  }\n}",
+              "filename": "~/.claude/settings.json"
+            }
+          },
+          {
+            "instruction": "Understand the permission context variables",
+            "note": "$TOOL_NAME, $TOOL_INPUT, and $PERMISSION_TYPE are available"
+          }
+        ],
+        "estimatedTime": "10 minutes"
+      },
+      "examples": [
+        {
+          "title": "Log all permission requests",
+          "code": {
+            "language": "json",
+            "content": "{\n  \"hooks\": {\n    \"PermissionRequest\": [\n      {\n        \"matcher\": \"*\",\n        \"command\": \"echo '{\\\"time\\\":\\\"'$(date -Iseconds)'\\\",\\\"tool\\\":\\\"'$TOOL_NAME'\\\",\\\"type\\\":\\\"'$PERMISSION_TYPE'\\\"}' >> ~/.claude/permission-audit.jsonl\"\n      }\n    ]\n  }\n}"
+          },
+          "explanation": "Creates an audit log of all permission requests for compliance tracking."
+        },
+        {
+          "title": "Custom notification for permission requests",
+          "code": {
+            "language": "json",
+            "content": "{\n  \"hooks\": {\n    \"PermissionRequest\": [\n      {\n        \"matcher\": \"Bash\",\n        \"command\": \"terminal-notifier -title 'Permission Request' -message 'Claude wants to run a command' -sound Basso\"\n      }\n    ]\n  }\n}"
+          },
+          "explanation": "Sends a notification when Claude requests permission to run bash commands."
+        }
+      ],
+      "tips": [
+        "PermissionRequest hooks cannot auto-approve; they only observe",
+        "Combine with allowedTools in settings for actual permissions",
+        "Great for auditing and alerting on sensitive requests"
+      ],
+      "relatedAchievements": ["hooked", "safety_net", "notification_system"]
+    },
+    "notification_hook": {
+      "longDescription": "The Notification hook type allows you to intercept and customize how Claude Code notifications are handled. Instead of relying on default system notifications, you can route them to custom scripts, external services, or different notification channels based on your preferences and workflow.",
+      "whyItMatters": "Default notifications may not fit your workflow. Custom notification handlers let you route alerts where they are most useful - Slack, email, or specialized tools.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Configure a Notification hook to customize how notifications are handled.",
+        "steps": [
+          {
+            "instruction": "Add a Notification hook",
+            "code": {
+              "language": "json",
+              "content": "{\n  \"hooks\": {\n    \"Notification\": [\n      {\n        \"command\": \"echo \\\"Notification: $NOTIFICATION_MESSAGE\\\" >> ~/.claude/notifications.log\"\n      }\n    ]\n  }\n}",
+              "filename": "~/.claude/settings.json"
+            }
+          },
+          {
+            "instruction": "Access notification details",
+            "note": "$NOTIFICATION_MESSAGE and $NOTIFICATION_TYPE are available"
+          }
+        ],
+        "estimatedTime": "10 minutes"
+      },
+      "examples": [
+        {
+          "title": "Route to external service",
+          "code": {
+            "language": "json",
+            "content": "{\n  \"hooks\": {\n    \"Notification\": [\n      {\n        \"command\": \"curl -s -X POST https://ntfy.sh/my-claude-topic -d \\\"$NOTIFICATION_MESSAGE\\\"\"\n      }\n    ]\n  }\n}"
+          },
+          "explanation": "Sends notifications to ntfy.sh for mobile push notifications."
+        },
+        {
+          "title": "Filtered notification handling",
+          "code": {
+            "language": "json",
+            "content": "{\n  \"hooks\": {\n    \"Notification\": [\n      {\n        \"command\": \"if echo \\\"$NOTIFICATION_TYPE\\\" | grep -q 'error'; then terminal-notifier -title 'Claude Error' -message \\\"$NOTIFICATION_MESSAGE\\\" -sound Basso; fi\"\n      }\n    ]\n  }\n}"
+          },
+          "explanation": "Only shows desktop notifications for error-type notifications."
+        }
+      ],
+      "tips": [
+        "Use ntfy.sh, pushover, or similar for mobile notifications",
+        "Filter by $NOTIFICATION_TYPE to handle different notification levels",
+        "Consider sound effects for urgent notifications"
+      ],
+      "relatedAchievements": ["hooked", "notification_system", "stop_hook"]
+    },
+    "logging_hook": {
+      "longDescription": "Logging hooks create an audit trail of Claude's tool usage, capturing what tools were used, when, and with what parameters. This is essential for compliance, debugging, and understanding how Claude interacts with your system. A well-designed logging hook provides visibility into every action taken.",
+      "whyItMatters": "Without logging, Claude's actions are ephemeral. Logs enable post-hoc analysis, compliance auditing, and debugging of unexpected behavior.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Create hooks that log tool usage to files for auditing and debugging.",
+        "steps": [
+          {
+            "instruction": "Create a comprehensive logging hook",
+            "code": {
+              "language": "json",
+              "content": "{\n  \"hooks\": {\n    \"PostToolUse\": [\n      {\n        \"matcher\": \"*\",\n        \"command\": \"echo '{\\\"time\\\":\\\"'$(date -Iseconds)'\\\",\\\"tool\\\":\\\"'$TOOL_NAME'\\\",\\\"session\\\":\\\"'$SESSION_ID'\\\"}' >> ~/.claude/audit.jsonl\"\n      }\n    ]\n  }\n}",
+              "filename": "~/.claude/settings.json"
+            }
+          },
+          {
+            "instruction": "Choose a structured log format",
+            "note": "JSONL (JSON Lines) format works well with tools like jq for analysis"
+          }
+        ],
+        "estimatedTime": "10 minutes"
+      },
+      "examples": [
+        {
+          "title": "Full audit logging",
+          "code": {
+            "language": "json",
+            "content": "{\n  \"hooks\": {\n    \"PreToolUse\": [\n      {\n        \"matcher\": \"*\",\n        \"command\": \"~/.claude/scripts/log-tool.sh pre \\\"$TOOL_NAME\\\" \\\"$TOOL_INPUT\\\"\"\n      }\n    ],\n    \"PostToolUse\": [\n      {\n        \"matcher\": \"*\",\n        \"command\": \"~/.claude/scripts/log-tool.sh post \\\"$TOOL_NAME\\\" \\\"$TOOL_OUTPUT\\\" \\\"$TOOL_EXIT_CODE\\\"\"\n      }\n    ]\n  }\n}"
+          },
+          "explanation": "Delegates to a script for comprehensive pre and post logging."
+        },
+        {
+          "title": "Logging script",
+          "code": {
+            "language": "bash",
+            "content": "#!/bin/bash\n# ~/.claude/scripts/log-tool.sh\nPHASE=$1\nTOOL=$2\nDATA=$3\nEXIT=$4\n\nLOG_FILE=~/.claude/tool-audit.jsonl\nTIMESTAMP=$(date -Iseconds)\n\nif [ \"$PHASE\" = \"pre\" ]; then\n  echo '{\"time\":\"'$TIMESTAMP'\",\"phase\":\"pre\",\"tool\":\"'$TOOL'\"}' >> $LOG_FILE\nelse\n  echo '{\"time\":\"'$TIMESTAMP'\",\"phase\":\"post\",\"tool\":\"'$TOOL'\",\"exit\":\"'$EXIT'\"}' >> $LOG_FILE\nfi",
+            "filename": "~/.claude/scripts/log-tool.sh"
+          },
+          "explanation": "A dedicated script for structured logging with timestamps and phases."
+        }
+      ],
+      "tips": [
+        "Use JSONL format for easy querying with jq",
+        "Include session IDs to correlate logs across sessions",
+        "Consider log rotation to manage file size",
+        "Log both pre and post for complete visibility"
+      ],
+      "relatedAchievements": ["post_tool_hook", "bash_hook", "metrics_collector"]
+    },
+    "safety_net": {
+      "longDescription": "Safety net hooks act as guardrails, preventing Claude from executing operations that could be dangerous or unintended. By checking tool inputs against blocklists or validation rules, these hooks can block operations before they run. This is a crucial layer of protection when working with file systems, databases, or external services.",
+      "whyItMatters": "Even with the best intentions, mistakes happen. Safety net hooks provide a last line of defense against accidental destructive operations.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Create PreToolUse hooks that check for dangerous patterns and block execution.",
+        "steps": [
+          {
+            "instruction": "Create a safety hook that blocks dangerous commands",
+            "code": {
+              "language": "json",
+              "content": "{\n  \"hooks\": {\n    \"PreToolUse\": [\n      {\n        \"matcher\": \"Bash\",\n        \"command\": \"~/.claude/scripts/safety-check.sh\"\n      }\n    ]\n  }\n}",
+              "filename": "~/.claude/settings.json"
+            }
+          },
+          {
+            "instruction": "Create the safety check script",
+            "code": {
+              "language": "bash",
+              "content": "#!/bin/bash\n# ~/.claude/scripts/safety-check.sh\n\nCMD=$(echo \"$TOOL_INPUT\" | jq -r '.command')\n\n# Block patterns\nDANGEROUS_PATTERNS=(\n  'rm -rf /'\n  'rm -rf ~'\n  'mkfs'\n  'dd if=/dev/zero'\n  '> /dev/sda'\n  'chmod -R 777 /'\n)\n\nfor pattern in \"${DANGEROUS_PATTERNS[@]}\"; do\n  if echo \"$CMD\" | grep -q \"$pattern\"; then\n    echo \"BLOCKED: Dangerous pattern detected: $pattern\"\n    exit 1\n  fi\ndone\n\nexit 0",
+              "filename": "~/.claude/scripts/safety-check.sh"
+            }
+          },
+          {
+            "instruction": "Make the script executable",
+            "code": {
+              "language": "bash",
+              "content": "chmod +x ~/.claude/scripts/safety-check.sh"
+            }
+          }
+        ],
+        "estimatedTime": "15 minutes"
+      },
+      "examples": [
+        {
+          "title": "Path-based protection",
+          "code": {
+            "language": "json",
+            "content": "{\n  \"hooks\": {\n    \"PreToolUse\": [\n      {\n        \"matcher\": \"Write\",\n        \"command\": \"FILE=$(echo $TOOL_INPUT | jq -r '.file_path'); if echo \\\"$FILE\\\" | grep -qE '^/(etc|var|usr)'; then echo 'Cannot write to system directories'; exit 1; fi\"\n      }\n    ]\n  }\n}"
+          },
+          "explanation": "Blocks file writes to system directories."
+        },
+        {
+          "title": "Production safeguard",
+          "code": {
+            "language": "json",
+            "content": "{\n  \"hooks\": {\n    \"PreToolUse\": [\n      {\n        \"matcher\": \"Bash\",\n        \"command\": \"if echo \\\"$TOOL_INPUT\\\" | grep -qiE '(production|prod-db|--prod)'; then echo 'Production operation blocked'; exit 1; fi\"\n      }\n    ]\n  }\n}"
+          },
+          "explanation": "Blocks commands that appear to target production systems."
+        }
+      ],
+      "tips": [
+        "Exit code 1 blocks the operation; 0 allows it",
+        "Use a script file for complex validation logic",
+        "Consider both command patterns and path patterns",
+        "Test safety hooks carefully before relying on them"
+      ],
+      "relatedAchievements": ["pre_tool_hook", "file_guardian", "validation_hook"]
+    },
+    "validation_hook": {
+      "longDescription": "Validation hooks inspect tool inputs or outputs to ensure they meet specific criteria before allowing operations to proceed or flagging issues after completion. Unlike simple pattern blocking, validation hooks can perform complex checks like schema validation, linting, or format verification.",
+      "whyItMatters": "Validation hooks ensure data quality and format correctness. They catch malformed inputs before they cause problems and verify outputs meet expectations.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Create hooks that validate tool inputs against schemas or rules.",
+        "steps": [
+          {
+            "instruction": "Create a validation hook for JSON inputs",
+            "code": {
+              "language": "json",
+              "content": "{\n  \"hooks\": {\n    \"PreToolUse\": [\n      {\n        \"matcher\": \"Write\",\n        \"command\": \"~/.claude/scripts/validate-write.sh\"\n      }\n    ]\n  }\n}",
+              "filename": "~/.claude/settings.json"
+            }
+          },
+          {
+            "instruction": "Create the validation script",
+            "code": {
+              "language": "bash",
+              "content": "#!/bin/bash\n# ~/.claude/scripts/validate-write.sh\n\nFILE=$(echo \"$TOOL_INPUT\" | jq -r '.file_path')\nCONTENT=$(echo \"$TOOL_INPUT\" | jq -r '.content')\n\n# Validate JSON files\nif [[ \"$FILE\" == *.json ]]; then\n  if ! echo \"$CONTENT\" | jq . > /dev/null 2>&1; then\n    echo \"ERROR: Invalid JSON content for $FILE\"\n    exit 1\n  fi\nfi\n\n# Validate package.json has required fields\nif [[ \"$FILE\" == */package.json ]]; then\n  if ! echo \"$CONTENT\" | jq -e '.name and .version' > /dev/null 2>&1; then\n    echo \"ERROR: package.json missing name or version\"\n    exit 1\n  fi\nfi\n\nexit 0",
+              "filename": "~/.claude/scripts/validate-write.sh"
+            }
+          }
+        ],
+        "estimatedTime": "15 minutes"
+      },
+      "examples": [
+        {
+          "title": "YAML validation",
+          "code": {
+            "language": "bash",
+            "content": "#!/bin/bash\n# Validate YAML files before writing\nFILE=$(echo \"$TOOL_INPUT\" | jq -r '.file_path')\nCONTENT=$(echo \"$TOOL_INPUT\" | jq -r '.content')\n\nif [[ \"$FILE\" == *.yaml ]] || [[ \"$FILE\" == *.yml ]]; then\n  if ! echo \"$CONTENT\" | python3 -c 'import yaml, sys; yaml.safe_load(sys.stdin)' 2>/dev/null; then\n    echo \"ERROR: Invalid YAML syntax\"\n    exit 1\n  fi\nfi"
+          },
+          "explanation": "Validates YAML syntax before allowing writes to .yaml files."
+        },
+        {
+          "title": "Output validation",
+          "code": {
+            "language": "json",
+            "content": "{\n  \"hooks\": {\n    \"PostToolUse\": [\n      {\n        \"matcher\": \"Bash\",\n        \"command\": \"if echo \\\"$TOOL_OUTPUT\\\" | grep -qi 'error\\\\|fatal\\\\|failed'; then echo 'WARNING: Output contains error indicators' >&2; fi\"\n      }\n    ]\n  }\n}"
+          },
+          "explanation": "Checks command output for error indicators and warns if found."
+        }
+      ],
+      "tips": [
+        "Use language-specific validators (jq for JSON, python for YAML)",
+        "PreToolUse validation can prevent bad data from being written",
+        "PostToolUse validation can catch errors in outputs",
+        "Consider schema validation for structured data"
+      ],
+      "relatedAchievements": ["pre_tool_hook", "post_tool_hook", "safety_net"]
+    },
+    "hook_scripter": {
+      "longDescription": "While inline commands work for simple hooks, complex logic deserves dedicated scripts. Hook scripter achievement recognizes creating hooks that delegate to external script files. This approach enables proper error handling, reusable logic, version control of hook behavior, and the use of any programming language.",
+      "whyItMatters": "Scripts enable sophisticated hook logic that would be unwieldy as inline commands. They can be tested, versioned, and maintained independently.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Create hooks that invoke external script files for complex operations.",
+        "steps": [
+          {
+            "instruction": "Create a scripts directory",
+            "code": {
+              "language": "bash",
+              "content": "mkdir -p ~/.claude/scripts"
+            }
+          },
+          {
+            "instruction": "Create a hook script",
+            "code": {
+              "language": "bash",
+              "content": "#!/bin/bash\n# ~/.claude/scripts/pre-bash.sh\n\n# Access hook environment variables\nTOOL_NAME=\"$TOOL_NAME\"\nTOOL_INPUT=\"$TOOL_INPUT\"\nSESSION_ID=\"$SESSION_ID\"\n\n# Your logic here\nCOMMAND=$(echo \"$TOOL_INPUT\" | jq -r '.command')\necho \"Processing command: $COMMAND\"\n\n# Return 0 to allow, 1 to block\nexit 0",
+              "filename": "~/.claude/scripts/pre-bash.sh"
+            }
+          },
+          {
+            "instruction": "Make the script executable and reference it in settings",
+            "code": {
+              "language": "bash",
+              "content": "chmod +x ~/.claude/scripts/pre-bash.sh"
+            }
+          },
+          {
+            "instruction": "Configure the hook to use the script",
+            "code": {
+              "language": "json",
+              "content": "{\n  \"hooks\": {\n    \"PreToolUse\": [\n      {\n        \"matcher\": \"Bash\",\n        \"command\": \"~/.claude/scripts/pre-bash.sh\"\n      }\n    ]\n  }\n}",
+              "filename": "~/.claude/settings.json"
+            }
+          }
+        ],
+        "estimatedTime": "15 minutes"
+      },
+      "examples": [
+        {
+          "title": "Python hook script",
+          "code": {
+            "language": "python",
+            "content": "#!/usr/bin/env python3\n# ~/.claude/scripts/validate-write.py\nimport json\nimport os\nimport sys\n\ntool_input = json.loads(os.environ.get('TOOL_INPUT', '{}'))\nfile_path = tool_input.get('file_path', '')\ncontent = tool_input.get('content', '')\n\n# Validate JSON files\nif file_path.endswith('.json'):\n    try:\n        json.loads(content)\n    except json.JSONDecodeError as e:\n        print(f'Invalid JSON: {e}', file=sys.stderr)\n        sys.exit(1)\n\nsys.exit(0)",
+            "filename": "~/.claude/scripts/validate-write.py"
+          },
+          "explanation": "A Python script for more complex validation logic."
+        },
+        {
+          "title": "Node.js hook script",
+          "code": {
+            "language": "javascript",
+            "content": "#!/usr/bin/env node\n// ~/.claude/scripts/check-deps.js\nconst { TOOL_INPUT, TOOL_NAME } = process.env;\n\ntry {\n  const input = JSON.parse(TOOL_INPUT);\n  console.log(`Tool: ${TOOL_NAME}`);\n  console.log(`Input: ${JSON.stringify(input, null, 2)}`);\n  process.exit(0);\n} catch (e) {\n  console.error('Error processing input:', e.message);\n  process.exit(1);\n}",
+            "filename": "~/.claude/scripts/check-deps.js"
+          },
+          "explanation": "A Node.js script for JavaScript-based hook logic."
+        }
+      ],
+      "tips": [
+        "Scripts can be written in any language (bash, python, node, etc.)",
+        "Hook environment variables are available as script environment variables",
+        "Use absolute paths or ~ for reliability",
+        "Remember to make scripts executable with chmod +x"
+      ],
+      "relatedAchievements": ["hooked", "logging_hook", "validation_hook"]
+    },
+    "conditional_hook": {
+      "longDescription": "Conditional hooks use environment variables, system state, or other conditions to vary their behavior. Rather than always running the same logic, conditional hooks can adapt based on context - different behavior in development vs production, different handling based on current directory, or varying logic based on time of day.",
+      "whyItMatters": "One-size-fits-all hooks are limiting. Conditional logic lets hooks adapt to context, reducing the need for multiple similar hooks.",
+      "difficulty": "advanced",
+      "howTo": {
+        "summary": "Create hooks with conditional logic based on environment or context.",
+        "steps": [
+          {
+            "instruction": "Create a hook with environment-based conditions",
+            "code": {
+              "language": "json",
+              "content": "{\n  \"hooks\": {\n    \"PreToolUse\": [\n      {\n        \"matcher\": \"Bash\",\n        \"command\": \"if [ \\\"$CLAUDE_ENV\\\" = 'production' ]; then echo 'Extra caution: production mode'; fi\"\n      }\n    ]\n  }\n}",
+              "filename": "~/.claude/settings.json"
+            }
+          },
+          {
+            "instruction": "Set environment variables for context",
+            "code": {
+              "language": "bash",
+              "content": "# In your shell profile\nexport CLAUDE_ENV=development\n\n# Or per-project in .envrc (with direnv)\nexport CLAUDE_ENV=production"
+            }
+          }
+        ],
+        "estimatedTime": "15 minutes"
+      },
+      "examples": [
+        {
+          "title": "Directory-based conditions",
+          "code": {
+            "language": "json",
+            "content": "{\n  \"hooks\": {\n    \"PreToolUse\": [\n      {\n        \"matcher\": \"Bash\",\n        \"command\": \"if pwd | grep -q '/production/'; then echo 'WARNING: In production directory'; sleep 2; fi\"\n      }\n    ]\n  }\n}"
+          },
+          "explanation": "Adds a warning delay when working in production directories."
+        },
+        {
+          "title": "Time-based conditions",
+          "code": {
+            "language": "bash",
+            "content": "#!/bin/bash\n# ~/.claude/scripts/time-aware-hook.sh\nHOUR=$(date +%H)\n\nif [ $HOUR -ge 22 ] || [ $HOUR -lt 6 ]; then\n  echo 'Late night coding detected - extra careful mode'\n  # Could add stricter validation here\nfi\n\nexit 0",
+            "filename": "~/.claude/scripts/time-aware-hook.sh"
+          },
+          "explanation": "Varies behavior based on time of day."
+        },
+        {
+          "title": "Git branch conditions",
+          "code": {
+            "language": "json",
+            "content": "{\n  \"hooks\": {\n    \"PreToolUse\": [\n      {\n        \"matcher\": \"Bash\",\n        \"command\": \"BRANCH=$(git rev-parse --abbrev-ref HEAD 2>/dev/null); if [ \\\"$BRANCH\\\" = 'main' ]; then echo 'On main branch - be careful'; fi\"\n      }\n    ]\n  }\n}"
+          },
+          "explanation": "Adds warnings when working on protected branches."
+        }
+      ],
+      "tips": [
+        "Use environment variables for deployment-stage awareness",
+        "Check git branch for repository context",
+        "pwd gives current directory for path-based conditions",
+        "Complex conditions are better in script files"
+      ],
+      "relatedAchievements": ["hook_scripter", "pre_tool_hook", "safety_net"]
+    },
+    "file_guardian": {
+      "longDescription": "File guardian hooks protect specific files or directories from modification by Claude. By intercepting Write and Edit tool uses and checking the target paths against a protected list, these hooks prevent accidental modifications to critical configuration files, production configs, or sensitive data.",
+      "whyItMatters": "Some files should never be modified accidentally. File guardians provide protection for your most critical files regardless of how convincing a request might seem.",
+      "difficulty": "advanced",
+      "howTo": {
+        "summary": "Create hooks that block writes to protected files and directories.",
+        "steps": [
+          {
+            "instruction": "Create a file guardian hook",
+            "code": {
+              "language": "json",
+              "content": "{\n  \"hooks\": {\n    \"PreToolUse\": [\n      {\n        \"matcher\": \"Write\",\n        \"command\": \"~/.claude/scripts/file-guardian.sh\"\n      },\n      {\n        \"matcher\": \"Edit\",\n        \"command\": \"~/.claude/scripts/file-guardian.sh\"\n      }\n    ]\n  }\n}",
+              "filename": "~/.claude/settings.json"
+            }
+          },
+          {
+            "instruction": "Create the guardian script",
+            "code": {
+              "language": "bash",
+              "content": "#!/bin/bash\n# ~/.claude/scripts/file-guardian.sh\n\nFILE=$(echo \"$TOOL_INPUT\" | jq -r '.file_path // .path')\n\n# Protected patterns\nPROTECTED=(\n  '.env'\n  '.env.production'\n  'credentials.json'\n  'secrets.yaml'\n  '/etc/*'\n  '~/.ssh/*'\n  '*.pem'\n  '*.key'\n)\n\nfor pattern in \"${PROTECTED[@]}\"; do\n  if [[ \"$FILE\" == $pattern ]]; then\n    echo \"BLOCKED: $FILE is protected\"\n    exit 1\n  fi\ndone\n\nexit 0",
+              "filename": "~/.claude/scripts/file-guardian.sh"
+            }
+          }
+        ],
+        "estimatedTime": "20 minutes"
+      },
+      "examples": [
+        {
+          "title": "Project-specific protection",
+          "code": {
+            "language": "bash",
+            "content": "#!/bin/bash\n# .claude/scripts/project-guardian.sh\n\nFILE=$(echo \"$TOOL_INPUT\" | jq -r '.file_path // .path')\n\n# Project-specific protected files\nPROTECTED_FILES=(\n  'config/production.yaml'\n  'database/migrations/*'\n  '.github/workflows/*'\n)\n\nfor protected in \"${PROTECTED_FILES[@]}\"; do\n  if [[ \"$FILE\" == *\"$protected\" ]]; then\n    echo \"PROTECTED: $FILE requires manual editing\"\n    exit 1\n  fi\ndone",
+            "filename": ".claude/scripts/project-guardian.sh"
+          },
+          "explanation": "Protects project-specific critical files."
+        },
+        {
+          "title": "Read-only directories",
+          "code": {
+            "language": "json",
+            "content": "{\n  \"hooks\": {\n    \"PreToolUse\": [\n      {\n        \"matcher\": \"Write\",\n        \"command\": \"FILE=$(echo $TOOL_INPUT | jq -r '.file_path'); if echo \\\"$FILE\\\" | grep -qE '^(vendor|node_modules|dist)/'; then echo 'Cannot modify generated/vendor files'; exit 1; fi\"\n      }\n    ]\n  }\n}"
+          },
+          "explanation": "Blocks modifications to vendor and generated directories."
+        }
+      ],
+      "tips": [
+        "Protect both Write and Edit tools for complete coverage",
+        "Use glob patterns for directory-wide protection",
+        "Consider a .protected file for project-specific lists",
+        "Test guardian rules carefully to avoid blocking legitimate work"
+      ],
+      "relatedAchievements": ["safety_net", "pre_tool_hook", "validation_hook"]
+    },
+    "hook_chainer": {
+      "longDescription": "Hook chaining involves multiple hooks configured for the same event type, each handling different aspects of processing. The hooks run in order, allowing for separation of concerns - one hook for logging, another for validation, a third for transformation. This modular approach makes hooks more maintainable and reusable.",
+      "whyItMatters": "Monolithic hooks become unwieldy. Chaining lets you compose simple, focused hooks into sophisticated pipelines while keeping each piece testable.",
+      "difficulty": "advanced",
+      "howTo": {
+        "summary": "Configure multiple hooks for the same event type to create processing pipelines.",
+        "steps": [
+          {
+            "instruction": "Add multiple hooks for the same event",
+            "code": {
+              "language": "json",
+              "content": "{\n  \"hooks\": {\n    \"PreToolUse\": [\n      {\n        \"matcher\": \"*\",\n        \"command\": \"~/.claude/scripts/log-pre.sh\",\n        \"description\": \"Logging hook\"\n      },\n      {\n        \"matcher\": \"Bash\",\n        \"command\": \"~/.claude/scripts/validate-bash.sh\",\n        \"description\": \"Bash validation\"\n      },\n      {\n        \"matcher\": \"Write\",\n        \"command\": \"~/.claude/scripts/validate-write.sh\",\n        \"description\": \"Write validation\"\n      }\n    ]\n  }\n}",
+              "filename": "~/.claude/settings.json"
+            }
+          },
+          {
+            "instruction": "Understand execution order",
+            "note": "Hooks execute in array order. If any hook returns non-zero, execution stops."
+          }
+        ],
+        "estimatedTime": "20 minutes"
+      },
+      "examples": [
+        {
+          "title": "Layered validation pipeline",
+          "code": {
+            "language": "json",
+            "content": "{\n  \"hooks\": {\n    \"PreToolUse\": [\n      {\n        \"matcher\": \"*\",\n        \"command\": \"echo \\\"[1/3] Logging: $TOOL_NAME\\\"\"\n      },\n      {\n        \"matcher\": \"*\",\n        \"command\": \"echo \\\"[2/3] Security check\\\"; ~/.claude/scripts/security-check.sh\"\n      },\n      {\n        \"matcher\": \"*\",\n        \"command\": \"echo \\\"[3/3] Validation\\\"; ~/.claude/scripts/validate.sh\"\n      }\n    ]\n  }\n}"
+          },
+          "explanation": "Three-stage pipeline: log, security check, then validate."
+        },
+        {
+          "title": "Specialized handlers",
+          "code": {
+            "language": "json",
+            "content": "{\n  \"hooks\": {\n    \"PostToolUse\": [\n      {\n        \"matcher\": \"*\",\n        \"command\": \"~/.claude/scripts/metrics.sh\",\n        \"description\": \"Collect metrics\"\n      },\n      {\n        \"matcher\": \"Bash\",\n        \"command\": \"~/.claude/scripts/bash-audit.sh\",\n        \"description\": \"Bash-specific audit\"\n      },\n      {\n        \"matcher\": \"Write\",\n        \"command\": \"~/.claude/scripts/file-audit.sh\",\n        \"description\": \"File change audit\"\n      }\n    ]\n  }\n}"
+          },
+          "explanation": "Combines general metrics with tool-specific auditing."
+        }
+      ],
+      "tips": [
+        "General hooks (matcher: *) should come before specific hooks",
+        "Use description field to document each hook's purpose",
+        "If one hook blocks (exit 1), subsequent hooks don't run",
+        "Keep each hook focused on one responsibility"
+      ],
+      "relatedAchievements": ["hooked", "logging_hook", "validation_hook"]
+    },
+    "notification_system": {
+      "longDescription": "A notification system goes beyond simple logging to actively alert you about important events. This might include desktop notifications when tasks complete, Slack messages for errors, or push notifications to your phone. The key is routing the right information to the right channel at the right time.",
+      "whyItMatters": "Active notifications let you step away from the terminal while Claude works. You'll know immediately when attention is needed or tasks are complete.",
+      "difficulty": "advanced",
+      "howTo": {
+        "summary": "Create hooks that send notifications through various channels based on events.",
+        "steps": [
+          {
+            "instruction": "Install notification tools",
+            "code": {
+              "language": "bash",
+              "content": "# macOS\nbrew install terminal-notifier\n\n# Or use ntfy.sh for cross-platform push notifications\n# (no installation needed, just curl)"
+            }
+          },
+          {
+            "instruction": "Create notification hooks",
+            "code": {
+              "language": "json",
+              "content": "{\n  \"hooks\": {\n    \"Stop\": [\n      {\n        \"command\": \"terminal-notifier -title 'Claude' -message 'Task completed' -sound default\"\n      }\n    ],\n    \"PostToolUse\": [\n      {\n        \"matcher\": \"Bash\",\n        \"command\": \"if [ \\\"$TOOL_EXIT_CODE\\\" != \\\"0\\\" ]; then terminal-notifier -title 'Claude Error' -message 'Command failed' -sound Basso; fi\"\n      }\n    ]\n  }\n}",
+              "filename": "~/.claude/settings.json"
+            }
+          }
+        ],
+        "estimatedTime": "20 minutes"
+      },
+      "examples": [
+        {
+          "title": "Multi-channel notifications",
+          "code": {
+            "language": "bash",
+            "content": "#!/bin/bash\n# ~/.claude/scripts/notify.sh\n# Usage: notify.sh <level> <message>\n\nLEVEL=$1\nMESSAGE=$2\n\n# Desktop notification (macOS)\nterminal-notifier -title \"Claude [$LEVEL]\" -message \"$MESSAGE\"\n\n# Push notification via ntfy.sh\nif [ \"$LEVEL\" = \"error\" ] || [ \"$LEVEL\" = \"critical\" ]; then\n  curl -s -d \"$MESSAGE\" ntfy.sh/my-claude-alerts\nfi\n\n# Slack webhook for team alerts\nif [ \"$LEVEL\" = \"critical\" ]; then\n  curl -s -X POST -H 'Content-type: application/json' \\\n    --data \"{\\\"text\\\":\\\"Claude Alert: $MESSAGE\\\"}\" \\\n    \"$SLACK_WEBHOOK_URL\"\nfi",
+            "filename": "~/.claude/scripts/notify.sh"
+          },
+          "explanation": "Multi-tiered notification system routing alerts based on severity."
+        },
+        {
+          "title": "Sound notifications",
+          "code": {
+            "language": "json",
+            "content": "{\n  \"hooks\": {\n    \"Stop\": [\n      {\n        \"command\": \"afplay /System/Library/Sounds/Glass.aiff\"\n      }\n    ],\n    \"PostToolUse\": [\n      {\n        \"matcher\": \"Bash\",\n        \"command\": \"if [ \\\"$TOOL_EXIT_CODE\\\" != \\\"0\\\" ]; then afplay /System/Library/Sounds/Basso.aiff; fi\"\n      }\n    ]\n  }\n}"
+          },
+          "explanation": "Uses different sounds for success and failure (macOS)."
+        }
+      ],
+      "tips": [
+        "terminal-notifier is great for macOS desktop notifications",
+        "ntfy.sh provides free push notifications to any device",
+        "Use different sounds/channels for different severity levels",
+        "Consider notification fatigue - don't over-notify"
+      ],
+      "relatedAchievements": ["stop_hook", "notification_hook", "hook_scripter"]
+    },
+    "metrics_collector": {
+      "longDescription": "Metrics collection hooks track quantitative data about Claude's operations - execution times, tool usage counts, success rates, and more. This data enables analysis of Claude's behavior patterns, performance optimization, and usage insights. A well-designed metrics system provides actionable intelligence about your Claude usage.",
+      "whyItMatters": "You cannot improve what you cannot measure. Metrics provide insights into how Claude is being used and where optimizations might help.",
+      "difficulty": "advanced",
+      "howTo": {
+        "summary": "Create hooks that capture and store metrics about tool usage and performance.",
+        "steps": [
+          {
+            "instruction": "Create a metrics collection script",
+            "code": {
+              "language": "bash",
+              "content": "#!/bin/bash\n# ~/.claude/scripts/collect-metrics.sh\n\nMETRICS_FILE=~/.claude/metrics.jsonl\nTIMESTAMP=$(date -Iseconds)\n\n# Collect timing from environment\nSTART_TIME=${TOOL_START_TIME:-$(date +%s%N)}\nEND_TIME=$(date +%s%N)\nDURATION_MS=$(( (END_TIME - START_TIME) / 1000000 ))\n\necho '{\"time\":\"'$TIMESTAMP'\",\"tool\":\"'$TOOL_NAME'\",\"duration_ms\":'$DURATION_MS',\"exit_code\":\"'$TOOL_EXIT_CODE'\"}' >> $METRICS_FILE",
+              "filename": "~/.claude/scripts/collect-metrics.sh"
+            }
+          },
+          {
+            "instruction": "Configure hooks to collect metrics",
+            "code": {
+              "language": "json",
+              "content": "{\n  \"hooks\": {\n    \"PreToolUse\": [\n      {\n        \"matcher\": \"*\",\n        \"command\": \"export TOOL_START_TIME=$(date +%s%N)\"\n      }\n    ],\n    \"PostToolUse\": [\n      {\n        \"matcher\": \"*\",\n        \"command\": \"~/.claude/scripts/collect-metrics.sh\"\n      }\n    ]\n  }\n}",
+              "filename": "~/.claude/settings.json"
+            }
+          }
+        ],
+        "estimatedTime": "25 minutes"
+      },
+      "examples": [
+        {
+          "title": "Comprehensive metrics collection",
+          "code": {
+            "language": "python",
+            "content": "#!/usr/bin/env python3\n# ~/.claude/scripts/metrics.py\nimport json\nimport os\nfrom datetime import datetime\nfrom pathlib import Path\n\nmetrics_file = Path.home() / '.claude' / 'metrics.jsonl'\n\nmetric = {\n    'timestamp': datetime.now().isoformat(),\n    'tool': os.environ.get('TOOL_NAME', 'unknown'),\n    'session': os.environ.get('SESSION_ID', 'unknown'),\n    'exit_code': os.environ.get('TOOL_EXIT_CODE', '0'),\n    'cwd': os.getcwd()\n}\n\nwith open(metrics_file, 'a') as f:\n    f.write(json.dumps(metric) + '\\n')",
+            "filename": "~/.claude/scripts/metrics.py"
+          },
+          "explanation": "Python-based metrics collection with richer data."
+        },
+        {
+          "title": "Metrics analysis",
+          "code": {
+            "language": "bash",
+            "content": "# Analyze collected metrics\n\n# Tool usage counts\necho \"Tool usage:\"\ncat ~/.claude/metrics.jsonl | jq -r '.tool' | sort | uniq -c | sort -rn\n\n# Failure rate\necho \"\\nFailure rate:\"\ncat ~/.claude/metrics.jsonl | jq -r '.exit_code' | sort | uniq -c\n\n# Most used tools today\necho \"\\nToday's usage:\"\ncat ~/.claude/metrics.jsonl | jq -r \"select(.timestamp | startswith(\\\"$(date +%Y-%m-%d)\\\")) | .tool\" | sort | uniq -c"
+          },
+          "explanation": "Commands to analyze your collected metrics."
+        }
+      ],
+      "tips": [
+        "JSONL format works well with jq for analysis",
+        "Include session IDs to group metrics by session",
+        "Consider periodic aggregation to manage file size",
+        "Track both successes and failures for complete picture"
+      ],
+      "relatedAchievements": ["logging_hook", "post_tool_hook", "hook_scripter"]
+    },
+    "transformation_hook": {
+      "longDescription": "Transformation hooks modify tool inputs or outputs as they flow through the system. Unlike validation hooks that block or allow, transformation hooks actively change data - normalizing paths, adding default parameters, formatting output, or enriching data. This enables powerful middleware-style processing.",
+      "whyItMatters": "Transformations let you standardize and enhance Claude's operations without modifying Claude itself. They are middleware for your AI workflow.",
+      "difficulty": "advanced",
+      "howTo": {
+        "summary": "Create hooks that transform tool inputs or outputs through stdout.",
+        "steps": [
+          {
+            "instruction": "Create a transformation hook",
+            "code": {
+              "language": "json",
+              "content": "{\n  \"hooks\": {\n    \"PreToolUse\": [\n      {\n        \"matcher\": \"Write\",\n        \"command\": \"~/.claude/scripts/transform-write.sh\",\n        \"transform\": true\n      }\n    ]\n  }\n}",
+              "filename": "~/.claude/settings.json"
+            },
+            "note": "The transform flag indicates this hook can modify the input"
+          },
+          {
+            "instruction": "Create the transformation script",
+            "code": {
+              "language": "bash",
+              "content": "#!/bin/bash\n# ~/.claude/scripts/transform-write.sh\n# Output modified TOOL_INPUT to stdout\n\n# Example: Add timestamp comment to all files\nFILE=$(echo \"$TOOL_INPUT\" | jq -r '.file_path')\nCONTENT=$(echo \"$TOOL_INPUT\" | jq -r '.content')\n\n# Add header comment for certain file types\nif [[ \"$FILE\" == *.js ]] || [[ \"$FILE\" == *.ts ]]; then\n  HEADER=\"// Generated by Claude on $(date)\\n\"\n  CONTENT=\"$HEADER$CONTENT\"\nfi\n\n# Output modified input\necho \"$TOOL_INPUT\" | jq --arg content \"$CONTENT\" '.content = $content'",
+              "filename": "~/.claude/scripts/transform-write.sh"
+            }
+          }
+        ],
+        "estimatedTime": "25 minutes"
+      },
+      "examples": [
+        {
+          "title": "Path normalization",
+          "code": {
+            "language": "bash",
+            "content": "#!/bin/bash\n# Normalize all paths to absolute paths\nFILE=$(echo \"$TOOL_INPUT\" | jq -r '.file_path')\n\n# Convert relative to absolute\nif [[ ! \"$FILE\" = /* ]]; then\n  FILE=\"$(pwd)/$FILE\"\nfi\n\n# Clean up path\nFILE=$(realpath -m \"$FILE\")\n\necho \"$TOOL_INPUT\" | jq --arg file \"$FILE\" '.file_path = $file'"
+          },
+          "explanation": "Normalizes relative paths to absolute before file operations."
+        },
+        {
+          "title": "Output formatting",
+          "code": {
+            "language": "bash",
+            "content": "#!/bin/bash\n# Post-process command output to highlight errors\n\nOUTPUT=\"$TOOL_OUTPUT\"\n\n# Add visual markers to errors\nif echo \"$OUTPUT\" | grep -qi 'error'; then\n  OUTPUT=$(echo \"$OUTPUT\" | sed 's/error/>>> ERROR <<</gi')\nfi\n\necho \"$OUTPUT\""
+          },
+          "explanation": "Transforms output to highlight error messages."
+        }
+      ],
+      "tips": [
+        "Transformation hooks must output valid JSON for inputs",
+        "Use jq for safe JSON manipulation",
+        "Keep transformations deterministic and predictable",
+        "Document transformations clearly - they can be surprising"
+      ],
+      "relatedAchievements": ["pre_tool_hook", "post_tool_hook", "hook_scripter"]
+    },
+    "pre_commit_hook": {
+      "longDescription": "Pre-commit hooks integrate Claude's operations with your git workflow, triggering before commits are made. This enables automatic code quality checks, formatting verification, test execution, or documentation updates whenever Claude is about to commit changes. It ensures Claude's commits meet your project standards.",
+      "whyItMatters": "Integrating with git hooks ensures Claude's commits meet the same quality standards as human commits. Automated checks prevent bad commits.",
+      "difficulty": "advanced",
+      "howTo": {
+        "summary": "Create hooks that trigger git-related validations before commits.",
+        "steps": [
+          {
+            "instruction": "Create a pre-commit hook trigger",
+            "code": {
+              "language": "json",
+              "content": "{\n  \"hooks\": {\n    \"PreToolUse\": [\n      {\n        \"matcher\": \"Bash\",\n        \"command\": \"if echo $TOOL_INPUT | jq -r '.command' | grep -q 'git commit'; then ~/.claude/scripts/pre-commit-check.sh; fi\"\n      }\n    ]\n  }\n}",
+              "filename": "~/.claude/settings.json"
+            }
+          },
+          {
+            "instruction": "Create the pre-commit check script",
+            "code": {
+              "language": "bash",
+              "content": "#!/bin/bash\n# ~/.claude/scripts/pre-commit-check.sh\n\necho \"Running pre-commit checks...\"\n\n# Run linter on staged files\nif command -v eslint &> /dev/null; then\n  STAGED=$(git diff --cached --name-only --diff-filter=ACM | grep -E '\\.(js|ts)$')\n  if [ -n \"$STAGED\" ]; then\n    echo \"Linting staged files...\"\n    echo \"$STAGED\" | xargs eslint --quiet\n    if [ $? -ne 0 ]; then\n      echo \"Lint errors found. Fix before committing.\"\n      exit 1\n    fi\n  fi\nfi\n\n# Check for console.log statements\nif git diff --cached | grep -q 'console.log'; then\n  echo \"WARNING: console.log found in staged changes\"\nfi\n\nexit 0",
+              "filename": "~/.claude/scripts/pre-commit-check.sh"
+            }
+          }
+        ],
+        "estimatedTime": "20 minutes"
+      },
+      "examples": [
+        {
+          "title": "Full pre-commit pipeline",
+          "code": {
+            "language": "bash",
+            "content": "#!/bin/bash\n# ~/.claude/scripts/pre-commit-check.sh\n\necho \"=== Pre-commit checks ===\"\n\n# 1. Format check\nif command -v prettier &> /dev/null; then\n  echo \"Checking formatting...\"\n  prettier --check $(git diff --cached --name-only) 2>/dev/null\nfi\n\n# 2. Type check (if TypeScript)\nif [ -f tsconfig.json ]; then\n  echo \"Running type check...\"\n  npx tsc --noEmit\n  if [ $? -ne 0 ]; then\n    echo \"Type errors found\"\n    exit 1\n  fi\nfi\n\n# 3. Run tests for changed files\necho \"Running related tests...\"\nnpm test -- --findRelatedTests $(git diff --cached --name-only) 2>/dev/null\n\necho \"=== Pre-commit checks passed ===\"\nexit 0"
+          },
+          "explanation": "Comprehensive pre-commit pipeline with formatting, types, and tests."
+        },
+        {
+          "title": "Commit message validation",
+          "code": {
+            "language": "json",
+            "content": "{\n  \"hooks\": {\n    \"PreToolUse\": [\n      {\n        \"matcher\": \"Bash\",\n        \"command\": \"CMD=$(echo $TOOL_INPUT | jq -r '.command'); if echo \\\"$CMD\\\" | grep -q 'git commit -m'; then MSG=$(echo \\\"$CMD\\\" | sed 's/.*-m [\\\"'\\'']//' | sed 's/[\\\"'\\'']$//' ); if ! echo \\\"$MSG\\\" | grep -qE '^(feat|fix|docs|style|refactor|test|chore):'; then echo 'Commit message must follow conventional format'; exit 1; fi; fi\"\n      }\n    ]\n  }\n}"
+          },
+          "explanation": "Validates commit messages follow conventional commits format."
+        }
+      ],
+      "tips": [
+        "Match 'git commit' in Bash commands to trigger",
+        "Keep checks fast to avoid slowing down workflow",
+        "Use --quiet flags on linters for cleaner output",
+        "Consider caching test results for performance"
+      ],
+      "relatedAchievements": ["bash_hook", "validation_hook", "hook_scripter"]
+    },
+    "hook_debugger": {
+      "longDescription": "Hook debugging is the process of troubleshooting hooks that don't work as expected. This involves understanding the hook execution environment, capturing output and errors, testing hooks in isolation, and systematically identifying issues. Mastering hook debugging is essential for building reliable automation.",
+      "whyItMatters": "Hooks run in a specific environment that may differ from your shell. Understanding how to debug them is crucial for building working automations.",
+      "difficulty": "intermediate",
+      "howTo": {
+        "summary": "Learn techniques for debugging and troubleshooting hook issues.",
+        "steps": [
+          {
+            "instruction": "Add debugging output to hooks",
+            "code": {
+              "language": "json",
+              "content": "{\n  \"hooks\": {\n    \"PreToolUse\": [\n      {\n        \"matcher\": \"*\",\n        \"command\": \"echo \\\"DEBUG: Tool=$TOOL_NAME Input=$TOOL_INPUT\\\" >> ~/.claude/hook-debug.log 2>&1\"\n      }\n    ]\n  }\n}",
+              "filename": "~/.claude/settings.json"
+            }
+          },
+          {
+            "instruction": "Capture stderr to see errors",
+            "code": {
+              "language": "bash",
+              "content": "# Redirect both stdout and stderr to log\ncommand \"your-hook-command 2>&1 | tee -a ~/.claude/hook-debug.log\""
+            }
+          },
+          {
+            "instruction": "Test hooks in isolation",
+            "code": {
+              "language": "bash",
+              "content": "# Simulate hook environment\nexport TOOL_NAME=\"Bash\"\nexport TOOL_INPUT='{\"command\":\"ls\"}'\nexport SESSION_ID=\"test-123\"\n\n# Run your hook script directly\n~/.claude/scripts/your-hook.sh"
+            }
+          }
+        ],
+        "estimatedTime": "15 minutes"
+      },
+      "examples": [
+        {
+          "title": "Comprehensive debug hook",
+          "code": {
+            "language": "bash",
+            "content": "#!/bin/bash\n# ~/.claude/scripts/debug-hook.sh\n\nLOG=~/.claude/hook-debug.log\n\necho \"=== Hook Debug $(date) ===\" >> $LOG\necho \"TOOL_NAME: $TOOL_NAME\" >> $LOG\necho \"TOOL_INPUT: $TOOL_INPUT\" >> $LOG\necho \"SESSION_ID: $SESSION_ID\" >> $LOG\necho \"PWD: $(pwd)\" >> $LOG\necho \"PATH: $PATH\" >> $LOG\nenv | sort >> $LOG\necho \"========================\" >> $LOG\n\nexit 0",
+            "filename": "~/.claude/scripts/debug-hook.sh"
+          },
+          "explanation": "Logs comprehensive environment information for debugging."
+        },
+        {
+          "title": "Error-capturing wrapper",
+          "code": {
+            "language": "bash",
+            "content": "#!/bin/bash\n# ~/.claude/scripts/safe-hook.sh\n# Wraps another script with error handling\n\nSCRIPT=$1\nshift\n\nif [ ! -x \"$SCRIPT\" ]; then\n  echo \"ERROR: Script not found or not executable: $SCRIPT\" >&2\n  exit 1\nfi\n\n# Run script and capture any errors\n$SCRIPT \"$@\" 2>&1 || {\n  echo \"Hook failed with exit code $?\" >&2\n  exit 0  # Don't block on hook errors during debugging\n}"
+          },
+          "explanation": "A wrapper script that captures and logs errors from hook scripts."
+        }
+      ],
+      "tips": [
+        "Always redirect stderr to see error messages",
+        "Log environment variables to understand context",
+        "Test hooks outside Claude first using exported variables",
+        "Use exit 0 temporarily to prevent blocking while debugging"
+      ],
+      "relatedAchievements": ["hooked", "hook_scripter", "logging_hook"]
+    },
+    "hook_optimizer": {
+      "longDescription": "Hook optimization focuses on making hooks faster and more efficient. Since hooks run on every matching tool use, slow hooks can significantly impact Claude's responsiveness. Optimization techniques include minimizing subprocess spawning, caching results, using efficient tools, and avoiding unnecessary work.",
+      "whyItMatters": "Hooks add latency to every tool use. Optimized hooks keep Claude responsive while still providing the automation you need.",
+      "difficulty": "advanced",
+      "howTo": {
+        "summary": "Learn techniques to make hooks faster and more efficient.",
+        "steps": [
+          {
+            "instruction": "Identify slow hooks",
+            "code": {
+              "language": "bash",
+              "content": "# Add timing to hooks\nSTART=$(date +%s%N)\n# ... hook logic ...\nEND=$(date +%s%N)\necho \"Hook took: $(( (END-START)/1000000 ))ms\" >> ~/.claude/hook-timing.log"
+            }
+          },
+          {
+            "instruction": "Use built-in shell features instead of external commands",
+            "code": {
+              "language": "bash",
+              "content": "# Slow: Using grep\nif echo \"$VAR\" | grep -q \"pattern\"; then\n\n# Fast: Using bash pattern matching\nif [[ \"$VAR\" == *\"pattern\"* ]]; then"
+            }
+          },
+          {
+            "instruction": "Avoid unnecessary subprocess creation",
+            "code": {
+              "language": "bash",
+              "content": "# Slow: Multiple subprocesses\nDATE=$(date +%Y-%m-%d)\nTIME=$(date +%H:%M:%S)\n\n# Fast: Single subprocess\nDATETIME=$(date '+%Y-%m-%d %H:%M:%S')"
+            }
+          }
+        ],
+        "estimatedTime": "20 minutes"
+      },
+      "examples": [
+        {
+          "title": "Optimized validation hook",
+          "code": {
+            "language": "bash",
+            "content": "#!/bin/bash\n# Optimized: Uses bash builtins where possible\n\n# Fast path: Quick checks first\n[[ -z \"$TOOL_INPUT\" ]] && exit 0\n\n# Use bash parameter expansion instead of external tools\nFILE=${TOOL_INPUT##*file_path\\\":\\\"}\nFILE=${FILE%%\\\"*}\n\n# Pattern matching without grep\ncase \"$FILE\" in\n  /etc/*|/var/*|/usr/*)\n    echo \"Blocked: system path\"\n    exit 1\n    ;;\nesac\n\nexit 0"
+          },
+          "explanation": "Uses bash builtins for faster execution."
+        },
+        {
+          "title": "Caching pattern",
+          "code": {
+            "language": "bash",
+            "content": "#!/bin/bash\n# Cache expensive computations\n\nCACHE_FILE=/tmp/claude-hook-cache.$$\nCACHE_TTL=300  # 5 minutes\n\n# Check cache\nif [[ -f \"$CACHE_FILE\" ]]; then\n  AGE=$(( $(date +%s) - $(stat -f%m \"$CACHE_FILE\") ))\n  if [[ $AGE -lt $CACHE_TTL ]]; then\n    cat \"$CACHE_FILE\"\n    exit 0\n  fi\nfi\n\n# Expensive computation\nRESULT=$(expensive_operation)\necho \"$RESULT\" > \"$CACHE_FILE\"\necho \"$RESULT\""
+          },
+          "explanation": "Caches expensive operations to avoid repeated computation."
+        }
+      ],
+      "tips": [
+        "Bash builtins are faster than external commands",
+        "Use [[ ]] instead of [ ] for faster conditionals",
+        "Exit early when conditions aren't met",
+        "Profile hooks to find the slowest parts"
+      ],
+      "relatedAchievements": ["hook_scripter", "hook_debugger", "hook_chainer"]
+    }
+  }
+}
